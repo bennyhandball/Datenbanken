@@ -28,16 +28,16 @@
 // Define logo paths
 #let logo-left = "pictures/DHBW_MA_Logo.jpg"
 #let logo-right = "pictures/SAP_R_grad_scrn.jpg"
-#let title = "Optimierung von Large Language Model-basierten Datenextraktionsprozessen: Ein systematischer Ansatz zur Klassifizierung interner E-Mails"
-#let nameAuthor = "Tim Christopher Eiser"
+#let title = "Retrieval Augmented Generation"
+#let nameAuthor = "Tim Christopher Eiser, Julian Konz & Benjamin Will"
 
 // Define header and footer content
 #let header-content = {}
 
 #let generate-footer-content(numbering) = context {
   let heading_selector = heading.where(level: 1)
-    //.or(heading.where(level: 2))
-    //.or(heading.where(level: 3))
+    .or(heading.where(level: 2))
+    .or(heading.where(level: 3))
   
   // Query all headings matching the selector
   let all_headings = query(heading_selector)
@@ -91,12 +91,12 @@
 #v(spacing)
 
 // Confidentiality marker (SPERRVERMERK)
-#align(center, text(weight: "semibold", size: title-size, "SPERRVERMERK"))
+// #align(center, text(weight: "semibold", size: title-size, "SPERRVERMERK"))
 
 #v(small-spacing)
 
 // Type of Thesis
-#align(center, text(weight: "semibold", size: subtitle-size, "Zweite Projektarbeit"))
+#align(center, text(weight: "semibold", size: subtitle-size, "Hausarbeit Datenbanken II"))
 
 #v(small-spacing)
 
@@ -113,10 +113,10 @@
 // Author
 #align(center, text(size: body-size, "von"))
 #v(small-spacing)
-#align(center, text(weight: "medium", size: subtitle-size, nameAuthor))
+#align(center, text(weight: "medium", size: subtitle-size, "Tim Christopher Eiser"+linebreak()+"Julian Konz"+linebreak()+"Benjamin Will"))
 
 
-#v(spacing * 2)
+#v(spacing * 5)
 
 // Author Information
 #grid(
@@ -126,15 +126,15 @@
 
   // Date
   text(weight: "semibold", size: body-size, "Bearbeitungszeitraum:"),
-  text(size: body-size, "Datum - Datum"),
+  text(size: body-size, "12.05.2025 - 03.08.2025"),
 
   // Student ID and Course
-  text(weight: "semibold", size: body-size, "Matrikelnummer, Kurs:"),
-  text(size: body-size, "Matrikelnummer, Kurs"),
+  text(weight: "semibold", size: body-size, "Kurs:"),
+  text(size: body-size, "WWI23SCB"),
 
   // University Course Leader
   text(weight: "semibold", size: body-size, "Studiengangleiter:"),
-  text(size: body-size, "Name"),
+  text(size: body-size, "Prof. Dr. -Ing. Clemens Martin"),
 
   // Spacer
   text(size: body-size, ""),
@@ -149,30 +149,18 @@
     text(size: body-size, "69190 Walldorf, Deutschland")
   ),
 
-  // Spacer
-  text(size: body-size, ""),
-  text(size: body-size, ""),
-
-  // Company Supervisor
-  text(weight: "semibold", size: body-size, "Betreuer der Ausbildungsfirma:"),
-  stack(
-    spacing: small-spacing,
-    text(size: body-size, "Name"),
-    text(size: body-size, "E-Mail"),
-    text(size: body-size, "Telefonnummer")
-  ),
 
   // Spacer
   text(size: body-size, ""),
   text(size: body-size, ""),
 
   // University Supervisor
-  text(weight: "semibold", size: body-size, "Wissenschaftliche Betreuerin:"),
+  text(weight: "semibold", size: body-size, "Dozent:"),
   stack(
     spacing: small-spacing,
-    text(size: body-size, "Name"),
-    text(size: body-size, "E-Mail"),
-    text(size: body-size, "Telefonnummer")
+    text(size: body-size, "Frank Neubüser"),
+    text(size: body-size, "frank.neubueser@eviden.com"),
+    text(size: body-size, "+49 (0) 211 399 36181")
   )
 )
 
@@ -305,7 +293,6 @@ Um den Lesefluss zu verbessern, werden Abbildungen, Codebeispiele und Tabellen, 
   v(12pt, weak: true)
   strong(it)
 }
-
 
 
 // Inhaltsverzeichnis (Table of Contents)
