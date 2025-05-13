@@ -1,0 +1,3 @@
+#let variables = (
+  Q: "Test",
+)
