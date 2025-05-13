@@ -1,149 +1,117 @@
-#let prefix = "variable-state-"
-#let variable = state("variables", none)
+#let prefix = "acronym-state-"
+#let varis = state("variables", none)
+#import "shared-lib.typ": display-link, is-in-dict
 
-#let init-variables(variables) = {
-  variable.update(variables)
-}
-
-// Check if an variable exists
-#let is-valid(var) = {
-  variable.display(variables => {
-    if var not in variables {
-      panic(var + " is not a key in the variables dictionary.")
-      return false
-    }
-  })
-  return true
-}
-
-// Display variables as clickable link
-#let display-link(var, text) = {
-  if is-valid(var) {
-    link(label("variable-" + var), text)
-  }
-}
-
-// Display variables
-#let display(var, text, link: true) = {
+#let display(dict-type, state, element, text, link: false) = {
   if link {
-    display-link(var, text)
+    display-link(dict-type, state, element, text)
   } else {
     text
   }
 }
 
-// Display variable in short form
-#let vars(var, plural: false, link: true) = {
-  if plural {
-    display(var, var + "s", link: link)
-  } else {
-    display(var, var, link: link)
-  }
-}
-// Display acronym in short plural form
-#let varspl(var, link: true) = {
-  vars(var, plural: true, link: link)
+#let init-variables(variables) = {
+  varis.update(variables)
 }
 
-// Display acronym in long form
-#let varl(var, plural: false, link: true) = {
-  variable.display(variables => {
-    if is-valid(var) {
-      let defs = variables.at(var)
-      if type(defs) == "string" {
+#let vars(acr, plural: false, link: true) = {
+  if plural {
+    display("variables", varis, acr, acr + "s", link: link)
+  } else {
+    display("variables", varis, acr, acr, link: link)
+  }
+}
+#let varspl(acr, link: true) = {
+  acrs(acr, plural: true, link: link)
+}
+
+#let varl(acr, plural: false, link: true) = {
+  context {
+    let variables = varis.get()
+    if is-in-dict("variables", varis, acr) {
+      let defs = variables.at(acr)
+      if type(defs) == str {
         if plural {
-          display(var, defs + "s", link: link)
+          display("variables", varis, acr, defs + "s", link: link)
         } else {
-          display(var, defs, link: link)
+          display("variables", varis, acr, defs, link: link)
         }
       } else if type(defs) == "array" {
         if defs.len() == 0 {
-          panic("No definitions found for variable " + var + ". Make sure it is defined in the dictionary passed to #init-variables(dict)")
+          panic("No definitions found for acronym " + acr + ". Make sure it is defined in the dictionary passed to #init-variables(dict)")
         }
         if plural {
           if defs.len() == 1 {
-            display(var, defs.at(0) + "s", link: link)
+            display("variables", varis, acr, defs.at(0) + "s", link: link)
           } else if defs.len() == 2 {
-            display(var, defs.at(1), link: link)
+            display("variables", varis, acr, defs.at(1), link: link)
           } else {
-            panic("Definitions should be arrays of one or two strings. Definition of " + var + " is: " + type(defs))
+            panic("Definitions should be arrays of one or two strings. Definition of " + acr + " is: " + type(defs))
           }
-        } else {  
-          display(var, defs.at(0), link: link)
+        } else {
+          display("variables", varis, acr, defs.at(0), link: link)
         }
       } else {
-        panic("Definitions should be arrays of one or two strings. Definition of " + var + " is: " + type(defs))
+        panic("Definitions should be arrays of one or two strings. Definition of " + acr + " is: " + type(defs))
       }
     }
-  })
-}
-// Display variables in long plural form
-#let varlpl(var, link: true) = {
-  varl(var, plural: true, link: link)
-}
-
-// Display variables for the first time
-#let varf(var, plural: false, link: true) = {
-  if plural {
-    display(var, [#varlpl(var) (#var\s)], link: link)
-  } else {
-    display(var, [#varl(var) (#var)], link: link)
   }
-  state(prefix + var, false).update(true)
 }
-// Display variable in plural form for the first time
-#let varfpl(var, link: true) = {
-  varf(var, plural: true, link: link)
+#let varlpl(acr, link: true) = {
+  varl(acr, plural: true, link: link)
 }
+#let varf(acr, plural: false, link: true) = {
+  if plural {
+    display("variables", varis, acr, [#varlpl(acr) (#acr\s)], link: link)
+  } else {
+    display("variables", varis, acr, [#varl(acr) ($#acr$)], link: link)
+  }
+  state(prefix + acr, false).update(true)
+}
+#let varfpl(acr, link: true) = {
+  acrf(acr, plural: true, link: link)
 
-// Display variable. Expands it if used for the first time
-#let var(var, plural: false, link: true) = {
-  state(prefix + var, false).display(seen => {
+}
+#let var(acr, plural: false, link: true) = {
+  context {
+    let seen = state(prefix + acr, false).get()
     if seen {
       if plural {
-        varspl(var, link: link)
+        varpl(acr, link: link)
       } else {
-        vars(var, link: link)
+        vars(acr, link: link)
       }
     } else {
       if plural {
-        varfpl(var, link: link)
+        acrfpl(acr, link: link)
       } else {
-        varf(var, link: link)
+        varf(acr, link: link)
       }
     }
-  })
+  }
 }
-
-// Display variables in the plural form. Expands it if used for the first time. 
-#let varpl(variable, link: true) = {
-  var(variable, plural: true, link: link)
+#let varpl(acronym, link: true) = {
+  acr(acronym, plural: true, link: link)
 }
-
-// Print an index of all the acronyms and their definitions.
-#let print-variables(variable-spacing) = {
+#let print-variables(acronym-spacing) = {
   heading(level: 1, outlined: false, numbering: none)[Variablenverzeichnis]
-
-  variable.display(variables=>{
-    let variable-keys = variables.keys()
-
+  context {
+    let variables = varis.get()
+    let acronym-keys = variables.keys()
     let max-width = 0pt
-    for var in variable-keys {
-      let result = measure(var).width
-
+    for acr in acronym-keys {
+      let result = measure(acr).width
       if (result > max-width) {
         max-width = result
       }
     }
-
-    let var-list = variable-keys.sorted()
-
-    for var in var-list{
+    let acr-list = acronym-keys.sorted()
+    for acr in acr-list {
       grid(
         columns: (max-width + 0.5em, auto),
-        gutter: variable-spacing,
-        [*#var#label("variable-" + var)*], [#varl(var, link: false)]
+        gutter: acronym-spacing,
+        [*#acr#label("variables-" + acr)*], [#varl(acr, link: false)],
       )
     }
-  })
+  }
 }
