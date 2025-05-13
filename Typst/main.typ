@@ -34,9 +34,14 @@
 // Define header and footer content
 #let header-content = {}
 
-#let generate-footer-content(numbering) = locate(loc => {
-  let all_headings = query(heading.where(level: 1).or(heading.where(level: 2)).or(heading.where(level: 3)), loc)
-  let current_page = loc.page()
+#let generate-footer-content(numbering) = context {
+  let heading_selector = heading.where(level: 1)
+    //.or(heading.where(level: 2))
+    //.or(heading.where(level: 3))
+  
+  // Query all headings matching the selector
+  let all_headings = query(heading_selector)
+  let current_page = here().page()
   
   let relevant_headings = ()
   for i in range(all_headings.len()) {
@@ -65,7 +70,7 @@
     }),
     align(right, text(size: 12pt, weight: "regular", counter(page).display(numbering)))
   )
-})
+}
 
 //-----------------------------------------------------------------------------------
 // Title Page
@@ -301,11 +306,7 @@ Um den Lesefluss zu verbessern, werden Abbildungen, Codebeispiele und Tabellen, 
   strong(it)
 }
 
-#show outline.entry.where(body: [Literaturverzeichnis] ): it => {
-    v(12pt, weak: true)
-    strong(it)
-    numbering("i")
-}
+
 
 // Inhaltsverzeichnis (Table of Contents)
   #outline(
