@@ -36,8 +36,8 @@
 
 #let generate-footer-content(numbering) = context {
   let heading_selector = heading.where(level: 1)
-    .or(heading.where(level: 2))
-    .or(heading.where(level: 3))
+    // .or(heading.where(level: 2))
+    // .or(heading.where(level: 3))
   
   // Query all headings matching the selector
   let all_headings = query(heading_selector)
@@ -173,7 +173,7 @@
   paper: "a4",
    margin: (
     left: 2cm,
-    right: 4cm,
+    right: 2cm,
     top: 2.5cm,
     bottom: 2cm
   ),
@@ -337,7 +337,7 @@ Um den Lesefluss zu verbessern, werden Abbildungen, Codebeispiele und Tabellen, 
   paper: "a4",
   margin: (
     left: 2cm,
-    right: 4cm,
+    right: 2cm,
     top: 2.5cm,
     bottom: 2cm
   ),
@@ -445,7 +445,7 @@ Neben den genannten Stärken birgen #acrpl("LLM") auch Einschränkungen und Risi
   paper: "a4",
   margin: (
     left: 2cm,
-    right: 4cm,
+    right: 2cm,
     top: 2.5cm,
     bottom: 2cm
   ),
