@@ -359,7 +359,7 @@ Um den Lesefluss zu verbessern, werden Abbildungen, Codebeispiele und Tabellen, 
 #pagebreak()
 
 = Grundlagen
-== Grundlagen Large Language Modellen (Tim)
+== Grundlagen Large Language Modellen 
 #acrfpl("LLM") haben das #acrf("NLP") nachhaltig verändert, da diese natürliche Sprache verarbeiten und syntaktisch, semantisch und logisch korrekte Texte generieren können. #acrpl("LLM") werden auf großen Textdatensätzen trainiert und kombinieren neuronale Netze mit spezialisierten Architekturen wie dem Transformer der den Grundstein für ihre #box("Leistungsfähigkeit legt "+ cite(<PLMsPreTraining>,supplement: "S. 1-4")+cite(<AttentionIsAllYouNeed>, supplement:"S. 10")+".")
 
 === Grundlagen der Sprachverarbeitung und neuronaler Netze 
@@ -381,13 +381,35 @@ Nach Abschluss dieser Trainingsphasen kann man das #acr("LLM") nun in der Infere
 #pagebreak()
 == Grundlagen Embedding Modellen (Benny)
 == Retrieval Augmented Generation (Julian/Tim)
-vergleich LLM RAG
+#acr("RAG") kombiniert die Stärken von #acrpl("LLM") mit dem gezielten Zugriff auf externe Wissensquellen. Klassische #acr("LLM")-Modelle fungieren dabei als geschlossenes Buch: Sie schöpfen ausschließlich aus dem Trainingswissen und können aktuelle oder spezielle Informationen nicht einbeziehen, wodurch sie bei neuen Fragestellungen an ihre Grenzen stoßen und mitunter falsche („halluzinierte“) Antworten liefern. #acr("RAG")-Systeme hingegen agieren wie ein Open-Book-Verfahren: Vor jeder Antwortgenerierung durchsuchen diese eine hinterlegte Wissensbasis (Dokumente, Datenbanken o. Ä.) nach relevanten Textpassagen und übergeben diese als zusätzlichen Kontext an das #acr("LLM"). So lassen sich aktuelle Fakten und detaillierte Informationen direkt in die Antwort einbinden, ohne das #acr("LLM") neu trainieren zu müssen, was Präzision und Nachvollziehbarkeit deutlich erhöht. @ibm2023rag
+
+
 ===  Wissensabruf und Anreicherung
+Im RAG-Verfahren erfolgt zu jeder Frage ein gezielter Abruf von Informationen aus externen Quellen. Die Eingabe (die Frage) wird dazu zunächst als Suchanfrage an das Informationssystem weitergeleitet
+promptingguide.ai
+. Das System durchsucht dann eine zuvor erstellte Wissensbasis (z.B. Dokumentensammlung, Datenbank oder Internetsuche) nach relevanten Textpassagen. Die so gefundenen Passagen werden als Kontext zusammen mit der Frage an das Sprachmodell übergeben. Das Modell kann die aus den Quellen gewonnenen Fakten direkt in seine Antwort einbeziehen
+promptingguide.ai
+research.ibm.com
+. Auf diese Weise können aktuelle Informationen – beispielsweise neueste Forschungsergebnisse oder Statistiken – in die Antwort einfließen, ohne dass das Modell sie zuvor gelernt haben muss
+aws.amazon.com
+en.wikipedia.org
+. Die Antworten basieren damit auf verifizierten Quellen und bleiben stets aktuell, da neue Daten einfach in die Wissensbasis aufgenommen werden können. Dies erhöht sowohl die Genauigkeit als auch die Aktualität der generierten Antworten.
 === Indexierung und Ähnlichkeitssuche 
+
 === Generative Antworterstellung
+Nachdem die relevanten Informationen abgerufen wurden, formuliert das LLM die Antwort. Das Modell erhält den ursprünglichen Fragestellungstext zusammen mit den gefundenen Dokumentauszügen als Eingabe
+learn.microsoft.com
+. Auf dieser Grundlage generiert das Sprachmodell den endgültigen Antworttext. Durch die Bereitstellung der externen Fakten kann das Modell die Antwort direkt auf den Quellen aufbauen, statt sich allein auf sein internes Wissen zu stützen
+promptingguide.ai
+. Dieser offene Ansatz sorgt dafür, dass die Antwort präziser und faktentreuer ist. Ein weiterer Vorteil ist, dass das System die Herkunft der Informationen kennt. Da die Antwort auf bestimmten Dokumenten basiert, kann man – sofern gewünscht – die verwendeten Quellen angeben
+research.ibm.com
+. Nutzer haben so die Möglichkeit, die Fakten selbst zu überprüfen, was das Vertrauen in die Ergebnisse erhöht. Außerdem entfällt das ständige Nachtrainieren des Modells, denn neue Informationen lassen sich einfach über die aktualisierte Wissensbasis bereitstellen
+en.wikipedia.org
+. Insgesamt ermöglichen RAG-Systeme so verlässlichere und aktuellere Antworten als klassische Sprachmodelle ohne externen Wissenseinbezug.
 === Retrieval Augmented Generation Parameter (Julian)
 == Retrieval Augmented Generation Evaluation (Julian)
 #pagebreak()
+
 = Unternehmensanwendung 
 
 
@@ -396,26 +418,21 @@ vergleich LLM RAG
 = Diskussion
 
 == Einordnung der Ergebnisse
-// Einordnung der Ergebnisse Text
 
 == Herausforderungen und Limitationen 
-// Herausforderungen und Limitationen Text
 
 == Handlungsempfehlungen und zukünftige Forschung
-// Handlungsempfehlungen und zukünftige Forschung Text
 
 #pagebreak()
 
 = Schlussbetrachtung
-- Zusammenfassung der Ergebnisse: Darstellung der erreichten Verbesserungen durch LLMs.
-- Ausblick: Empfehlungen für zukünftige Forschung und Weiterentwicklung von LLM-basierten Systemen zur Optimierung interner Kommunikationsprozesse.
-// Schlussbetrachtung Text
+
 
 == Fazit
-// Fazit Text
+
 
 == Ausblick
-// Ausblick und zukünftige Perspektiven Text
+
 #pagebreak()
 
 

@@ -6,7 +6,6 @@
       return false
     }
   }
-
   return true
 }
 
