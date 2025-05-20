@@ -378,34 +378,18 @@ Ein wichtiger Zweig der #acrpl("LLM") sind #acrpl("PLM"), die durch Vortraining 
 Der Aufbau und die Anwendung von LLMs basieren auf einem zweistufigen Trainingsprozess. In der Pre-Training-Phase wird das Modell auf umfangreichen Textdaten trainiert, um allgemeine Sprachstrukturen und -muster zu lernen. Nach dieser folgt die Fine-Tuning-Phase, in der das Modell auf spezifische Aufgaben oder Datensätze abgestimmt wird, um seine Leistung in spezifischen Anwendungsbereichen #box("zu optimieren "+cite(<LLMTaxonomyPrompting>, supplement: "S. 3-6")+".")
 #v(1.5em)
 Nach Abschluss dieser Trainingsphasen kann man das #acr("LLM") nun in der Inferenz nutzen, bei der das Modell anhand eines #acr("Prompt") und auf Basis der gelernten Muster eine Ausgabe generiert #cite(<Inference>,supplement: "S. 3").  Der #acr("Prompt") ermöglicht es, das Verhalten des #acrpl("LLM") zu steuern und spezifische Kontextinformationen zu liefern. Dadurch wird im Rahmen der Inferenz, die Qualität und Relevanz der #box("Antworten maximiert "+cite(<LLMTaxonomyPrompting>, supplement: "S. 3-6")+".")
-=== Stärken und Schwächen von Large Language Models
-Wie jede Technologie bieten #acrpl("LLM") enorme Chance und haben Stärken, die sie auszeichnen. Die für die E-Mail-Klassifikation relevanten Vorteile beinhalten:
-- *Spracherfassung*: #acrpl("LLM") erkennen semantische und syntaktische Strukturen in Texten präzise, was sie besonders effektiv für Aufgaben wie Textklassifikation oder #box("Stimmungs-Analysen macht "+cite(<brown2020languagemodelsfewshotlearners>, supplement: "S. 20-21")+".")
-#v(0.5em)
-- *Vielseitigkeit*: #acrpl("LLM") sind in der Lage, ohne domänenspezifisches Training unterschiedliche Aufgaben zu lösen, von der Beantwortung von Fragen bis hin zu der Analyse #box("von Dokumenten und Kommunikation "+cite(<PLMsPreTraining>,supplement: "S. 3-4")+".")
-#v(0.5em)
-- *Kontextuelles Lernen*: #acrpl("LLM") können mehrdeutige Begriffe und kontextabhängige Bedeutungen erkennen und darauf basierend differenzierte sowie kontextgerechte #box("Antworten generieren "+cite(<10825265>, supplement: "S. 7486-7489")). 
-#v(0.4em)
-Neben den genannten Stärken birgen #acrpl("LLM") auch Einschränkungen und Risiken, die bei der Nutzung dieser zu adressieren sind. #box("Zu diesen gehören:")
-- *Erklärbarkeit*: Die Ausgaben von #acrpl("LLM") sind nicht deterministisch und meist nur schwer nachvollziehbar, da sie auf komplexen statistischen Mustern und #box("nicht einsehbaren Zusammenhängen basieren "+cite(<ExplainableLLM>, supplement:"S. 11-14; 56")+".") 
-#v(0.5em)
-- *Datenabhängigkeit*: Die Qualität der #acr("LLM") Ausgaben hängt stark von den Trainingsdaten ab. Verzerrte oder unzureichende Daten können zu problematischen oder fehlerhaften #box("Ausgaben führen "+cite(<ExplainableLLM>,supplement: "S. 53-54")+".")
-#v(0.5em)
-- *Begrenzungen bei spezialisiertem Wissen*: Während #acrpl("LLM") über umfassende Sprachkompetenz verfügen, stoßen sie, ohne gezielte Anpassungen, bei hochspezifischen Aufgaben an #box("ihre Grenzen "+cite(<LLMTaxonomyPrompting>, supplement: "S. 3")+cite(<10825265>, supplement: "S. 979")+".")
-#v(0.5em)
-- *Vertraulichkeit und Datenschutz*: #acrpl("LLM"), die sensible Nutzerdaten verarbeiten, birgen das Risiko sensible Informationen ungewollt offengelegt oder missbraucht werden. Besonders bei der Verarbeitung durch Dritt-Anbieter können Daten potenziell Dritten zugänglich #box("gemacht werden "+cite(<li2024personalllmagentsinsights>, supplement: "S. 31-32")+".")
+#pagebreak()
 == Grundlagen Embedding Modellen (Benny)
-== Retrieval Augmented Generation
-=== Funktionsweise 
-=== Architekturen 
-=== Retrieval Komponente 
+== Retrieval Augmented Generation (Julian/Tim)
+vergleich LLM RAG
+===  Wissensabruf und Anreicherung
 === Indexierung und Ähnlichkeitssuche 
-=== Generation Modell 
-=== Retrieval Augmented Generation Optimierung
-== Retrieval Augmented Generation im Vergleich mit klassischen Large Language Modellen
-== Retrieval Augmented Generation Evaluation 
+=== Generative Antworterstellung
+=== Retrieval Augmented Generation Parameter (Julian)
+== Retrieval Augmented Generation Evaluation (Julian)
 #pagebreak()
 = Unternehmensanwendung 
+
 
 #pagebreak()
 
