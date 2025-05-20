@@ -352,38 +352,65 @@ Um den Lesefluss zu verbessern, werden Abbildungen, Codebeispiele und Tabellen, 
 #set math.equation(numbering: "(1)")
 
 = Einleitung
-== Motivation
-Die Einleitung erläutert die zunehmenden Herausforderungen bei der Bearbeitung großer Mengen unstrukturierter interner Kommunikation in Unternehmen. Ziel ist die Anwendung und Optimierung von LLMs (Large Language Models) zur Verbesserung der Effizienz und Genauigkeit der Datenextraktion und -klassifizierung in E-Mails.
-== Ziel und Gang
-- Zielsetzung: Systematische Optimierung der Datenextraktion und -klassifizierung durch LLMs und gezieltes Prompt Engineering.
-- Gang der Untersuchung: Die Arbeit basiert auf dem CRISP-DM-Zyklus, der die Schritte von der Problemdefinition über die Datenverarbeitung und Modellierung bis zur Evaluation und praktischen Umsetzung umfasst.
+
 #pagebreak()
 
 = Methodik
-Die Methodik beschreibt die Anwendung des CRISP-DM-Zyklus:
-- Business Understanding (Geschäftsverständnis): Definition der Projektziele und des geschäftlichen Nutzens.
-- Data Understanding (Datenverständnis): Analyse der verwendeten Datenquellen, insbesondere interner E-Mails.
-- Data Preparation (Datenaufbereitung): Reinigung, Formatierung und Extraktion relevanter Merkmale.
-- Modeling (Modellierung): Entwicklung und Anpassung von LLM-Modellen zur Datenklassifikation mit Hilfe von Prompt Engineering.
-- Evaluation (Bewertung): Überprüfung und Bewertung der Modellergebnisse.
-- Deployment (Einsatz): Integration des Systems in bestehende Kommunikationsprozesse.
 #pagebreak()
 
 = Grundlagen
-- LLM-Technologien und ihre Funktionsweise: Erklärung der Grundlagen von Large Language Models (z.B. GPT, BERT) und ihrer Einsatzmöglichkeiten.
-- Prompt Engineering: Techniken und Methoden zur Leistungsoptimierung von LLMs durch gezielte Gestaltung von Eingabeaufforderungen.
-- CRISP-DM-Zyklus: Beschreibung des CRISP-DM-Frameworks als strukturierter Ansatz für datengetriebene Projekte.
-#pagebreak()
+== Grundlagen Large Language Modellen (Tim)
+#acrfpl("LLM") haben das #acrf("NLP") nachhaltig verändert, da diese natürliche Sprache verarbeiten und syntaktisch, semantisch und logisch korrekte Texte generieren können. #acrpl("LLM") werden auf großen Textdatensätzen trainiert und kombinieren neuronale Netze mit spezialisierten Architekturen wie dem Transformer der den Grundstein für ihre #box("Leistungsfähigkeit legt "+ cite(<PLMsPreTraining>,supplement: "S. 1-4")+cite(<AttentionIsAllYouNeed>, supplement:"S. 10")+".")
 
-= Praxis
-- Datenerhebung und -aufbereitung: Sammlung und Bearbeitung von E-Mail-Daten unter Berücksichtigung des Datenschutzes, explorative Datenanalyse zur Identifikation relevanter Merkmale.
-- Modellierung und Entwicklung: Implementierung und Anpassung von LLM-Modellen zur Klassifikation von E-Mails, Anwendung verschiedener Prompting-Strategien.
-- Integration und Evaluierung: Einsatz des optimierten Modells und Analyse der Ergebnisse im Vergleich zu bestehenden Ansätzen.
+=== Grundlagen der Sprachverarbeitung und neuronaler Netze 
+Das #acrf("NLP") befasst sich mit der maschinellen Verarbeitung und Erzeugung natürlicher Sprache, also der von Menschen intuitiv verwendeten gesprochenen und geschriebenen Sprache #cite(<PLMsPreTraining>,supplement: "S. 1"). Im Zentrum der maschinellen Sprachverarbeitung stehen neuronale Netze, die in ihrer Funktionsweise vom menschlichen Gehirn inspiriert sind #cite(<AttentionIsAllYouNeed>, supplement:"S. 1"). Diese Netze bestehen aus zahlreichen künstlichen Neuronen, die über Parameter, sogenannte Gewichte, miteinander verbunden sind. Die Anpassung dieser Parameter ermöglicht es den Netzen, komplexe Muster und Zusammenhänge in den Eingabedaten zu erkennen und abzubilden #cite(<SCHMIDHUBER201585>, supplement: "S. 87"). Moderne #acrpl("LLM"), bei denen oftmals Milliarden Parameter zu dem Einsatz kommen, können somit feinste sprachliche #box("Nuancen  modellieren "+cite(<8666928>,supplement: "S. 68")+".")
+
+#pagebreak()
+=== Transformer-Architektur
+Die Entwicklung heutiger leistungsfähiger #acrpl("LLM") ist eng mit der Einführung der Transformer-Architektur von Vaswani et al. in #cite(<AttentionIsAllYouNeed>, supplement: "Attention is All you Need") verknüpft. In der Transformer-Architektur wird der Eingabetext zunächst in kleinere Einheiten, sogenannte Tokens, zerlegt. Jedes dieser Tokens wird anschließend in einen hochdimensionalen Vektor umgewandelt, der dessen semantische Bedeutung repräsentiert. Der Self-Attention-Mechanismus des Transformers ermöglicht es, gleichzeitig die Beziehungen zwischen allen Tokens im Kontext zu analysieren und dynamisch ihre Relevanz zu gewichten. Diese Methode erlaubt es dem Modell, den Kontext eines jeden Wortes innerhalb eines Satzes präzise zu erfassen, was letztlich in der Fähigkeit resultiert, fließende und sinnvolle Texte #box("zu generieren. "+cite(<AttentionIsAllYouNeed>,supplement: "S. 3-5"))
+#v(1.5em)
+Neben dem Self-Attention-Mechanismus sind Feedforward-Blöcke ein wesentlicher Bestandteil der Transformer-Architektur. Nachdem die relevanten Kontextinformationen ermittelt wurden, werden die resultierenden Vektoren in diese Blöcke eingespeist. Ein typischer Feedforward-Block besteht aus zwei linearen Schichten, die durch eine nichtlineare Aktivierungsfunktion getrennt sind. Zuerst wird der Eingabevektor in einen höherdimensionalen Raum transformiert, was eine detailliertere Repräsentation ermöglicht, und danach wieder auf die ursprüngliche Dimension reduziert. Diese Abfolge modelliert nichtlineare Zusammenhänge in den Daten und ermöglicht eine unabhängige Verarbeitung der Vektoren, was die Effizienz und Parallelisierbarkeit bei großen #box("Datenmengen steigert. "+cite(<AttentionIsAllYouNeed>,supplement: "S. 5")+"")
+#pagebreak()
+=== Large-Scale Pre-Trained Language Models 
+Ein wichtiger Zweig der #acrpl("LLM") sind #acrpl("PLM"), die durch Vortraining auf umfangreichen Textdaten ein tiefes Sprachverständnis entwickeln und für spezifische Aufgaben feinjustiert werden können #cite(<PLMsPaper>,supplement: "S. 1"). #acrpl("PLM") werden häufig unter dem übergeordneten Begriff der #acrpl("LLM") zusammengefasst, da sie die Grundlage vieler aktueller Modelle bilden. Zur Vereinfachung werden #acrpl("PLM") in dieser Arbeit unter dem übergeordneten Begriff #acr("LLM") behandelt. Die Größe von #acrpl("LLM") wird anhand der Zahl ihrer trainierbaren Parameter bestimmt, die – neben Faktoren wie der Qualität der Trainingsdaten – ihr #box("Sprachverständnis beeinflussen "+cite(<brown2020languagemodelsfewshotlearners>, supplement: "S. 4")+".")
+
+=== Trainingsprozess und Inferenz 
+Der Aufbau und die Anwendung von LLMs basieren auf einem zweistufigen Trainingsprozess. In der Pre-Training-Phase wird das Modell auf umfangreichen Textdaten trainiert, um allgemeine Sprachstrukturen und -muster zu lernen. Nach dieser folgt die Fine-Tuning-Phase, in der das Modell auf spezifische Aufgaben oder Datensätze abgestimmt wird, um seine Leistung in spezifischen Anwendungsbereichen #box("zu optimieren "+cite(<LLMTaxonomyPrompting>, supplement: "S. 3-6")+".")
+#v(1.5em)
+Nach Abschluss dieser Trainingsphasen kann man das #acr("LLM") nun in der Inferenz nutzen, bei der das Modell anhand eines #acr("Prompt") und auf Basis der gelernten Muster eine Ausgabe generiert #cite(<Inference>,supplement: "S. 3").  Der #acr("Prompt") ermöglicht es, das Verhalten des #acrpl("LLM") zu steuern und spezifische Kontextinformationen zu liefern. Dadurch wird im Rahmen der Inferenz, die Qualität und Relevanz der #box("Antworten maximiert "+cite(<LLMTaxonomyPrompting>, supplement: "S. 3-6")+".")
+=== Stärken und Schwächen von Large Language Models
+Wie jede Technologie bieten #acrpl("LLM") enorme Chance und haben Stärken, die sie auszeichnen. Die für die E-Mail-Klassifikation relevanten Vorteile beinhalten:
+- *Spracherfassung*: #acrpl("LLM") erkennen semantische und syntaktische Strukturen in Texten präzise, was sie besonders effektiv für Aufgaben wie Textklassifikation oder #box("Stimmungs-Analysen macht "+cite(<brown2020languagemodelsfewshotlearners>, supplement: "S. 20-21")+".")
+#v(0.5em)
+- *Vielseitigkeit*: #acrpl("LLM") sind in der Lage, ohne domänenspezifisches Training unterschiedliche Aufgaben zu lösen, von der Beantwortung von Fragen bis hin zu der Analyse #box("von Dokumenten und Kommunikation "+cite(<PLMsPreTraining>,supplement: "S. 3-4")+".")
+#v(0.5em)
+- *Kontextuelles Lernen*: #acrpl("LLM") können mehrdeutige Begriffe und kontextabhängige Bedeutungen erkennen und darauf basierend differenzierte sowie kontextgerechte #box("Antworten generieren "+cite(<10825265>, supplement: "S. 7486-7489")). 
+#v(0.4em)
+Neben den genannten Stärken birgen #acrpl("LLM") auch Einschränkungen und Risiken, die bei der Nutzung dieser zu adressieren sind. #box("Zu diesen gehören:")
+- *Erklärbarkeit*: Die Ausgaben von #acrpl("LLM") sind nicht deterministisch und meist nur schwer nachvollziehbar, da sie auf komplexen statistischen Mustern und #box("nicht einsehbaren Zusammenhängen basieren "+cite(<ExplainableLLM>, supplement:"S. 11-14; 56")+".") 
+#v(0.5em)
+- *Datenabhängigkeit*: Die Qualität der #acr("LLM") Ausgaben hängt stark von den Trainingsdaten ab. Verzerrte oder unzureichende Daten können zu problematischen oder fehlerhaften #box("Ausgaben führen "+cite(<ExplainableLLM>,supplement: "S. 53-54")+".")
+#v(0.5em)
+- *Begrenzungen bei spezialisiertem Wissen*: Während #acrpl("LLM") über umfassende Sprachkompetenz verfügen, stoßen sie, ohne gezielte Anpassungen, bei hochspezifischen Aufgaben an #box("ihre Grenzen "+cite(<LLMTaxonomyPrompting>, supplement: "S. 3")+cite(<10825265>, supplement: "S. 979")+".")
+#v(0.5em)
+- *Vertraulichkeit und Datenschutz*: #acrpl("LLM"), die sensible Nutzerdaten verarbeiten, birgen das Risiko sensible Informationen ungewollt offengelegt oder missbraucht werden. Besonders bei der Verarbeitung durch Dritt-Anbieter können Daten potenziell Dritten zugänglich #box("gemacht werden "+cite(<li2024personalllmagentsinsights>, supplement: "S. 31-32")+".")
+== Grundlagen Embedding Modellen (Benny)
+== Retrieval Augmented Generation
+=== Funktionsweise 
+=== Architekturen 
+=== Retrieval Komponente 
+=== Indexierung und Ähnlichkeitssuche 
+=== Generation Modell 
+=== Retrieval Augmented Generation Optimierung
+== Retrieval Augmented Generation im Vergleich mit klassischen Large Language Modellen
+== Retrieval Augmented Generation Evaluation 
+#pagebreak()
+= Unternehmensanwendung 
+
 #pagebreak()
 
 = Diskussion
-- Ergebnisse und Interpretation: Analyse der Ergebnisse und Vergleich mit bestehenden Ansätzen zur Datenextraktion und -klassifizierung.
-- Kritische Bewertung: Reflexion über die Anwendung des CRISP-DM-Zyklus und Identifikation von Stärken, Schwächen und Verbesserungsmöglichkeiten.
+
 == Einordnung der Ergebnisse
 // Einordnung der Ergebnisse Text
 
