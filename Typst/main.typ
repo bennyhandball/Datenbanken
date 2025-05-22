@@ -219,13 +219,29 @@
   row-gutter: 1em,
   column-gutter: 12em, 
   // Left Column
-  text(weight: "semibold", "____________________________"),
+  text(weight: "semibold", "__________________"),
   // Right Column
-  text(weight: "semibold", "________________________"),
+  text(weight: "semibold", "______________________________"),
   // Left Column
   text(weight: "semibold", "Ort, Datum"),
   // Right Column
-  text(weight: "semibold", "Unterschrift")
+  text(weight: "semibold", "Unterschrift Tim Christopher Eiser"),
+  v(3em),v(1.5em),
+  text(weight: "semibold", "__________________"),
+  // Right Column
+  text(weight: "semibold", "______________________________"),
+  // Left Column
+  text(weight: "semibold", "Ort, Datum"),
+  // Right Column
+  text(weight: "semibold", "Unterschrift Julian Konz"),
+  v(3em),v(1.5em),
+  text(weight: "semibold", "__________________"),
+  // Right Column
+  text(weight: "semibold", "______________________________"),
+  // Left Column
+  text(weight: "semibold", "Ort, Datum"),
+  // Right Column
+  text(weight: "semibold", "Unterschrift Benjamin Will")
 )
 
 
