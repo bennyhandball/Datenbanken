@@ -7,17 +7,21 @@
 #let embedding-modelle = [
 == Embedding-Modelle
 
-Embedding-Modelle spielen eine zentrale Rolle im ML, insbesondere in #acr("RAG")-Architekturen. Sie dienen dazu, Wörter, Sätze oder Dokumente in dichte, numerische Vektoren zu transformieren, die semantische Beziehungen im hochdimensionalen Raum abbilden. 
+Embedding-Modelle spielen eine zentrale Rolle im ML, insbesondere in #acr("RAG")-Architekturen. Sie dienen dazu, Wörter, Sätze oder Dokumente in dichte, numerische Vektoren zu transformieren, die semantische Beziehungen im hochdimensionalen Raum abbilden. Sie lösen das Problem, dass Computer nicht direkt mit Wörtern arbeiten können, sondern numerische Repräsentationen benötigen. Embeddings übersetzen Wörter, Sätze oder ganze Dokumente in hochdimensionale Vektorräume, wobei semantische Beziehungen erhalten bleiben.
 
-Neuronale Netzwerke können Wörter, Sätze oder Dokumente nicht direkt verarbeiten. Um eine Verarbeitung zu ermöglichen, ist eine Umwandlung in eine Abbildung durch einen Vektor nötig. Die Umwandlung eines Wortes eines Satzes oder eines Dokuments in einen hochdimensionalen Vektor erfolgt nach folgendem Grundprinzip:
+Die Umwandlung eines Wortes eines Satzes oder eines Dokuments in einen hochdimensionalen Vektor erfolgt nach folgendem Grundprinzip:
 
-+ *Tokenisierung:* Zunächst wird der Text von irrelevanten Elementen bereinigt. Dazu zählen HTML-Tags, URLs, E-Mail-Adressen, Emojis, Sonderzeichen sowie überflüssige Leerzeichen oder Zeilenumbrüche. Optional kann der gesamte Text in Kleinbuchstaben konvertiert werden, um die Konsistenz zu erhöhen. Anschließend wird der bereinigte Text in einzelne Tokens (Einheiten) zerlegt. Unter einem Token versteht man dabei die kleinste bedeutungstragende Einheit, in die ein Text während der Verarbeitung durch ein Sprachmodell zerlegt wird. Was dabei genau als Token gilt, hängt vom Modell und der Tokenisierungsstrategie ab. 
++ *Tokenisierung:* Die Tokenisierung teilt sich in zwei wesentlichr Phasen: die Textbereinigung und die eigentliche Token-Extraktion.
 
-+ *Embedding-Zuordnung:* In diesem Schritt wird jedem Token eine numerische Repräsentation (Vektor) zugewiesen. 
+Zunächst wird der Text von irrelevanten Elementen bereinigt. Dazu zählen HTML-Tags, URLs, E-Mail-Adressen, Emojis, Sonderzeichen sowie überflüssige Leerzeichen oder Zeilenumbrüche. Optional kann der gesamte Text in Kleinbuchstaben konvertiert werden, um die Konsistenz zu erhöhen. 
 
-+ *Vektorraum* 
+Anschließend wird der bereinigte Text in einzelne Tokens (Einheiten) zerlegt. Unter einem Token versteht man dabei die kleinste bedeutungstragende Einheit, in die ein Text während der Verarbeitung durch ein Sprachmodell zerlegt wird. Was dabei genau als Token gilt, hängt vom Modell und der Tokenisierungsstrategie ab. 
 
-+ *Pooling/Aggregation:* Einzelne Token-Vektoren werden zu einem Gesamtvektor für den gesamten Text zusammengefasst.
++ *Embedding-Zuordnung:* In diesem Schritt wird jedem Token eine numerische Repräsentation in Form eines hochdimensionalen Vektors zugewiesen. Dies erfolt über eine Lookup-Operation in der Embedding-Matrix, einer vortrainierten Tabelle, die für jedes Token im Vokabular einen entsprechenden Vektor bereithält.  
+
++ *Vektorraum und semantische Beziehungen:* Die generierten Embedding-Vektoren spannen einen hochdimensionalen Vektor auf, in dem semantische Beziehungen zwischen Wörtern durch geometrische Relationen repräsentiert werden. Semantisch ähnliche Wörter befinden sich in diesem Raum in räumlicher Nähe zueinander. Diese Eigenschaft ermöglicht es, semantische Ähnlichkeiten durch Vektoroperationen (Kosinus-Ähnlichkeit) zu erfassen. 
+
++ *Pooling/Aggregation:* Da längere Texte aus mehreren Tokens bestehen, müssen die individuellen Token-Vektoren zu einer einheitlichen Repräsentation für den gesamten Text aggrigiert werden. Hierfür können verschiedene Pooling-Strategien genutzt werden. 
 
 + *Normalisierung:* In diesem Schritt sollen die Embeddings vergleichbar gemacht werden 
 ]
