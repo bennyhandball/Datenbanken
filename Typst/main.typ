@@ -4,6 +4,8 @@
 #import "variables.typ": variables
 #import "variables-lib.typ": init-variables, print-variables, var, varpl, vars, varspl, varl, varlpl, varf,varfpl
 
+#import "rag_evaluation.typ": rag_evaluation
+
 // Set global cite style
 #set cite(style: "ieee")
 
@@ -11,7 +13,7 @@
 #set text(font: "Arial", size: 12pt)
 
 // Set line spacing to 1.5
-#set par(leading: 1.5em)
+#set par(leading: 1.5em, spacing: 2.5em)
 
 // Define global text sizes
 #let title-size = 1.5em
@@ -402,12 +404,13 @@ research.ibm.com
 . Nutzer haben so die Möglichkeit, die Fakten selbst zu überprüfen, was das Vertrauen in die Ergebnisse erhöht. Außerdem entfällt das ständige Nachtrainieren des Modells, denn neue Informationen lassen sich einfach über die aktualisierte Wissensbasis bereitstellen
 en.wikipedia.org
 . Insgesamt ermöglichen RAG-Systeme so verlässlichere und aktuellere Antworten als klassische Sprachmodelle ohne externen Wissenseinbezug.
+
 === Retrieval Augmented Generation Parameter (Julian)
-== Retrieval Augmented Generation Evaluation (Julian)
+
+#rag_evaluation
 #pagebreak()
 
 = Unternehmensanwendung 
-
 
 #pagebreak()
 

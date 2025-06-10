@@ -4,5 +4,6 @@
   LLM:"Large Language Model",
   PLM:"Large-Scale Pre-Trained Language Model",
   "Prompt":"Eingabe",
-  RAG:"Retrieval-Augmented Generation"
+  RAG:"Retrieval-Augmented Generation",
+  ROUGE:"Recall-Oriented Understudy for Gisting Evaluation"
 )
