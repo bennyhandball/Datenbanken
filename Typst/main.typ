@@ -353,9 +353,12 @@ Um den Lesefluss zu verbessern, werden Abbildungen, Codebeispiele und Tabellen, 
 #acrfpl("LLM") haben das #acrf("NLP") nachhaltig verändert, da diese natürliche Sprache verarbeiten und syntaktisch, semantisch und logisch korrekte Texte generieren können. #acrpl("LLM") werden auf großen Textdatensätzen trainiert und kombinieren neuronale Netze mit spezialisierten Architekturen wie dem Transformer der den Grundstein für ihre #box("Leistungsfähigkeit legt "+ cite(<PLMsPreTraining>,supplement: "S. 1-4")+cite(<AttentionIsAllYouNeed>, supplement:"S. 10")+".")
 
 === Grundlagen der Sprachverarbeitung und neuronaler Netze 
-Das #acrf("NLP") befasst sich mit der maschinellen Verarbeitung und Erzeugung natürlicher Sprache, also der von Menschen intuitiv verwendeten gesprochenen und geschriebenen Sprache #cite(<PLMsPreTraining>,supplement: "S. 1"). Im Zentrum der maschinellen Sprachverarbeitung stehen neuronale Netze, die in ihrer Funktionsweise vom menschlichen Gehirn inspiriert sind #cite(<AttentionIsAllYouNeed>, supplement:"S. 1"). Diese Netze bestehen aus zahlreichen künstlichen Neuronen, die über Parameter, sogenannte Gewichte, miteinander verbunden sind. Die Anpassung dieser Parameter ermöglicht es den Netzen, komplexe Muster und Zusammenhänge in den Eingabedaten zu erkennen und abzubilden #cite(<SCHMIDHUBER201585>, supplement: "S. 87"). Moderne #acrpl("LLM"), bei denen oftmals Milliarden Parameter zu dem Einsatz kommen, können somit feinste sprachliche #box("Nuancen  modellieren "+cite(<8666928>,supplement: "S. 68")+".")
+Das #acrf("NLP") befasst sich mit der maschinellen Verarbeitung und Erzeugung natürlicher Sprache, also der von Menschen intuitiv verwendeten gesprochenen und geschriebenen Sprache #cite(<PLMsPreTraining>,supplement: "S. 1"). Im Zentrum der maschinellen Sprachverarbeitung stehen neuronale Netze, die in ihrer Funktionsweise vom menschlichen Gehirn inspiriert sind #cite(<AttentionIsAllYouNeed>, supplement:"S. 1"). Diese Netze bestehen aus zahlreichen künstlichen Neuronen, die über Parameter, sogenannte Gewichte, miteinander verbunden sind.
+#v(1em) 
+#figure(caption:"Aufbau neuronaler Netze. In Anlehnung an "+cite(<krannig2020deep>)+". ",image(width: 80%,"pictures/neuronale_netze.jpeg"))<NeuronaleNetze>
+#v(1em) 
+Die Anpassung dieser Parameter ermöglicht es den Netzen, komplexe Muster und Zusammenhänge in den Eingabedaten zu erkennen und abzubilden #cite(<SCHMIDHUBER201585>, supplement: "S. 87"). Moderne #acrpl("LLM"), bei denen oftmals Milliarden Parameter zu dem Einsatz kommen, können somit feinste sprachliche #box("Nuancen  modellieren "+cite(<8666928>,supplement: "S. 68")+".")
 
-#pagebreak()
 === Transformer-Architektur
 Die Entwicklung heutiger leistungsfähiger #acrpl("LLM") ist eng mit der Einführung der Transformer-Architektur von Vaswani et al. in #cite(<AttentionIsAllYouNeed>, supplement: "Attention is All you Need") verknüpft. In der Transformer-Architektur wird der Eingabetext zunächst in kleinere Einheiten, sogenannte Tokens, zerlegt. Jedes dieser Tokens wird anschließend in einen hochdimensionalen Vektor umgewandelt, der dessen semantische Bedeutung repräsentiert. Der Self-Attention-Mechanismus des Transformers ermöglicht es, gleichzeitig die Beziehungen zwischen allen Tokens im Kontext zu analysieren und dynamisch ihre Relevanz zu gewichten. Diese Methode erlaubt es dem Modell, den Kontext eines jeden Wortes innerhalb eines Satzes präzise zu erfassen, was letztlich in der Fähigkeit resultiert, fließende und sinnvolle Texte #box("zu generieren. "+cite(<AttentionIsAllYouNeed>,supplement: "S. 3-5"))
 #v(1.5em)
@@ -373,7 +376,7 @@ Nach Abschluss dieser Trainingsphasen kann man das #acr("LLM") nun in der Infere
 #import "embedding-modelle.typ": embedding-modelle
 #embedding-modelle
 
-== Retrieval Augmented Generation (Julian/Tim)
+== Retrieval Augmented Generation (Tim)
 #acr("RAG") kombiniert die Stärken von #acrpl("LLM") mit dem gezielten Zugriff auf externe Wissensquellen. Klassische #acr("LLM")-Modelle fungieren dabei als geschlossenes Buch: Sie schöpfen ausschließlich aus dem Trainingswissen und können aktuelle oder spezielle Informationen nicht einbeziehen, wodurch sie bei neuen Fragestellungen an ihre Grenzen stoßen und mitunter falsche („halluzinierte“) Antworten liefern. #acr("RAG")-Systeme hingegen agieren wie ein Open-Book-Verfahren: Vor jeder Antwortgenerierung durchsuchen diese eine hinterlegte Wissensbasis (Dokumente, Datenbanken o. Ä.) nach relevanten Textpassagen und übergeben diese als zusätzlichen Kontext an das #acr("LLM"). So lassen sich aktuelle Fakten und detaillierte Informationen direkt in die Antwort einbinden, ohne das #acr("LLM") neu trainieren zu müssen, was Präzision und Nachvollziehbarkeit deutlich erhöht. @ibm2023rag
 
 
