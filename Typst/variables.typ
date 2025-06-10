@@ -1,3 +1,22 @@
 #let variables = (
-  Q: "Test",
+  TP: "True Positive",
+  TN: "True Negative",
+  FP: "False Positive",
+  FN: "False Negative",
+  L: "Menge an Klassen",
+  N: "Anzahl an Iterationen",
+  P: "Menge an vorhergesagten Klassen",
+  H: "Menge an tatsächlichen Klassen",
+  b: "vorhergesagter Text",
+  d: "Referenztext",
+  "\u{03C9}": "Wort",
+  B: "Menge aller n-gramme im vorhergesagten Text",
+  D: "Menge aller n-gramme im Referenztext",
+  k: "Metrik-Gewichtung",
+  c: "Klasse",
+  SE: "Standardfehler",
+  "\u{03C3}": "Standardabweichung",
+  μ: "Allgemeine Mittelwert",
+  "\u{039B}": "Textlänge",
+  "\u{03B1}": "Signifikanzniveau"
 )

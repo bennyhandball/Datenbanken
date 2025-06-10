@@ -4,6 +4,8 @@
 #import "variables.typ": variables
 #import "variables-lib.typ": init-variables, print-variables, var, varpl, vars, varspl, varl, varlpl, varf,varfpl
 
+#import "rag_evaluation.typ": rag_evaluation
+
 // Set global cite style
 #set cite(style: "ieee")
 
@@ -341,6 +343,8 @@ Um den Lesefluss zu verbessern, werden Abbildungen, Codebeispiele und Tabellen, 
 #set heading(numbering: "1.",outlined: true)
 #set math.equation(numbering: "(1)")
 
+#set par(leading: 1.5em, spacing: 2.5em)
+
 = Einleitung
 
 #pagebreak()
@@ -410,12 +414,13 @@ Nutzer haben so die Möglichkeit, die Fakten selbst zu überprüfen, was das Ver
 en.wikipedia.org
 
 Insgesamt ermöglichen RAG-Systeme so verlässlichere und aktuellere Antworten als klassische Sprachmodelle ohne externen Wissenseinbezug.
+
 === Retrieval Augmented Generation Parameter (Julian)
-== Retrieval Augmented Generation Evaluation (Julian)
+
+#rag_evaluation
 #pagebreak()
 
 = Unternehmensanwendung 
-
 
 #pagebreak()
 
