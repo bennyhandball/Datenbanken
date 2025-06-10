@@ -60,6 +60,7 @@
     }
   }
   line(length: 100%)
+  v(-1.5em)
   stack(
     dir: ltr,
     spacing: 1em,
@@ -365,7 +366,7 @@ Die Anpassung dieser Parameter ermöglicht es den Netzen, komplexe Muster und Zu
 
 === Transformer-Architektur
 Die Entwicklung heutiger leistungsfähiger #acrpl("LLM") ist eng mit der Einführung der Transformer-Architektur von Vaswani et al. in #cite(<AttentionIsAllYouNeed>, supplement: "Attention is All you Need") verknüpft. In der Transformer-Architektur wird der Eingabetext zunächst in kleinere Einheiten, sogenannte Tokens, zerlegt. Jedes dieser Tokens wird anschließend in einen hochdimensionalen Vektor umgewandelt, der dessen semantische Bedeutung repräsentiert. Der Self-Attention-Mechanismus des Transformers ermöglicht es, gleichzeitig die Beziehungen zwischen allen Tokens im Kontext zu analysieren und dynamisch ihre Relevanz zu gewichten. Diese Methode erlaubt es dem Modell, den Kontext eines jeden Wortes innerhalb eines Satzes präzise zu erfassen, was letztlich in der Fähigkeit resultiert, fließende und sinnvolle Texte #box("zu generieren. "+cite(<AttentionIsAllYouNeed>,supplement: "S. 3-5"))
-#v(1.5em)
+
 Neben dem Self-Attention-Mechanismus sind Feedforward-Blöcke ein wesentlicher Bestandteil der Transformer-Architektur. Nachdem die relevanten Kontextinformationen ermittelt wurden, werden die resultierenden Vektoren in diese Blöcke eingespeist. Ein typischer Feedforward-Block besteht aus zwei linearen Schichten, die durch eine nichtlineare Aktivierungsfunktion getrennt sind. Zuerst wird der Eingabevektor in einen höherdimensionalen Raum transformiert, was eine detailliertere Repräsentation ermöglicht, und danach wieder auf die ursprüngliche Dimension reduziert. Diese Abfolge modelliert nichtlineare Zusammenhänge in den Daten und ermöglicht eine unabhängige Verarbeitung der Vektoren, was die Effizienz und Parallelisierbarkeit bei großen #box("Datenmengen ermöglicht. "+cite(<AttentionIsAllYouNeed>,supplement: "S. 5")+"")
 #pagebreak()
 === Large-Scale Pre-Trained Language Models
@@ -373,7 +374,7 @@ Ein bedeutender Zweig der #acrpl("LLM") bilden #acrpl("PLM"), die durch ausgedeh
 
 === Trainingsprozess und Inferenz 
 Der Aufbau und die Anwendung von LLMs basieren auf einem zweistufigen Trainingsprozess. In der Pre-Training-Phase wird das Modell auf umfangreichen Textdaten trainiert, um allgemeine Sprachstrukturen und -muster zu lernen. Nach dieser folgt die Fine-Tuning-Phase, in der das Modell auf spezifische Aufgaben oder Datensätze abgestimmt wird, um seine Leistung in spezifischen Anwendungsbereichen #box("zu optimieren "+cite(<LLMTaxonomyPrompting>, supplement: "S. 3-6")+".")
-#v(1.5em)
+
 Nach Abschluss dieser Trainingsphasen kann man das #acr("LLM") nun in der Inferenz nutzen, bei der das Modell anhand eines #acr("Prompt") und auf Basis der gelernten Muster eine Ausgabe generiert #cite(<Inference>,supplement: "S. 3").  Der #acr("Prompt") ermöglicht es, das Verhalten des #acrpl("LLM") zu steuern und spezifische Kontextinformationen zu liefern. Dadurch wird im Rahmen der Inferenz, die Qualität und Relevanz der #box("Antworten maximiert "+cite(<LLMTaxonomyPrompting>, supplement: "S. 3-6")+".")
 #pagebreak()
 
@@ -382,17 +383,17 @@ Nach Abschluss dieser Trainingsphasen kann man das #acr("LLM") nun in der Infere
 
 == Retrieval Augmented Generation (Tim)
 #acrf("RAG") kombiniert die Stärken von #acrpl("LLM") mit dem gezielten Zugriff auf externe Wissensquellen. Klassische #acr("LLM")-Modelle fungieren dabei wie ein geschlossenes Buch. Sie schöpfen ausschließlich aus dem Trainingswissen und können aktuelle oder spezielle Informationen nicht einbeziehen. Durch diese Einschränkung stoßen sie bei neuen oder spezialisierten Fragestellungen schnell an ihre Grenzen – und liefern mitunter falsche oder „halluzinierte“ Antworten, also frei erfundene Inhalte. @ibm2023rag
-#v(1.5em)
+
 #acr("RAG")-Systeme hingegen agieren wie ein Open-Book-Verfahren: Vor jeder Antwort durchsuchen diese eine hinterlegte Wissensbasis (Dokumente, Datenbanken o. Ä.) nach relevanten Textpassagen und übergeben diese als zusätzlichen Kontext an das #acr("LLM"). So lassen sich aktuelle Fakten und detaillierte Informationen direkt in die Antwort einbinden, ohne das #acr("LLM") neu trainieren zu müssen, was Präzision, gerade in spezialisierten Bereichen, und Nachvollziehbarkeit deutlich erhöht. @ibm2023rag
 
 
 ===  Wissensabruf und Anreicherung
 Im #acr("RAG")-Verfahren erfolgt somit zu jeder Frage ein gezielter Abruf von Informationen aus der verbunden Wissensbasis. Die Inferenz wird dazu zunächst als Suchanfrage an das #box(acr("RAG")+"-System weitergeleitet.")
-#v(1.5em)
+
 Jenes durchsucht dann die zuvor erstellte Wissensbasis (z.B. Dokumentensammlung, Datenbank oder Internetsuche) nach relevanten Textpassagen. Die so gefundenen Passagen werden dann als Kontext zusammen mit der Frage an das #acr("LLM") übergeben. Das #acr("LLM") kann dann die aus der Wissensbasis entnommenen Fakten direkt in seine #box("Antwort einbeziehen.")
-#v(1.5em)
+
 So können auch aktuelle Informationen, wie beispielsweise neueste Forschungsergebnisse oder Statistiken, in die Antwort einfließen, ohne dass das #acr("LLM") diese im Training #box("lernen musste.")
-#v(1.5em)
+
 Die Antworten basieren damit auf verifizierten Quellen und bleiben stets aktuell, da neue Daten einfach in die Wissensbasis aufgenommen werden können. Dies erhöht sowohl die Qualität als auch die Aktualität der generierten Antworten, gerade in nischen Themen oder bei #box("neuen Erkenntnissen.")
 
 === Indexierung und Ähnlichkeitssuche 
