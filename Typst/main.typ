@@ -364,8 +364,8 @@ Die Entwicklung heutiger leistungsfähiger #acrpl("LLM") ist eng mit der Einfüh
 #v(1.5em)
 Neben dem Self-Attention-Mechanismus sind Feedforward-Blöcke ein wesentlicher Bestandteil der Transformer-Architektur. Nachdem die relevanten Kontextinformationen ermittelt wurden, werden die resultierenden Vektoren in diese Blöcke eingespeist. Ein typischer Feedforward-Block besteht aus zwei linearen Schichten, die durch eine nichtlineare Aktivierungsfunktion getrennt sind. Zuerst wird der Eingabevektor in einen höherdimensionalen Raum transformiert, was eine detailliertere Repräsentation ermöglicht, und danach wieder auf die ursprüngliche Dimension reduziert. Diese Abfolge modelliert nichtlineare Zusammenhänge in den Daten und ermöglicht eine unabhängige Verarbeitung der Vektoren, was die Effizienz und Parallelisierbarkeit bei großen #box("Datenmengen ermöglicht. "+cite(<AttentionIsAllYouNeed>,supplement: "S. 5")+"")
 #pagebreak()
-=== Large-Scale Pre-Trained Language Models 
-Ein wichtiger Zweig der #acrpl("LLM") sind #acrpl("PLM"), die durch Vortraining auf umfangreichen Textdaten ein tiefes Sprachverständnis entwickeln und für spezifische Aufgaben feinjustiert werden können #cite(<PLMsPaper>,supplement: "S. 1"). #acrpl("PLM") werden häufig mit dem übergeordneten Begriff der #acrpl("LLM") synonym verwendet, da sie die Grundlage vieler aktueller Modelle bilden. Zur Vereinfachung werden #acrpl("PLM") in dieser Arbeit unter dem Begriff #acr("LLM") beschrieben. Die Größe von #acrpl("LLM") wird anhand der Zahl ihrer trainierbaren Parameter bestimmt, die – neben Faktoren wie der Qualität der Trainingsdaten – ihr #box("Sprachverständnis beeinflussen "+cite(<brown2020languagemodelsfewshotlearners>, supplement: "S. 4")+".")
+=== Large-Scale Pre-Trained Language Models
+Ein bedeutender Zweig der #acrpl("LLM") bilden #acrpl("PLM"), die durch ausgedehntes Vortraining auf umfangreichen Textkorpora ein tiefgehendes Sprachverständnis entwickeln und anschließend für spezifische Aufgaben feinjustiert werden können #cite(<PLMsPaper>, supplement: "S. 1"). #acrpl("PLM") werden oft synonym zum übergeordneten Begriff #acrpl("LLM") verwendet, da sie die Grundlage zahlreicher aktueller Modelle, wie Chat GPT und Claude, bilden. Zur Vereinfachung werden #acrpl("PLM") in dieser Arbeit unter dem Begriff #acr("LLM") zusammengefasst. Die Größe von #acrpl("LLM") bemisst sich an der Zahl der trainierbaren Parameter, die – neben Faktoren wie der Qualität der Trainingsdaten – ihr #box("Sprachverständnis beeinflussen "+cite(<brown2020languagemodelsfewshotlearners>, supplement: "S. 4")+".")
 
 === Trainingsprozess und Inferenz 
 Der Aufbau und die Anwendung von LLMs basieren auf einem zweistufigen Trainingsprozess. In der Pre-Training-Phase wird das Modell auf umfangreichen Textdaten trainiert, um allgemeine Sprachstrukturen und -muster zu lernen. Nach dieser folgt die Fine-Tuning-Phase, in der das Modell auf spezifische Aufgaben oder Datensätze abgestimmt wird, um seine Leistung in spezifischen Anwendungsbereichen #box("zu optimieren "+cite(<LLMTaxonomyPrompting>, supplement: "S. 3-6")+".")
@@ -377,31 +377,39 @@ Nach Abschluss dieser Trainingsphasen kann man das #acr("LLM") nun in der Infere
 #embedding-modelle
 
 == Retrieval Augmented Generation (Tim)
-#acr("RAG") kombiniert die Stärken von #acrpl("LLM") mit dem gezielten Zugriff auf externe Wissensquellen. Klassische #acr("LLM")-Modelle fungieren dabei als geschlossenes Buch: Sie schöpfen ausschließlich aus dem Trainingswissen und können aktuelle oder spezielle Informationen nicht einbeziehen, wodurch sie bei neuen Fragestellungen an ihre Grenzen stoßen und mitunter falsche („halluzinierte“) Antworten liefern. #acr("RAG")-Systeme hingegen agieren wie ein Open-Book-Verfahren: Vor jeder Antwortgenerierung durchsuchen diese eine hinterlegte Wissensbasis (Dokumente, Datenbanken o. Ä.) nach relevanten Textpassagen und übergeben diese als zusätzlichen Kontext an das #acr("LLM"). So lassen sich aktuelle Fakten und detaillierte Informationen direkt in die Antwort einbinden, ohne das #acr("LLM") neu trainieren zu müssen, was Präzision und Nachvollziehbarkeit deutlich erhöht. @ibm2023rag
+#acrf("RAG") kombiniert die Stärken von #acrpl("LLM") mit dem gezielten Zugriff auf externe Wissensquellen. Klassische #acr("LLM")-Modelle fungieren dabei wie ein geschlossenes Buch. Sie schöpfen ausschließlich aus dem Trainingswissen und können aktuelle oder spezielle Informationen nicht einbeziehen. Durch diese Einschränkung stoßen sie bei neuen oder spezialisierten Fragestellungen schnell an ihre Grenzen – und liefern mitunter falsche oder „halluzinierte“ Antworten, also frei erfundene Inhalte. @ibm2023rag
+#v(1.5em)
+#acr("RAG")-Systeme hingegen agieren wie ein Open-Book-Verfahren: Vor jeder Antwort durchsuchen diese eine hinterlegte Wissensbasis (Dokumente, Datenbanken o. Ä.) nach relevanten Textpassagen und übergeben diese als zusätzlichen Kontext an das #acr("LLM"). So lassen sich aktuelle Fakten und detaillierte Informationen direkt in die Antwort einbinden, ohne das #acr("LLM") neu trainieren zu müssen, was Präzision, gerade in spezialisierten Bereichen, und Nachvollziehbarkeit deutlich erhöht. @ibm2023rag
 
 
 ===  Wissensabruf und Anreicherung
-Im RAG-Verfahren erfolgt zu jeder Frage ein gezielter Abruf von Informationen aus externen Quellen. Die Eingabe (die Frage) wird dazu zunächst als Suchanfrage an das Informationssystem weitergeleitet
-promptingguide.ai
-. Das System durchsucht dann eine zuvor erstellte Wissensbasis (z.B. Dokumentensammlung, Datenbank oder Internetsuche) nach relevanten Textpassagen. Die so gefundenen Passagen werden als Kontext zusammen mit der Frage an das Sprachmodell übergeben. Das Modell kann die aus den Quellen gewonnenen Fakten direkt in seine Antwort einbeziehen
-promptingguide.ai
-research.ibm.com
-. Auf diese Weise können aktuelle Informationen – beispielsweise neueste Forschungsergebnisse oder Statistiken – in die Antwort einfließen, ohne dass das Modell sie zuvor gelernt haben muss
-aws.amazon.com
-en.wikipedia.org
-. Die Antworten basieren damit auf verifizierten Quellen und bleiben stets aktuell, da neue Daten einfach in die Wissensbasis aufgenommen werden können. Dies erhöht sowohl die Genauigkeit als auch die Aktualität der generierten Antworten.
+Im #acr("RAG")-Verfahren erfolgt somit zu jeder Frage ein gezielter Abruf von Informationen aus der verbunden Wissensbasis. Die Inferenz wird dazu zunächst als Suchanfrage an das #box(acr("RAG")+"-System weitergeleitet.")
+#v(1.5em)
+Jenes durchsucht dann die zuvor erstellte Wissensbasis (z.B. Dokumentensammlung, Datenbank oder Internetsuche) nach relevanten Textpassagen. Die so gefundenen Passagen werden dann als Kontext zusammen mit der Frage an das #acr("LLM") übergeben. Das #acr("LLM") kann dann die aus der Wissensbasis entnommenen Fakten direkt in seine #box("Antwort einbeziehen.")
+#v(1.5em)
+So können auch aktuelle Informationen, wie beispielsweise neueste Forschungsergebnisse oder Statistiken, in die Antwort einfließen, ohne dass das #acr("LLM") diese im Training #box("lernen musste.")
+#v(1.5em)
+Die Antworten basieren damit auf verifizierten Quellen und bleiben stets aktuell, da neue Daten einfach in die Wissensbasis aufgenommen werden können. Dies erhöht sowohl die Qualität als auch die Aktualität der generierten Antworten, gerade in nischen Themen oder bei #box("neuen Erkenntnissen.")
+
 === Indexierung und Ähnlichkeitssuche 
 
 === Generative Antworterstellung
-Nachdem die relevanten Informationen abgerufen wurden, formuliert das LLM die Antwort. Das Modell erhält den ursprünglichen Fragestellungstext zusammen mit den gefundenen Dokumentauszügen als Eingabe
+Nachdem die relevanten Informationen abgerufen wurden, formuliert das LLM die Antwort. Das Modell erhält den ursprünglichen Fragestellungstext zusammen mit den gefundenen Dokumentauszügen als Eingabe.
+
 learn.microsoft.com
-. Auf dieser Grundlage generiert das Sprachmodell den endgültigen Antworttext. Durch die Bereitstellung der externen Fakten kann das Modell die Antwort direkt auf den Quellen aufbauen, statt sich allein auf sein internes Wissen zu stützen
+Auf dieser Grundlage generiert das Sprachmodell den endgültigen Antworttext. Durch die Bereitstellung der externen Fakten kann das Modell die Antwort direkt auf den Quellen aufbauen, statt sich allein auf sein internes Wissen zu stützen.
+
 promptingguide.ai
-. Dieser offene Ansatz sorgt dafür, dass die Antwort präziser und faktentreuer ist. Ein weiterer Vorteil ist, dass das System die Herkunft der Informationen kennt. Da die Antwort auf bestimmten Dokumenten basiert, kann man – sofern gewünscht – die verwendeten Quellen angeben
+
+Dieser offene Ansatz sorgt dafür, dass die Antwort präziser und faktentreuer ist. Ein weiterer Vorteil ist, dass das System die Herkunft der Informationen kennt. Da die Antwort auf bestimmten Dokumenten basiert, kann man – sofern gewünscht – die verwendeten Quellen angeben.
+
 research.ibm.com
-. Nutzer haben so die Möglichkeit, die Fakten selbst zu überprüfen, was das Vertrauen in die Ergebnisse erhöht. Außerdem entfällt das ständige Nachtrainieren des Modells, denn neue Informationen lassen sich einfach über die aktualisierte Wissensbasis bereitstellen
+
+Nutzer haben so die Möglichkeit, die Fakten selbst zu überprüfen, was das Vertrauen in die Ergebnisse erhöht. Außerdem entfällt das ständige Nachtrainieren des Modells, denn neue Informationen lassen sich einfach über die aktualisierte Wissensbasis bereitstellen.
+
 en.wikipedia.org
-. Insgesamt ermöglichen RAG-Systeme so verlässlichere und aktuellere Antworten als klassische Sprachmodelle ohne externen Wissenseinbezug.
+
+Insgesamt ermöglichen RAG-Systeme so verlässlichere und aktuellere Antworten als klassische Sprachmodelle ohne externen Wissenseinbezug.
 === Retrieval Augmented Generation Parameter (Julian)
 == Retrieval Augmented Generation Evaluation (Julian)
 #pagebreak()
