@@ -208,7 +208,7 @@
 #set text(hyphenate: true, lang: "de")
 
 = Eidesstattliche Erklärung
-#align(left, text("Ich versichere hiermit, dass ich meine Projektarbeit mit dem Thema: „Titel“ selbstständig verfasst und keine anderen als die angegebenen Quellen und Hilfsmittel benutzt habe. Ich versichere zudem, dass die eingereichte elektronische Fassung mit der gedruckten Fassung übereinstimmt."))
+#align(left, text("Ich versichere hiermit, dass ich meine Projektarbeit mit dem Thema: „Titel“ selbstständig verfasst und keine anderen als die angegebenen Quellen und Hilfsmittel benutzt habe. Ich versichere zudem, dass die eingereichte elektronische Fassung mit der gedruckten "+box("Fassung übereinstimmt.")))
 
 // Space for the signature
 #v(7em)
@@ -273,32 +273,6 @@ Ein Teil der Literatur, die für die Anfertigung dieser Arbeit genutzt wird, is
 Um den Lesefluss zu verbessern, werden Abbildungen, Codebeispiele und Tabellen, die den Lesefluss stören, im Anhang platziert, auf den im Text zusätzlich verwiesen wird.
 
 //-----------------------------------------------------------------------------------
-// Abstract
-//-----------------------------------------------------------------------------------
-#pagebreak()
-= Abstract
-
-#grid(
-  columns: (auto, auto),
-  row-gutter: 18pt,
-  column-gutter: 2.5em,
-  text("Titel:"),
-  text(title),
-  
-  text("Verfasser:"),
-  text(nameAuthor),
-  
-  text("Kurs:"),
-  text("WWI 23 SCB"),
-  text("Ausbildungsbetrieb:"),
-  text("SAP SE"),
-)
-#v(1.5em)
-// Fasse hier die Arbeit und die Ergebnisse kurz und prägnant zusammen.
-
-
-
-//-----------------------------------------------------------------------------------
 // Inhaltsverzeichnis, Abbildungsverzeichnis, Tabellenverzeichnis
 //-----------------------------------------------------------------------------------
 #pagebreak()
@@ -312,7 +286,7 @@ Um den Lesefluss zu verbessern, werden Abbildungen, Codebeispiele und Tabellen, 
 
 
 // Inhaltsverzeichnis (Table of Contents)
-  #outline(
+#outline(
     title: "Inhaltsverzeichnis",
     depth: 3,
     indent: 1em,
@@ -385,10 +359,10 @@ Das #acrf("NLP") befasst sich mit der maschinellen Verarbeitung und Erzeugung na
 === Transformer-Architektur
 Die Entwicklung heutiger leistungsfähiger #acrpl("LLM") ist eng mit der Einführung der Transformer-Architektur von Vaswani et al. in #cite(<AttentionIsAllYouNeed>, supplement: "Attention is All you Need") verknüpft. In der Transformer-Architektur wird der Eingabetext zunächst in kleinere Einheiten, sogenannte Tokens, zerlegt. Jedes dieser Tokens wird anschließend in einen hochdimensionalen Vektor umgewandelt, der dessen semantische Bedeutung repräsentiert. Der Self-Attention-Mechanismus des Transformers ermöglicht es, gleichzeitig die Beziehungen zwischen allen Tokens im Kontext zu analysieren und dynamisch ihre Relevanz zu gewichten. Diese Methode erlaubt es dem Modell, den Kontext eines jeden Wortes innerhalb eines Satzes präzise zu erfassen, was letztlich in der Fähigkeit resultiert, fließende und sinnvolle Texte #box("zu generieren. "+cite(<AttentionIsAllYouNeed>,supplement: "S. 3-5"))
 #v(1.5em)
-Neben dem Self-Attention-Mechanismus sind Feedforward-Blöcke ein wesentlicher Bestandteil der Transformer-Architektur. Nachdem die relevanten Kontextinformationen ermittelt wurden, werden die resultierenden Vektoren in diese Blöcke eingespeist. Ein typischer Feedforward-Block besteht aus zwei linearen Schichten, die durch eine nichtlineare Aktivierungsfunktion getrennt sind. Zuerst wird der Eingabevektor in einen höherdimensionalen Raum transformiert, was eine detailliertere Repräsentation ermöglicht, und danach wieder auf die ursprüngliche Dimension reduziert. Diese Abfolge modelliert nichtlineare Zusammenhänge in den Daten und ermöglicht eine unabhängige Verarbeitung der Vektoren, was die Effizienz und Parallelisierbarkeit bei großen #box("Datenmengen steigert. "+cite(<AttentionIsAllYouNeed>,supplement: "S. 5")+"")
+Neben dem Self-Attention-Mechanismus sind Feedforward-Blöcke ein wesentlicher Bestandteil der Transformer-Architektur. Nachdem die relevanten Kontextinformationen ermittelt wurden, werden die resultierenden Vektoren in diese Blöcke eingespeist. Ein typischer Feedforward-Block besteht aus zwei linearen Schichten, die durch eine nichtlineare Aktivierungsfunktion getrennt sind. Zuerst wird der Eingabevektor in einen höherdimensionalen Raum transformiert, was eine detailliertere Repräsentation ermöglicht, und danach wieder auf die ursprüngliche Dimension reduziert. Diese Abfolge modelliert nichtlineare Zusammenhänge in den Daten und ermöglicht eine unabhängige Verarbeitung der Vektoren, was die Effizienz und Parallelisierbarkeit bei großen #box("Datenmengen ermöglicht. "+cite(<AttentionIsAllYouNeed>,supplement: "S. 5")+"")
 #pagebreak()
 === Large-Scale Pre-Trained Language Models 
-Ein wichtiger Zweig der #acrpl("LLM") sind #acrpl("PLM"), die durch Vortraining auf umfangreichen Textdaten ein tiefes Sprachverständnis entwickeln und für spezifische Aufgaben feinjustiert werden können #cite(<PLMsPaper>,supplement: "S. 1"). #acrpl("PLM") werden häufig unter dem übergeordneten Begriff der #acrpl("LLM") zusammengefasst, da sie die Grundlage vieler aktueller Modelle bilden. Zur Vereinfachung werden #acrpl("PLM") in dieser Arbeit unter dem übergeordneten Begriff #acr("LLM") behandelt. Die Größe von #acrpl("LLM") wird anhand der Zahl ihrer trainierbaren Parameter bestimmt, die – neben Faktoren wie der Qualität der Trainingsdaten – ihr #box("Sprachverständnis beeinflussen "+cite(<brown2020languagemodelsfewshotlearners>, supplement: "S. 4")+".")
+Ein wichtiger Zweig der #acrpl("LLM") sind #acrpl("PLM"), die durch Vortraining auf umfangreichen Textdaten ein tiefes Sprachverständnis entwickeln und für spezifische Aufgaben feinjustiert werden können #cite(<PLMsPaper>,supplement: "S. 1"). #acrpl("PLM") werden häufig mit dem übergeordneten Begriff der #acrpl("LLM") synonym verwendet, da sie die Grundlage vieler aktueller Modelle bilden. Zur Vereinfachung werden #acrpl("PLM") in dieser Arbeit unter dem Begriff #acr("LLM") beschrieben. Die Größe von #acrpl("LLM") wird anhand der Zahl ihrer trainierbaren Parameter bestimmt, die – neben Faktoren wie der Qualität der Trainingsdaten – ihr #box("Sprachverständnis beeinflussen "+cite(<brown2020languagemodelsfewshotlearners>, supplement: "S. 4")+".")
 
 === Trainingsprozess und Inferenz 
 Der Aufbau und die Anwendung von LLMs basieren auf einem zweistufigen Trainingsprozess. In der Pre-Training-Phase wird das Modell auf umfangreichen Textdaten trainiert, um allgemeine Sprachstrukturen und -muster zu lernen. Nach dieser folgt die Fine-Tuning-Phase, in der das Modell auf spezifische Aufgaben oder Datensätze abgestimmt wird, um seine Leistung in spezifischen Anwendungsbereichen #box("zu optimieren "+cite(<LLMTaxonomyPrompting>, supplement: "S. 3-6")+".")
