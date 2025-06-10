@@ -13,7 +13,7 @@
 #set text(font: "Arial", size: 12pt)
 
 // Set line spacing to 1.5
-#set par(leading: 1.5em, spacing: 2.5em)
+#set par(leading: 1.5em)
 
 // Define global text sizes
 #let title-size = 1.5em
@@ -342,6 +342,8 @@ Um den Lesefluss zu verbessern, werden Abbildungen, Codebeispiele und Tabellen, 
 #counter(heading).update(0)
 #set heading(numbering: "1.",outlined: true)
 #set math.equation(numbering: "(1)")
+
+#set par(leading: 1.5em, spacing: 2.5em)
 
 = Einleitung
 
