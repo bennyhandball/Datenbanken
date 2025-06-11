@@ -7,7 +7,12 @@
 #let embedding-modelle = [
 == Embedding-Modelle
 
-Embedding-Modelle spielen eine zentrale Rolle im ML, insbesondere in #acr("RAG")-Architekturen. Sie dienen dazu, Wörter, Sätze oder Dokumente in dichte, numerische Vektoren zu transformieren, die semantische Beziehungen im hochdimensionalen Raum abbilden. Sie lösen das Problem, dass Computer nicht direkt mit Wörtern arbeiten können, sondern numerische Repräsentationen benötigen. Embeddings übersetzen Wörter, Sätze oder ganze Dokumente in hochdimensionale Vektorräume, wobei semantische Beziehungen erhalten bleiben. @Embeddings zeigt eine stark vereinfachte Übersicht über den Embedding Prozess. Dieser Prozess soll detailliert im folgenden #box[erläutert werden.]
+Embedding-Modelle spielen eine zentrale Rolle im #acr("ML"), insbesondere in #acr("RAG")-Architekturen #cite(<aws_embeddings_ml>). Sie dienen dazu, Wörter, Sätze oder Dokumente in dichte, numerische Vektoren zu transformieren, die semantische Beziehungen im hochdimensionalen Raum abbilden #cite(<coursera_embedding_model_2025>). Sie lösen das Problem, dass Computer nicht direkt mit Wörtern arbeiten können, sondern numerische Repräsentationen benötigen. Embeddings übersetzen Wörter, Sätze oder ganze Dokumente in hochdimensionale Vektorräume, wobei semantische Beziehungen erhalten bleiben #cite(<aws_embeddings_ml>). 
+
+
+
+
+@Embeddings zeigt eine stark vereinfachte Übersicht über den Embedding Prozess. Dieser Prozess soll detailliert im folgenden #box[erläutert werden.]
 
 #figure(caption:"Übersicht Prozess Embedding Modelle"+ " "+cite(<2024vector_embeddings>)+". ",image(width: 90%,"pictures/How-Embeddings-Work.jpg"))<Embeddings>
 

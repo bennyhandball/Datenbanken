@@ -6,5 +6,6 @@
   "Prompt":"Eingabe",
   RAG:"Retrieval-Augmented Generation",
   ROUGE:"Recall-Oriented Understudy for Gisting Evaluation",
-  DPR:"Dense Passage Retriever"
+  DPR:"Dense Passage Retriever",
+  ML: "Machine Learning"
 )
