@@ -5,6 +5,7 @@
 #import "variables-lib.typ": init-variables, print-variables, var, varpl, vars, varspl, varl, varlpl, varf,varfpl
 
 #import "rag_evaluation.typ": rag_evaluation
+#import "indexing_similarity_search.typ": indexing_similarity_search
 
 // Set global cite style
 #set cite(style: "ieee")
