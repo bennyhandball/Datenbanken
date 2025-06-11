@@ -5,7 +5,7 @@
 #import "variables-lib.typ": init-variables, print-variables, var, varpl, vars, varspl, varl, varlpl, varf,varfpl
 
 #import "rag_evaluation.typ": rag_evaluation
-#import "indexing_similarity_search.typ": indexing_similarity_search
+#import "rag_parameter.typ": rag_parameter
 
 // Set global cite style
 #set cite(style: "ieee")
@@ -428,7 +428,7 @@ en.wikipedia.org
 
 Insgesamt ermöglichen RAG-Systeme so verlässlichere und aktuellere Antworten als klassische Sprachmodelle ohne externen Wissenseinbezug.
 
-=== Retrieval Augmented Generation Parameter (Julian)
+#rag_parameter
 
 #rag_evaluation
 #pagebreak()
