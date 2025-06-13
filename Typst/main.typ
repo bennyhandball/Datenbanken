@@ -403,9 +403,7 @@ Das #acr("CRISP-DM")-Modell ist ein branchenübergreifendes Standardmodell, das 
 ))
 <Phasen_CRISP_DM>
 
-Der #acr("CRISP-DM") Data-Mining-Prozess kann in sechs iterative Phasen gegliedert werden (siehe @Phasen_CRISP_DM) #cite(<ncr_clinton_2000>, supplement: "S.13") #cite(<christoph_schröer_kruse_gómez_2021>, supplement: "S.527"). 
-
-Diese Phasen sind: 
+Der #acr("CRISP-DM") Data-Mining-Prozess kann in sechs iterative Phasen gegliedert werden (siehe @Phasen_CRISP_DM) #cite(<ncr_clinton_2000>, supplement: "S.13") #cite(<christoph_schröer_kruse_gómez_2021>, supplement: "S.527"). Diese Phasen sind: 
 
 
 * 1. Business Understanding*:
