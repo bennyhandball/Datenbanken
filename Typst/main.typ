@@ -445,7 +445,27 @@ Während der Inferenz verarbeitet das #acr("LLM") die Eingabe tokenweise und gen
 
 #import "embedding-modelle.typ": embedding-modelle
 #embedding-modelle
+#pagebreak()
 == Vektordatenbanken
+
+Vektordatenbanken bilden eine spezialisierte Klasse von Datenbanksystemen, die darauf ausgelegt sind, hochdimensionale Vektorrepräsentationen effizient zu speichern, zu indexieren und durchsuchbar zu machen. Im Kontext von #acr("RAG")-Systemen fungieren sie als zentrale Infrastruktur für die Speicherung und den Abruf von Embedding-Vektoren, die semantische Informationen von #box("Textdokumenten repräsentieren.")
+
+=== Architektur und Funktionsweise
+Im Gegensatz zu relationalen Datenbanken speichern Vektordatenbanken Daten als numerische Vektoren in hochdimensionalen Räumen. Jeder Vektor repräsentiert semantische Eigenschaften eines Datenobjekts, wobei die räumliche Nähe zwischen Vektoren die semantische Ähnlichkeit der ursprünglichen Inhalte widerspiegelt. Diese Eigenschaft ermöglicht komplexe Ähnlichkeitsabfragen ohne exakte #box("Schlüsselwort-Übereinstimmungen.")
+
+Die Architektur umfasst eine Speicherschicht für persistente Vektordaten, eine Indexierungsschicht für effiziente Organisation sowie eine Abfrageschicht für Ähnlichkeitssuchen. Zusätzlich unterstützen moderne Systeme die Speicherung von Metadaten für hybride Filterung und #box("Verfeinerung der Suchergebnisse.")
+
+=== Indexierung und Suchoptimierung
+
+Für die effiziente Durchsuchung großer Vektorbestände setzen Vektordatenbanken spezialisierte Indexierungsalgorithmen ein. Hierarchical Navigable Small World (HNSW)-Graphen ermöglichen durch mehrschichtige Navigationsstrukturen sublineare Suchzeiten bei hoher Genauigkeit. Alternative Verfahren wie Locality-Sensitive Hashing (LSH) bieten je nach Anwendungsfall spezifische Vorteile hinsichtlich Speichereffizienz oder Suchgeschwindigkeit.
+
+Die Approximate Nearest Neighbor (ANN)-Suche bildet das methodische Fundament dieser Verfahren. Da exakte Bestimmung der nächstgelegenen Nachbarn in hochdimensionalen Räumen rechnerisch aufwendig ist, approximieren diese Algorithmen die Ergebnisse mit kontrollierbarer Genauigkeit bei #box("reduzierten Rechenzeiten "+cite(<johnson2017billionscalesimilaritysearchgpus>, supplement: "S. 1, 2, 10")+".")
+
+=== Integration in RAG-Systeme
+
+In #acr("RAG")-Architekturen übernehmen Vektordatenbanken die kritische Funktion der semantischen Retrieval-Komponente. Textdokumente werden mittels Embedding-Modelle in Vektorrepräsentationen transformiert und indexiert. Bei Benutzeranfragen wird diese ebenfalls vektorisiert und gegen den Vektorbestand abgeglichen. Die Datenbank identifiziert semantisch ähnlichste Dokumente und stellt diese als Kontext für die Textgenerierung durch das #acr("LLM") #box("bereit "+cite(<lewis2021retrievalaugmentedgenerationknowledgeintensivenlp>, supplement: "S. 9")+".")
+
+Die Integration erfolgt über standardisierte APIs, die sowohl Batch-Import großer Dokumentenmengen als auch Echtzeitabfragen unterstützen. Aktuelle Implementierungen bieten zusätzlich Funktionalitäten wie versionierte Vektorbestände, horizontale Skalierung und Multi-Tenancy-Fähigkeiten für #box("unternehmenskritische Anwendungen.")
 
 
 #pagebreak()
