@@ -6,5 +6,6 @@
   PLM:"Large-Scale Pre-Trained Language Model",
   "Prompt":"Eingabe",
   RAG:"Retrieval-Augmented Generation",
-  ROUGE:"Recall-Oriented Understudy for Gisting Evaluation"
+  ROUGE:"Recall-Oriented Understudy for Gisting Evaluation",
+  DPR:"Dense Passage Retriever"
 )
