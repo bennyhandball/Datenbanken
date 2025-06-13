@@ -61,6 +61,45 @@
     }
   }
   line(length: 100%)
+  stack(
+    dir: ltr,
+    spacing: 1em,
+    align(left, {
+      if relevant_headings.len() > 0 {
+        relevant_headings.map(h => h.body).join(" • ")
+      } else {
+        ""
+      }
+    }),
+    align(right, text(size: 12pt, weight: "regular", counter(page).display(numbering)))
+  )
+}
+#let header-content = {}
+
+#let generate-footer-content-v-15(numbering) = context {
+  let heading_selector = heading.where(level: 1)
+    // .or(heading.where(level: 2))
+    // .or(heading.where(level: 3))
+  
+  // Query all headings matching the selector
+  let all_headings = query(heading_selector)
+  let current_page = here().page()
+  
+  let relevant_headings = ()
+  for i in range(all_headings.len()) {
+    let h = all_headings.at(i)
+    let heading_page = h.location().page()
+    let next_heading_page = if i + 1 < all_headings.len() { 
+      all_headings.at(i + 1).location().page() 
+    } else { 
+      current_page + 1
+    }
+    
+    if heading_page == current_page or (heading_page < current_page and next_heading_page > current_page) {
+      relevant_headings.push(h)
+    }
+  }
+  line(length: 100%)
   v(-1.5em)
   stack(
     dir: ltr,
@@ -337,7 +376,7 @@ Um den Lesefluss zu verbessern, werden Abbildungen, Codebeispiele und Tabellen, 
   ),
   header: header-content,
   numbering: "1",
-  footer: generate-footer-content("1"),
+  footer: generate-footer-content-v-15("1"),
 )
 #pagebreak()
 #counter(page).update(1)
@@ -372,8 +411,8 @@ Während der Inferenz verarbeitet das #acr("LLM") die Eingabe tokenweise und gen
 #pagebreak()
 == Retrieval Augmented Generation (Tim)
 #acrf("RAG") kombiniert die Stärken von #acrpl("LLM") mit dem gezielten Zugriff auf externe Wissensquellen. Klassische #acr("LLM")-Modelle schöpfen ausschließlich aus dem Trainingswissen und können aktuelle oder spezielle Informationen nicht einbeziehen #cite(<gupta2024comprehensivesurveyretrievalaugmentedgeneration>, supplement: "1"), was bei neuen oder spezialisierten Fragestellungen zu falschen oder „halluzinierten", also erfundenen, Antworten #box("führen kann "+cite(<gupta2024comprehensivesurveyretrievalaugmentedgeneration>, supplement: "1-2")+cite(<Huang_2025>, supplement: "S. 1, 3, 20")+cite(<ibm2023rag>)+".")
-#figure(caption: "RAG Workflow entlang der Komponenten" + cite(<gupta2024comprehensivesurveyretrievalaugmentedgeneration>,supplement: "S. 2"),image(width: 80%,"pictures/RAG knowledge.png"))
-#acr("RAG")-Systeme hingegen durchsuchen vor jeder Antwort eine hinterlegte Wissensbasis (Dokumente, Datenbanken o. Ä.) nach relevanten Textpassagen und übergeben diese als zusätzlichen Kontext an das #acr("LLM"). So lassen sich aktuelle Fakten und spezialisierte Informationen direkt einbinden, ohne das #acr("LLM") neu trainieren zu müssen, was Präzision und Nachvollziehbarkeit deutlich #box("erhöht "+cite(<gupta2024comprehensivesurveyretrievalaugmentedgeneration>, supplement: "1-2")+".")
+
+#acr("RAG")-Systeme hingegen durchsuchen vor jeder Antwort eine hinterlegte Wissensbasis (Dokumente, Datenbanken o. Ä.) nach relevanten Textpassagen und übergeben diese als zusätzlichen Kontext an das #acr("LLM"). So lassen sich aktuelle Fakten und spezialisierte Informationen direkt einbinden, ohne das #acr("LLM") neu trainieren zu müssen, was Präzision und Nachvollziehbarkeit deutlich #box("erhöht "+cite(<gupta2024comprehensivesurveyretrievalaugmentedgeneration>, supplement: "1-2")+ref(<RAGWorkflow>)+".")
 ===  Wissensabruf und Anreicherung
 Im #acr("RAG")-Verfahren wird zu jeder Anfrage die Wissensbasis (z.B. Dokumentensammlung, Datenbank oder Internetsuche) nach relevanten Textpassagen durchsucht, die zusammen mit der Frage als zusätzlich Kontext an das #acr("LLM") übergeben werden. Das #acr("LLM") kann dann die abgerufenen Fakten direkt in seine Antwort einbetten #cite(<lewis2021retrievalaugmentedgenerationknowledgeintensivenlp>, supplement: "S. 9"). So können auch aktuelle Informationen, wie neueste Forschungsergebnisse, einfließen, ohne dass das #acr("LLM") diese im Training lernen musste. Die Antworten basieren auf verifizierten Quellen und bleiben aktuell, da neue Daten einfach in die Wissensbasis aufgenommen werden können, was Qualität und Aktualität gerade bei nischen Themen #box("und neuen Erkenntnissen erhöht "+cite(<karpukhin2020densepassageretrievalopendomain>, supplement: "S. 8") +cite(<lewis2021retrievalaugmentedgenerationknowledgeintensivenlp>, supplement: "S. 9")).
 === Indexierung und Ähnlichkeitssuche
@@ -454,7 +493,7 @@ Insgesamt ermöglichen RAG-Systeme so verlässlichere und aktuellere Antworten a
   ),
   header: header-content,
   numbering: "i",
-  footer: generate-footer-content("i"),
+  footer: generate-footer-content-v-15("i"),
 )
 #set heading(numbering: none)
 #pagebreak()
@@ -470,7 +509,4 @@ Insgesamt ermöglichen RAG-Systeme so verlässlichere und aktuellere Antworten a
 //-----------------------------------------------------------------------------------
 #pagebreak()
 = Anhang 
-// Anhang Text
-#heading("Anhang A", outlined: false)
-#heading("Anhang B", outlined: false)
-#heading("Anhang C", outlined: false)
+#figure(caption: "RAG Workflow entlang der Komponenten" + cite(<gupta2024comprehensivesurveyretrievalaugmentedgeneration>,supplement: "S. 2"),image(width: 100%,"pictures/RAG knowledge.png"))<RAGWorkflow>
