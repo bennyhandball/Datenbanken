@@ -447,7 +447,6 @@ Während der Inferenz verarbeitet das #acr("LLM") die Eingabe tokenweise und gen
 #embedding-modelle
 #pagebreak()
 == Vektordatenbanken
-
 Vektordatenbanken bilden eine spezialisierte Klasse von Datenbanksystemen, die darauf ausgelegt sind, hochdimensionale Vektorrepräsentationen effizient zu speichern, zu indexieren und durchsuchbar zu machen. Im Kontext von #acr("RAG")-Systemen fungieren sie als zentrale Infrastruktur für die Speicherung und den Abruf von Embedding-Vektoren, die semantische Informationen von #box("Textdokumenten repräsentieren.")
 
 === Architektur und Funktionsweise
@@ -456,16 +455,11 @@ Im Gegensatz zu relationalen Datenbanken speichern Vektordatenbanken Daten als n
 Die Architektur umfasst eine Speicherschicht für persistente Vektordaten, eine Indexierungsschicht für effiziente Organisation sowie eine Abfrageschicht für Ähnlichkeitssuchen. Zusätzlich unterstützen moderne Systeme die Speicherung von Metadaten für hybride Filterung und #box("Verfeinerung der Suchergebnisse.")
 
 === Indexierung und Suchoptimierung
-
 Für die effiziente Durchsuchung großer Vektorbestände setzen Vektordatenbanken spezialisierte Indexierungsalgorithmen ein. Hierarchical Navigable Small World (HNSW)-Graphen ermöglichen durch mehrschichtige Navigationsstrukturen sublineare Suchzeiten bei hoher Genauigkeit. Alternative Verfahren wie Locality-Sensitive Hashing (LSH) bieten je nach Anwendungsfall spezifische Vorteile hinsichtlich Speichereffizienz oder Suchgeschwindigkeit.
-
 Die Approximate Nearest Neighbor (ANN)-Suche bildet das methodische Fundament dieser Verfahren. Da exakte Bestimmung der nächstgelegenen Nachbarn in hochdimensionalen Räumen rechnerisch aufwendig ist, approximieren diese Algorithmen die Ergebnisse mit kontrollierbarer Genauigkeit bei #box("reduzierten Rechenzeiten "+cite(<johnson2017billionscalesimilaritysearchgpus>, supplement: "S. 1, 2, 10")+".")
 
-=== Integration in RAG-Systeme
-
-In #acr("RAG")-Architekturen übernehmen Vektordatenbanken die kritische Funktion der semantischen Retrieval-Komponente. Textdokumente werden mittels Embedding-Modelle in Vektorrepräsentationen transformiert und indexiert. Bei Benutzeranfragen wird diese ebenfalls vektorisiert und gegen den Vektorbestand abgeglichen. Die Datenbank identifiziert semantisch ähnlichste Dokumente und stellt diese als Kontext für die Textgenerierung durch das #acr("LLM") #box("bereit "+cite(<lewis2021retrievalaugmentedgenerationknowledgeintensivenlp>, supplement: "S. 9")+".")
-
-Die Integration erfolgt über standardisierte APIs, die sowohl Batch-Import großer Dokumentenmengen als auch Echtzeitabfragen unterstützen. Aktuelle Implementierungen bieten zusätzlich Funktionalitäten wie versionierte Vektorbestände, horizontale Skalierung und Multi-Tenancy-Fähigkeiten für #box("unternehmenskritische Anwendungen.")
+=== Technische Implementierung
+Moderne Vektordatenbanken bieten standardisierte APIs für sowohl Batch-Import großer Dokumentenmengen als auch Echtzeitabfragen. Die Systeme unterstützen verschiedene Distanzmetriken wie Kosinus-Ähnlichkeit, Euklidische Distanz oder Dot-Product zur Berechnung der Vektorähnlichkeit. Aktuelle Implementierungen bieten zusätzlich Funktionalitäten wie versionierte Vektorbestände, horizontale Skalierung und Multi-Tenancy-Fähigkeiten für #box("unternehmenskritische Anwendungen.")
 
 
 #pagebreak()
@@ -473,19 +467,21 @@ Die Integration erfolgt über standardisierte APIs, die sowohl Batch-Import gro�
 #acrf("RAG") kombiniert die Stärken von #acrpl("LLM") mit dem gezielten Zugriff auf externe Wissensquellen. Klassische #acr("LLM")-Modelle schöpfen ausschließlich aus dem Trainingswissen und können aktuelle oder spezielle Informationen nicht einbeziehen #cite(<gupta2024comprehensivesurveyretrievalaugmentedgeneration>, supplement: "1"), was bei neuen oder spezialisierten Fragestellungen zu falschen oder „halluzinierten", also erfundenen, Antworten #box("führen kann "+cite(<gupta2024comprehensivesurveyretrievalaugmentedgeneration>, supplement: "1-2")+cite(<Huang_2025>, supplement: "S. 1, 3, 20")+cite(<ibm2023rag>)+".")
 
 #acr("RAG")-Systeme hingegen durchsuchen vor jeder Antwort eine hinterlegte Wissensbasis (Dokumente, Datenbanken o. Ä.) nach relevanten Textpassagen und übergeben diese als zusätzlichen Kontext an das #acr("LLM"). So lassen sich aktuelle Fakten und spezialisierte Informationen direkt einbinden, ohne das #acr("LLM") neu trainieren zu müssen, was Präzision und Nachvollziehbarkeit deutlich #box("erhöht "+cite(<gupta2024comprehensivesurveyretrievalaugmentedgeneration>, supplement: "1-2")+ref(<RAGWorkflow>)+".")
+
 ===  Wissensabruf und Anreicherung
-Im #acr("RAG")-Verfahren wird zu jeder Anfrage die Wissensbasis (z.B. Dokumentensammlung, Datenbank oder Internetsuche) nach relevanten Textpassagen durchsucht, die zusammen mit der Frage als zusätzlich Kontext an das #acr("LLM") übergeben werden. Das #acr("LLM") kann dann die abgerufenen Fakten direkt in seine Antwort einbetten #cite(<lewis2021retrievalaugmentedgenerationknowledgeintensivenlp>, supplement: "S. 9"). So können auch aktuelle Informationen, wie neueste Forschungsergebnisse, einfließen, ohne dass das #acr("LLM") diese im Training lernen musste. Die Antworten basieren auf verifizierten Quellen und bleiben aktuell, da neue Daten einfach in die Wissensbasis aufgenommen werden können, was Qualität und Aktualität gerade bei nischen Themen #box("und neuen Erkenntnissen erhöht "+cite(<karpukhin2020densepassageretrievalopendomain>, supplement: "S. 8") +cite(<lewis2021retrievalaugmentedgenerationknowledgeintensivenlp>, supplement: "S. 9")).
-#pagebreak()
-=== Indexierung und Ähnlichkeitssuche
-Die effiziente Indexierung der Wissensbasis und die darauf aufbauende Ähnlichkeitssuche bestimmen maßgeblich die Qualität des Retrievals und damit die Qualität und Verlässlichkeit der Antworten #cite(<manning2008introduction>, supplement: "S. 9"). Dokumente werden zunächst in passageartige Einheiten segmentiert und für die Suche aufbereitet.
-Bei klassischen Information-Retrieval-Verfahren (sparse Retrieval) kommen TF-IDF und BM25 zum Einsatz:
+Im #acr("RAG")-Verfahren wird zu jeder Anfrage die Wissensbasis (z.B. Dokumentensammlung, Datenbank oder Internetsuche) nach relevanten Textpassagen durchsucht, die zusammen mit der Frage als zusätzlicher Kontext an das #acr("LLM") übergeben werden. Das #acr("LLM") kann dann die abgerufenen Fakten direkt in seine Antwort einbetten #cite(<lewis2021retrievalaugmentedgenerationknowledgeintensivenlp>, supplement: "S. 9"). So können auch aktuelle Informationen, wie neueste Forschungsergebnisse, einfließen, ohne dass das #acr("LLM") diese im Training lernen musste. Die Antworten basieren auf verifizierten Quellen und bleiben aktuell, da neue Daten einfach in die Wissensbasis aufgenommen werden können, was Qualität und Aktualität gerade bei nischen Themen #box("und neuen Erkenntnissen erhöht "+cite(<karpukhin2020densepassageretrievalopendomain>, supplement: "S. 8") +cite(<lewis2021retrievalaugmentedgenerationknowledgeintensivenlp>, supplement: "S. 9")).
+
+=== Retrieval-Verfahren und Suchstrategien
+Die Qualität des Retrievals bestimmt maßgeblich die Verlässlichkeit der #acr("RAG")-Antworten #cite(<manning2008introduction>, supplement: "S. 9"). Dokumente werden zunächst in passageartige Einheiten segmentiert und für die Suche aufbereitet. Bei klassischen Information-Retrieval-Verfahren (sparse Retrieval) kommen TF-IDF und BM25 zum Einsatz:
 
 - *TF-IDF*: Gewichtet Terme durch Multiplikation der Termhäufigkeit mit dem inversen Dokumenthäufigkeitsmaß, sodass häufige Terme abgeschwächt und seltene Terme #box("hervorgehoben werden"+cite(<SPARCKJONES>, supplement: "S. 12, 13, 15")+cite(<BM25>,supplement: "S. 347-352")+".")
 - *BM25*: Führt gesättigte Termfrequenz und Dokumentlängennormalisierung ein, um übermäßige Gewichtung und unverhältnismäßige Bevorzugung langer Dokumente #box("zu verhindern"+cite(<BM25>,supplement: "S. 352-369")+".")
 
 Diese Verfahren zeigen robuste Leistung, stoßen jedoch bei semantisch anspruchsvollen Anfragen oder Paraphrasen an ihre Grenzen, da sie primär auf exakten #box("Wortüberlappungen beruhen "+cite(<karpukhin2020densepassageretrievalopendomain>, supplement: "S. 1")).
+
 Modernes dichtes Retrieval (dense Retrieval) bildet Fragen und Dokument-Passagen in einen gemeinsamen Vektorraum ab. Duale Encoder (Fragen Encoder und Passagen Encoder) auf Transformer-Basis werden darauf trainiert, semantisch ähnliche Frage-Passage-Paare im Vektorraum zu verorten. Der #acr("DPR") von Karpukhin et al. #cite(<karpukhin2020densepassageretrievalopendomain>)) zeigt, dass solche Verfahren herkömmliche BM25-Systeme in der Retrieval-Genauigkeit deutlich #box("übertreffen können "+cite(<karpukhin2020densepassageretrievalopendomain>, supplement: "S. 1-3")).
-Für die Indexierung großer Embedding-Mengen ermöglichen Bibliotheken wie FAISS sublineare Suchzeiten durch Approximate Nearest Neighbor-Suche (ANN) #cite(<johnson2017billionscalesimilaritysearchgpus>, supplement: "S. 1, 2, 10"). Hybride Strategien kombinieren schnelle sparse Vorfilterung per BM25 mit dichter Feinsortierung, um Effizienz und Präzision zu balancieren. Metadaten können als Filterbedingung einfließen, um irrelevante oder veraltete Passagen #box("frühzeitig auszuschließen "+cite(<kuzi2020leveragingsemanticlexicalmatching>,supplement: "S. 1-4")).
+
+Für die technische Umsetzung des dichten Retrievals werden die in Kapitel 2.2 beschriebenen Vektordatenbanken eingesetzt, die eine effiziente Speicherung und Durchsuchung der Embedding-Vektoren ermöglichen. Hybride Strategien kombinieren schnelle sparse Vorfilterung per BM25 mit dichter Feinsortierung über Vektordatenbanken, um Effizienz und Präzision zu balancieren. Metadaten können als Filterbedingung einfließen, um irrelevante oder veraltete Passagen #box("frühzeitig auszuschließen "+cite(<kuzi2020leveragingsemanticlexicalmatching>,supplement: "S. 1-4")).
 
 === Generative Antworterstellung
 
