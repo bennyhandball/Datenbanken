@@ -352,6 +352,46 @@ Um den Lesefluss zu verbessern, werden Abbildungen, Codebeispiele und Tabellen, 
 #pagebreak()
 
 = Methodik
+== Cross Industry Standard Process for Data Mining <CRISP>
+Um die Optimierung der Antwortqualität methodisch fundiert zu gestalten, bietet sich der #acrf("CRISP-DM") als bewährtes Modell an. Der #acr("CRISP-DM")-Prozess wurde 1996 von einem Konsortium,  bestehend aus Daimler Chrysler (damals Daimler Benz), SPSS (damals ISL) und National Cash Register (NCR) entwickelt, um ein standardisiertes, nicht proprietäres Prozessmodell zur Verfügung zu haben #cite(<ncr_clinton_2000>, supplement: "S.3").
+
+Das #acr("CRISP-DM")-Modell ist ein branchenübergreifendes Standardmodell, das speziell für Data-Mining-Projekte entwickelt wurde #cite(<christoph_schröer_kruse_gómez_2021>, supplement: "S.527") #cite(<lendy_rahmadi_none_hadiyanto_ridwan_sanjaya_arif_prambayun_2023>, supplement: "S.401"). Es bietet eine strukturierte Vorgehensweise, um solche Projekte gezielt, effizient und systematisch umzusetzen #cite(<martinez-plumed_contreras-ochando_ferri_hernandez-orallo_kull_lachiche_ramirez-quintana_flach_2019>, supplement: "S.3048"). #acr("CRISP-DM") hat sich mittlerweile in der Data-Mining-Forschung etabliert und wird als de-facto-Standard anerkannt #cite(<christoph_schröer_kruse_gómez_2021>,supplement: "Abstract, S.526") #cite(<studer_bui_drescher_hanuschkin_winkler_peters_müller_2021>, supplement: "S.2")#cite(<martinez-plumed_contreras-ochando_ferri_hernandez-orallo_kull_lachiche_ramirez-quintana_flach_2019>, supplement: "S.3048").
+//Supplement ergänzen
+#figure(caption:
+[Phasen des CRISP-DM Phasenmodells @wirth_hipp_2000 ]
+, image(width:9.9cm,
+"pictures/CRISP_DM_PA (1).png" 
+))
+<Phasen_CRISP_DM>
+
+Der #acr("CRISP-DM") Data-Mining-Prozess kann in sechs iterative Phasen gegliedert werden (siehe @Phasen_CRISP_DM) #cite(<ncr_clinton_2000>, supplement: "S.13") #cite(<christoph_schröer_kruse_gómez_2021>, supplement: "S.527"). 
+
+Diese Phasen sind: 
+
+
+* 1. Business Understanding*:
+Die erste Phase fokussiert sich auf die Formulierung der geschäftlichen Projektziele und Anforderungen #cite(<christoph_schröer_kruse_gómez_2021>, supplement: "S.527"). Diese werden anschließend in einen Data-Science Kontext überführt. Basierend auf  dieser Grundlage wird das Data-Mining-Problem definiert und ein vorläufiger Plan entwickelt, um die angestrebten Ziele zu erreichen #cite(<ncr_clinton_2000>,supplement: "S.13") #cite(<foroughi_luksch>, supplement: "S.8").
+
+* 2. Data Understanding*:
+Die Phase des Data Understandings beginnt mit der initialen Datenerhebung #cite(<foroughi_luksch>, supplement: "S.7"). Anschließend folgt die Datenanalyse, wobei mögliche Verknüpfungen, Zusammenhänge und erste Auffälligkeiten identifiziert werden #cite(<christoph_schröer_kruse_gómez_2021>, supplement: "S.527"). Im Folgenden wird die Qualität der Daten geprüft, um sicher zu stellen, dass die Daten für nachfolgende Analysen geeignet sind #cite(<foroughi_luksch>, supplement: "S.9").
+
+* 3. Data Preparation*:
+Die Phase der Data Preparation verfolgt das Ziel, die relevanten Daten gezielt auszuwählen, zu bereinigen, zu transformieren und zu integrieren, sodass ein finaler Datensatz für die Nutzung entsteht #cite(<ncr_clinton_2000>,supplement: "S.14") #box[#cite(<foroughi_luksch>, supplement: "S.9")]. Zudem werden neue Attribute oder Datensätze erstellt, während das Datenformat an die Anforderungen der Modellierungstools #box[angepasst wird #cite(<foroughi_luksch>, supplement: "S.8"). ]
+
+
+* 4. Modelling*:
+In dieser Phase werden geeignete Modellierungstechniken ausgewählt und anhand der vorbereiteten Daten angewendet #cite(<foroughi_luksch>, supplement: "S.9")#cite(<ncr_clinton_2000>,supplement: "S.14"). Die daraus folgenden Ergebnisse der Modelle werden bewertet und bei Bedarf optimiert. Die Auswahl eines Verfahrens zur Bewertung der Qualität des gewählten Modells ist hierbei von hoher Bedeutung. Das Ziel der Phase ist das bestmögliche Erreichen der zuvor definierten Ziele #cite(<wirth_hipp_2000>, supplement: "S.6") .
+
+
+
+
+
+* 5. Evaluation*:
+In dieser Phase erfolgt die umfassende Evaluation und Bewertung der zuvor erstellten Modelle #cite(<wirth_hipp_2000>, supplement: "S.6"). Zur Beurteilung der Modellqualität werden die zuvor festgelegten Testverfahren sowie die definierten Evaluationsmetriken herangezogen. Dabei wird überprüft, ob die entwickelten Modelle die gewünschten Ergebnisse liefern und die definierten Geschäftsziele vollständig erreichen #box[#cite(<ncr_clinton_2000>,supplement: "S.14") #cite(<wirth_hipp_2000>, supplement: "S.6").]
+
+
+* 6. Deployment*: Die Erstellung des Modells stellt in der Regel nicht das Ende des Projekts dar #cite(<ncr_clinton_2000>,supplement: "S.14") #cite(<wirth_hipp_2000>, supplement: "S.7").
+Je nach Anforderung und Zweck des Modells der geplanten Anwendung wird in diesem Schritt die Implementierung, der Projektabschluss und die Dokumentation des Modells durchgeführt #cite(<ncr_clinton_2000>,supplement: "S.14") #cite(<ncr_clinton_2000>,supplement: "S.32-34") #cite(<wirth_hipp_2000>, supplement: "S.7").
 #pagebreak()
 
 = Grundlagen
@@ -381,7 +421,7 @@ Nach Abschluss dieser Trainingsphasen kann man das #acr("LLM") nun in der Infere
 
 #import "embedding-modelle.typ": embedding-modelle
 #embedding-modelle
-
+== Vektordatenbanken
 == Retrieval Augmented Generation (Tim)
 #acrf("RAG") kombiniert die Stärken von #acrpl("LLM") mit dem gezielten Zugriff auf externe Wissensquellen. Klassische #acr("LLM")-Modelle fungieren dabei wie ein geschlossenes Buch. Sie schöpfen ausschließlich aus dem Trainingswissen und können aktuelle oder spezielle Informationen nicht einbeziehen #cite(<gupta2024comprehensivesurveyretrievalaugmentedgeneration>, supplement: "1"). Durch diese Einschränkung stoßen sie bei neuen oder spezialisierten Fragestellungen schnell an ihre Grenzen – und liefern mitunter falsche oder „halluzinierte“ Antworten, also frei #box("erfundene Inhalte "+cite(<gupta2024comprehensivesurveyretrievalaugmentedgeneration>, supplement: "2")+cite(<Huang_2025>, supplement: "S. 1, 3, 20")+cite(<ibm2023rag>)+".")
 
