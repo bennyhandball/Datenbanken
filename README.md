@@ -26,3 +26,10 @@ python Code/qdrant_rag_connection.py
 
 The script performs a simple liveness check to verify that Qdrant is
 reachable.
+
+## Notebook Example
+
+The `Code/qdrant_vectordb.ipynb` notebook demonstrates how to read text
+from a PDF using PyMuPDF (`fitz`). To avoid conflicts with Python's built-in
+`open`, the notebook imports the library with `import fitz` and calls
+`fitz.open()` when loading documents.
