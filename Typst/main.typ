@@ -507,7 +507,20 @@ Insgesamt ermöglichen RAG-Systeme so verlässlichere und aktuellere Antworten a
 #rag_evaluation
 #pagebreak()
 
-= Unternehmensanwendung 
+= Anwendung
+
+== Business Understanding
+TIM
+== Data Understanding
+TIM
+== Data Preparation
+Benny
+== Modelling
+Benny
+== Evaluation
+Julian
+== Deployment
+Julian
 
 #pagebreak()
 
