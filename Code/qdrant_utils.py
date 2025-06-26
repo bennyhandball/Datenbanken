@@ -20,15 +20,16 @@ def load_pdf_and_chunk(filepath: str, chunk_size: int = 500, overlap: int = 50) 
         raise FileNotFoundError(f"The file was not found: {filepath}")
 
     try:
-        import fitz  # PyMuPDF
+        from PyPDF2 import PdfReader
     except Exception as exc:
-        raise ImportError("PyMuPDF is required to process PDF files.") from exc
+        raise ImportError("PyPDF2 is required to process PDF files.") from exc
 
-    doc = fitz.open(filepath)
+    reader = PdfReader(filepath)
     full_text = ""
-    for page in doc:
-        full_text += page.get_text("text") + "\n"
-    doc.close()
+    for page in reader.pages:
+        text = page.extract_text()
+        if text:
+            full_text += text + "\n"
 
     chunks = []
     start = 0
