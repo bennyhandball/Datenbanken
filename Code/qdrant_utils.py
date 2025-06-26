@@ -1,7 +1,10 @@
 import os
 from typing import List
 
-import fitz
+try:
+    import fitz  # PyMuPDF
+except Exception as e:  # pragma: no cover - optional dependency
+    fitz = None
 from dotenv import load_dotenv
 from qdrant_client import QdrantClient
 from qdrant_client.models import PointStruct, VectorParams, Distance
@@ -16,8 +19,14 @@ def get_qdrant_client() -> QdrantClient:
 
 
 def load_pdf_and_chunk(filepath: str, chunk_size: int = 500, overlap: int = 50) -> List[str]:
+    """Load a PDF file and split it into overlapping chunks."""
     if not os.path.exists(filepath):
         raise FileNotFoundError(f"The file was not found: {filepath}")
+
+    if fitz is None or not hasattr(fitz, "open"):
+        raise ImportError(
+            "PyMuPDF is required for PDF processing. Install it with 'pip install PyMuPDF'."
+        )
 
     doc = fitz.open(filepath)
     full_text = ""
@@ -51,10 +60,14 @@ def embed_chunks(chunks: List[str]) -> List[List[float]]:
 
 
 def store_embeddings_in_qdrant(client: QdrantClient, collection_name: str, chunks: List[str], embeddings: List[List[float]]):
-    client.recreate_collection(
-        collection_name=collection_name,
-        vectors_config=VectorParams(size=len(embeddings[0]), distance=Distance.COSINE)
-    )
+    """Store embeddings in Qdrant, creating the collection if needed."""
+    collections = client.get_collections().collections
+    if collection_name not in [c.name for c in collections]:
+        client.create_collection(
+            collection_name=collection_name,
+            vectors_config=VectorParams(size=len(embeddings[0]), distance=Distance.COSINE)
+        )
+
     points = [
         PointStruct(id=i, vector=vector, payload={"text": chunks[i]})
         for i, vector in enumerate(embeddings)

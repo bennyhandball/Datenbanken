@@ -24,25 +24,27 @@ def index():
     answer = None
     error = None
     if request.method == "POST":
-        file = request.files.get("document")
-        query = request.form.get("query", "")
+        form_type = request.form.get("form_type")
         client = get_qdrant_client()
 
-        if file and file.filename:
-            filename = secure_filename(file.filename)
-            with NamedTemporaryFile(delete=False, suffix=os.path.splitext(filename)[1]) as tmp:
-                file.save(tmp.name)
-                chunks = load_pdf_and_chunk(tmp.name)
-                embeddings = embed_chunks(chunks)
-                store_embeddings_in_qdrant(client, COLLECTION_NAME, chunks, embeddings)
-            os.remove(tmp.name)
-
-        if query:
-            try:
-                retrieved = retrieve_similar_chunks(query, client, COLLECTION_NAME, top_k=5)
-                answer = answer_with_context(query, retrieved)
-            except ValueError as e:
-                error = str(e)
+        if form_type == "upload":
+            file = request.files.get("document")
+            if file and file.filename:
+                filename = secure_filename(file.filename)
+                with NamedTemporaryFile(delete=False, suffix=os.path.splitext(filename)[1]) as tmp:
+                    file.save(tmp.name)
+                    chunks = load_pdf_and_chunk(tmp.name)
+                    embeddings = embed_chunks(chunks)
+                    store_embeddings_in_qdrant(client, COLLECTION_NAME, chunks, embeddings)
+                os.remove(tmp.name)
+        elif form_type == "query":
+            query = request.form.get("query", "")
+            if query:
+                try:
+                    retrieved = retrieve_similar_chunks(query, client, COLLECTION_NAME, top_k=5)
+                    answer = answer_with_context(query, retrieved)
+                except ValueError as e:
+                    error = str(e)
 
     return render_template("index.html", answer=answer, error=error)
 
