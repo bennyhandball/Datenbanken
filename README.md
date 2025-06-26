@@ -26,3 +26,18 @@ python Code/qdrant_rag_connection.py
 
 The script performs a simple liveness check to verify that Qdrant is
 reachable.
+
+## Web Interface
+
+A small Flask application is provided in `app.py` to upload a PDF, ask a
+question and display the answer generated with the stored embeddings. To
+run the web app install the dependencies and start the server:
+
+```bash
+pip install -r requirements.txt
+python app.py
+```
+
+Ensure the `.env` file contains the required `QDRANT_SERVER_IP`,
+`QDRANT_PORT` and `OPENAI_API_KEY` variables. The app will be available at
+`http://localhost:5000/`.
