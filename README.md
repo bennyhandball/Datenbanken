@@ -29,8 +29,13 @@ reachable.
 
 ## Web Interface
 
-A small Flask application is provided in `app.py` to upload a PDF, ask a
-question and display the answer generated with the stored embeddings. To
+The repository contains a small Flask application in `app.py` for uploading
+PDFs and submitting questions. Uploaded documents are chunked and embedded and
+stored in Qdrant. Questions can then be asked against this vector store. The
+web interface now exposes **two** separate forms: one for uploading a document
+and one for sending a query.
+
+To
 run the web app install the dependencies and start the server:
 
 ```bash
@@ -39,5 +44,8 @@ python app.py
 ```
 
 Ensure the `.env` file contains the required `QDRANT_SERVER_IP`,
-`QDRANT_PORT` and `OPENAI_API_KEY` variables. The app will be available at
+`QDRANT_PORT` and optionally `OPENAI_API_KEY` variables. When no OpenAI key is
+set the application will fall back to simple local embeddings and return the
+retrieved context directly.
+The app will be available at
 `http://localhost:5000/`.
