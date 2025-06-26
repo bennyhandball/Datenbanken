@@ -18,6 +18,12 @@
         <button type="submit">Submit</button>
     </form>
 
+    {% if error %}
+    <div class="error">
+        <p>{{ error }}</p>
+    </div>
+    {% endif %}
+
     {% if answer %}
     <div class="answer">
         <h2>Answer</h2>

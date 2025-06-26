@@ -22,6 +22,7 @@ COLLECTION_NAME = "webapp_collection"
 @app.route("/", methods=["GET", "POST"])
 def index():
     answer = None
+    error = None
     if request.method == "POST":
         file = request.files.get("document")
         query = request.form.get("query", "")
@@ -37,10 +38,13 @@ def index():
             os.remove(tmp.name)
 
         if query:
-            retrieved = retrieve_similar_chunks(query, client, COLLECTION_NAME, top_k=5)
-            answer = answer_with_context(query, retrieved)
+            try:
+                retrieved = retrieve_similar_chunks(query, client, COLLECTION_NAME, top_k=5)
+                answer = answer_with_context(query, retrieved)
+            except ValueError as e:
+                error = str(e)
 
-    return render_template("index.html", answer=answer)
+    return render_template("index.html", answer=answer, error=error)
 
 
 if __name__ == "__main__":

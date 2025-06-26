@@ -63,6 +63,12 @@ def store_embeddings_in_qdrant(client: QdrantClient, collection_name: str, chunk
 
 
 def retrieve_similar_chunks(query: str, client: QdrantClient, collection_name: str, top_k: int = 5) -> List[str]:
+    collections = client.get_collections().collections
+    if collection_name not in [c.name for c in collections]:
+        raise ValueError(
+            f"Collection '{collection_name}' not found. Please upload a document first."
+        )
+
     query_vector = get_embedding(query)
     search_result = client.search(
         collection_name=collection_name,
