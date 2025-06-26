@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Qdrant RAG Demo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="container">
+    <h1>Qdrant RAG Demo</h1>
+    <form method="post" enctype="multipart/form-data">
+        <label for="document">PDF Document</label>
+        <input type="file" name="document" id="document" accept="application/pdf">
+
+        <label for="query">Prompt</label>
+        <input type="text" name="query" id="query" placeholder="Ask a question" required>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if answer %}
+    <div class="answer">
+        <h2>Answer</h2>
+        <p>{{ answer }}</p>
+    </div>
+    {% endif %}
+</div>
+</body>
+</html>
