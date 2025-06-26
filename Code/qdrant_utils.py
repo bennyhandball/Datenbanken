@@ -63,11 +63,20 @@ def store_embeddings_in_qdrant(client: QdrantClient, collection_name: str, chunk
 
 
 def retrieve_similar_chunks(query: str, client: QdrantClient, collection_name: str, top_k: int = 5) -> List[str]:
+    """Return the most similar chunks for the given query.
+
+    If the collection does not exist yet, an empty list is returned in order
+    to avoid triggering a 404 error from Qdrant.
+    """
+
+    if not client.collection_exists(collection_name):
+        return []
+
     query_vector = get_embedding(query)
     search_result = client.search(
         collection_name=collection_name,
         query_vector=query_vector,
-        limit=top_k
+        limit=top_k,
     )
     return [hit.payload["text"] for hit in search_result]
 

@@ -38,7 +38,10 @@ def index():
 
         if query:
             retrieved = retrieve_similar_chunks(query, client, COLLECTION_NAME, top_k=5)
-            answer = answer_with_context(query, retrieved)
+            if not retrieved:
+                answer = "No documents available. Please upload a PDF first."
+            else:
+                answer = answer_with_context(query, retrieved)
 
     return render_template("index.html", answer=answer)
 
