@@ -460,7 +460,7 @@ Die Approximate Nearest Neighbor (ANN)-Suche bildet das methodische Fundament di
 === Technische Implementierung
 Moderne Vektordatenbanken bieten standardisierte APIs für sowohl Batch-Import großer Dokumentenmengen als auch Echtzeitabfragen. Die Systeme unterstützen verschiedene Distanzmetriken wie Kosinus-Ähnlichkeit, Euklidische Distanz oder Dot-Product zur Berechnung der Vektorähnlichkeit. Aktuelle Implementierungen bieten zusätzlich Funktionalitäten wie versionierte Vektorbestände, horizontale Skalierung und Multi-Tenancy-Fähigkeiten für #box("unternehmenskritische Anwendungen."+cite(<wang2025reliablevectordatabasemanagement>, supplement: "S. 2-4")+cite(<qdrant_indexing_2024>))
 
-== Retrieval Augmented Generation (Tim)
+== Retrieval Augmented Generation<RAG>
 #acrf("RAG") kombiniert die Stärken von #acrpl("LLM") mit dem gezielten Zugriff auf externe Wissensquellen. Klassische #acr("LLM")-Modelle schöpfen ausschließlich aus dem Trainingswissen und können aktuelle oder spezielle Informationen nicht einbeziehen #cite(<gupta2024comprehensivesurveyretrievalaugmentedgeneration>, supplement: "1"), was bei neuen oder spezialisierten Fragestellungen zu falschen oder „halluzinierten", also erfundenen, Antworten #box("führen kann "+cite(<gupta2024comprehensivesurveyretrievalaugmentedgeneration>, supplement: "1-2")+cite(<Huang_2025>, supplement: "S. 1, 3, 20")+cite(<ibm2023rag>)+".")
 
 #acr("RAG")-Systeme hingegen durchsuchen vor jeder Antwort eine hinterlegte Wissensbasis (Dokumente, Datenbanken o. Ä.) nach relevanten Textpassagen und übergeben diese als zusätzlichen Kontext an das #acr("LLM"). So lassen sich aktuelle Fakten und spezialisierte Informationen direkt einbinden, ohne das #acr("LLM") neu trainieren zu müssen, was Präzision und Nachvollziehbarkeit deutlich #box("erhöht "+cite(<gupta2024comprehensivesurveyretrievalaugmentedgeneration>, supplement: "1-2")+ref(<RAGWorkflow>)+".")
@@ -508,16 +508,26 @@ Insgesamt ermöglichen RAG-Systeme so verlässlichere und aktuellere Antworten a
 #pagebreak()
 
 = Anwendung
-
 == Business Understanding
-TIM
+Besonders im akademischen Bereich stehen #acrpl("LLM") vor der Herausforderung, dass sie nur über die Informationen der Trainingsphase verfügen. Dies führt zu stark eingeschränkter Leistung, wenn hochspezialisiertes Wissen oder neue Erkenntnisse eingebunden werden sollen #cite(<karpukhin2020densepassageretrievalopendomain>, supplement: "S. 8") #cite(<lewis2021retrievalaugmentedgenerationknowledgeintensivenlp>, supplement: "S. 9"). Für dieses Problem bieten die in @RAG beschriebenen #acr("RAG")-Systeme eine mögliche Lösung. Ziel dieser Arbeit ist es, zu untersuchen, inwieweit #acr("RAG")-Systeme dazu geeignet sind, Studierenden und Wissenschaftlern schnellen Zugang zu aktueller Forschung zu ermöglichen und literaturbezogene Fragen zuverlässig #box("zu beantworten.")
+
+Dazu wird ein eigenes #acr("RAG")-System entwickelt, das es erlaubt,  Literatur hochzuladen und gezielt Fragen dazu zu stellen. Die Qualität der Antworten wird evaluiert, um das Potenzial solcher Systeme für den akademischen Einsatz realistisch einschätzen #box("zu können.")
+
+Dafür werden folgende Metriken für eine Quantifizierung genutzt *JULIAN*
+
 == Data Understanding
-TIM
+Zur Evaluation des entwickelten #acr("RAG")-Systems wird eine gezielte Auswahl wissenschaftlicher Publikationen verwendet. Konkret werden fünf aktuelle Paper aus unterschiedlichen Fachbereichen ausgewählt, um die Funktionsweise und Leistungsfähigkeit des Systems zu evaluieren. Die Auswahl deckt dabei verschiedene Forschungsfelder ab, um die Generalisierbarkeit des Ansatzes #box("zu prüfen.")
+
+*ANALYSE PAPER*
+
 == Data Preparation
-Benny
+Für jedes der fünf ausgewählten Paper werden fünf inhaltliche Fragen erstellt, die direkt auf das Verständnis und die Kernaussagen des jeweiligen Textes abzielen. Zusätzlich werden zwei standardisierte Metadatenfragen zu den Autoren des Papers sowie zur angewandten Methodik formuliert. Diese Fragen sind für alle fünf Paper identisch und dienen der Überprüfung, ob das System grundlegende Dokumentinformationen zuverlässig #box("extrahieren kann.")
+
+Insgesamt liegt somit ein Datensatz von 35 Fragen (5 × 5 Inhlatsfragen, 5 × 2 Metadatenfragen) vor. Dieser dient im Weiteren als Basis für die Bewertung der Antwortgenauigkeit #box("in "+ref(<Evaluation>)+".")
+
 == Modelling
 Benny
-== Evaluation
+== Evaluation<Evaluation>
 Julian
 == Deployment
 Julian
