@@ -101,7 +101,7 @@ textarea {
 
 #chat-form {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     gap: 10px;
     border-top: 1px solid #eee;
     padding-top: 10px;
@@ -109,10 +109,10 @@ textarea {
 
 .upload-section {
     display: flex;
-    flex-direction: column;
     align-items: center;
+    gap: 8px;
     font-size: 0.75rem;
-    width: 40px;
+    width: auto;
 }
 
 .upload-label {
@@ -127,9 +127,12 @@ textarea {
     cursor: pointer;
 }
 
+.upload-section.drag-over .upload-label {
+    background-color: var(--accent-color);
+}
+
 #file-name {
-    margin-bottom: 4px;
-    text-align: center;
+    margin: 0;
     word-break: break-all;
 }
 

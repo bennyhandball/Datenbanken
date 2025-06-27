@@ -21,10 +21,42 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     const fileInput = document.getElementById('document');
     const fileName = document.getElementById('file-name');
+    const dropArea = document.querySelector('.upload-section');
     if (fileInput && fileName) {
+        const updateName = files => {
+            if (files.length) {
+                fileName.textContent = files[0].name;
+            } else {
+                fileName.textContent = '';
+            }
+        };
+
         fileInput.addEventListener('change', () => {
-            fileName.textContent = fileInput.files.length ? fileInput.files[0].name : '';
+            updateName(fileInput.files);
         });
+
+        if (dropArea) {
+            ['dragenter', 'dragover'].forEach(evt => {
+                dropArea.addEventListener(evt, e => {
+                    e.preventDefault();
+                    dropArea.classList.add('drag-over');
+                });
+            });
+
+            ['dragleave', 'drop'].forEach(evt => {
+                dropArea.addEventListener(evt, e => {
+                    e.preventDefault();
+                    dropArea.classList.remove('drag-over');
+                });
+            });
+
+            dropArea.addEventListener('drop', e => {
+                if (e.dataTransfer.files.length) {
+                    fileInput.files = e.dataTransfer.files;
+                    updateName(e.dataTransfer.files);
+                }
+            });
+        }
     }
     document.querySelectorAll('form').forEach(form => {
         form.addEventListener('submit', () => {
