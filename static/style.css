@@ -85,6 +85,52 @@ textarea {
 
 
 #chat-container {
+
+    margin-top: 20px;
+    max-height: 400px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.chat-message {
+    padding: 12px 15px;
+    border-radius: 8px;
+    max-width: 80%;
+    line-height: 1.4;
+}
+
+.chat-message.user {
+    background: #dcf8c6;
+    margin-left: auto;
+}
+
+.chat-message.assistant {
+    background: #f7f7f8;
+    margin-right: auto;
+}
+
+#loading-container {
+    width: 100%;
+    height: 4px;
+    background: #eee;
+    margin-top: 10px;
+    display: none;
+    overflow: hidden;
+}
+
+#loading-bar {
+    height: 100%;
+    width: 0;
+    background-color: var(--primary-color);
+    animation: loading 2s linear infinite;
+}
+
+@keyframes loading {
+    0% { width: 0; }
+    100% { width: 100%; }
+=======
     margin-top: 20px;
     max-height: 400px;
     overflow-y: auto;
@@ -139,4 +185,5 @@ textarea {
     border: 1px solid #ddd;
     max-height: 300px;
     overflow-y: auto;
+
 }
