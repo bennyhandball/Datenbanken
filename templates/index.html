@@ -14,6 +14,7 @@
     <div id="chat-container">
         {% for msg in chat_history %}
         <div class="chat-message {{ msg.role }}">
+            <p class="timestamp">{{ msg.timestamp }}</p>
             <p>{{ msg.content }}</p>
         </div>
         {% endfor %}
@@ -24,7 +25,7 @@
     <div class="chat-history">
         <h2>Chat History</h2>
         {% for msg in chat_history %}
-        <p><strong>{{ msg.role.capitalize() }}:</strong> {{ msg.content }}</p>
+        <p><strong>{{ msg.role.capitalize() }}:</strong> [{{ msg.timestamp }}] {{ msg.content }}</p>
         {% endfor %}
     </div>
     {% endif %}

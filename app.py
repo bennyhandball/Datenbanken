@@ -1,6 +1,7 @@
 import os
 import time
 from tempfile import NamedTemporaryFile
+from datetime import datetime
 
 from flask import Flask, render_template, request, redirect, url_for, session
 from werkzeug.utils import secure_filename
@@ -28,7 +29,11 @@ def check_server_restart():
         session.clear()
         session["server_start_time"] = app.config["SERVER_START_TIME"]
         session["chat_history"] = [
-            {"role": "assistant", "content": "Bitte stelle eine Frage."}
+            {
+                "role": "assistant",
+                "content": "Bitte stelle eine Frage.",
+                "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            }
         ]
 
 
@@ -65,8 +70,16 @@ def interact():
         try:
             retrieved = retrieve_similar_chunks(query_text, client, COLLECTION_NAME, top_k=5)
             answer = answer_with_context(query_text, retrieved)
-            chat_history.append({"role": "user", "content": query_text})
-            chat_history.append({"role": "assistant", "content": answer})
+            chat_history.append({
+                "role": "user",
+                "content": query_text,
+                "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            })
+            chat_history.append({
+                "role": "assistant",
+                "content": answer,
+                "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            })
             session["chat_history"] = chat_history
         except ValueError as e:
             error = str(e)
@@ -79,8 +92,16 @@ def interact():
         )
         context_chunks = retrieved + [history_text]
         answer = answer_with_context(user_response, context_chunks)
-        chat_history.append({"role": "user", "content": user_response})
-        chat_history.append({"role": "assistant", "content": answer})
+        chat_history.append({
+            "role": "user",
+            "content": user_response,
+            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        })
+        chat_history.append({
+            "role": "assistant",
+            "content": answer,
+            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        })
         session["chat_history"] = chat_history
 
     return render_template("index.html", answer=answer, error=error, chat_history=chat_history)
