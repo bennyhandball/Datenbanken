@@ -18,6 +18,12 @@
                 <p>{{ msg.content }}</p>
             </div>
             {% endfor %}
+            <div id="user-typing-indicator" class="chat-message user typing-indicator" style="display: none;">
+                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            </div>
+            <div id="assistant-typing-indicator" class="chat-message assistant typing-indicator" style="display: none;">
+                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            </div>
         </div>
 
         <form method="post" action="{{ url_for('interact') }}" enctype="multipart/form-data" id="chat-form" class="chat-form">

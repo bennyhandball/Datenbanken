@@ -218,3 +218,31 @@ textarea {
 .clear-form {
     margin-top: 10px;
 }
+
+.typing-indicator {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    line-height: 0;
+}
+
+.typing-indicator .dot {
+    width: 6px;
+    height: 6px;
+    background-color: #888;
+    border-radius: 50%;
+    animation: blink 1s infinite ease-in-out;
+}
+
+.typing-indicator .dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-indicator .dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes blink {
+    0%, 80%, 100% { opacity: 0.2; }
+    40% { opacity: 1; }
+}

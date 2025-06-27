@@ -60,9 +60,39 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     }
-    document.querySelectorAll('form').forEach(form => {
-        form.addEventListener('submit', () => {
-            startLoading();
+    const queryInput = document.getElementById('query');
+    const userIndicator = document.getElementById('user-typing-indicator');
+    const assistantIndicator = document.getElementById('assistant-typing-indicator');
+
+    if (queryInput && userIndicator) {
+        queryInput.addEventListener('input', () => {
+            if (queryInput.value) {
+                userIndicator.style.display = 'block';
+            } else {
+                userIndicator.style.display = 'none';
+            }
         });
+    }
+
+    const chatForm = document.getElementById('chat-form');
+    if (chatForm) {
+        chatForm.addEventListener('submit', e => {
+            e.preventDefault();
+            if (assistantIndicator) {
+                assistantIndicator.style.display = 'block';
+            }
+            startLoading();
+            setTimeout(() => {
+                chatForm.submit();
+            }, 10);
+        });
+    }
+
+    document.querySelectorAll('form').forEach(form => {
+        if (form !== chatForm) {
+            form.addEventListener('submit', () => {
+                startLoading();
+            });
+        }
     });
 });
