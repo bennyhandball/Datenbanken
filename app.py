@@ -44,6 +44,13 @@ def index():
     return render_template("index.html", answer=None, error=None, chat_history=chat_history)
 
 
+@app.route("/clear_chat", methods=["POST"])
+def clear_chat():
+    """Clear the current chat history."""
+    session.clear()
+    return redirect(url_for("index"))
+
+
 @app.route("/interact", methods=["POST"])
 def interact():
     check_server_restart()

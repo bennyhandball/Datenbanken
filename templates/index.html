@@ -44,6 +44,10 @@
         <button type="submit">Submit</button>
     </form>
 
+    <form method="post" action="{{ url_for('clear_chat') }}" class="clear-form">
+        <button type="submit">Clear Chat</button>
+    </form>
+
     {% if error %}
     <div class="error">
         <p>{{ error }}</p>
