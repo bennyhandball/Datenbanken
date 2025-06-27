@@ -55,8 +55,7 @@ def clear_chat():
 def interact():
     check_server_restart()
     file = request.files.get("document")
-    query_text = request.form.get("query", "").strip()
-    user_response = request.form.get("response", "").strip()
+    message = request.form.get("message", "").strip()
 
     answer = None
     error = None
@@ -72,14 +71,22 @@ def interact():
             store_embeddings_in_qdrant(client, COLLECTION_NAME, chunks, embeddings)
         os.remove(tmp.name)
 
-    if query_text:
+    if message:
         client = get_qdrant_client()
         try:
-            retrieved = retrieve_similar_chunks(query_text, client, COLLECTION_NAME, top_k=5)
-            answer = answer_with_context(query_text, retrieved)
+            retrieved = retrieve_similar_chunks(message, client, COLLECTION_NAME, top_k=5)
+            if len(chat_history) > 1:
+                history_text = "\n".join(
+                    f"{msg['role'].capitalize()}: {msg['content']}" for msg in chat_history
+                )
+                context_chunks = retrieved + [history_text]
+                answer = answer_with_context(message, context_chunks)
+            else:
+                answer = answer_with_context(message, retrieved)
+
             chat_history.append({
                 "role": "user",
-                "content": query_text,
+                "content": message,
                 "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             })
             chat_history.append({
@@ -90,26 +97,6 @@ def interact():
             session["chat_history"] = chat_history
         except ValueError as e:
             error = str(e)
-
-    elif user_response:
-        client = get_qdrant_client()
-        retrieved = retrieve_similar_chunks(user_response, client, COLLECTION_NAME, top_k=5)
-        history_text = "\n".join(
-            f"{msg['role'].capitalize()}: {msg['content']}" for msg in chat_history
-        )
-        context_chunks = retrieved + [history_text]
-        answer = answer_with_context(user_response, context_chunks)
-        chat_history.append({
-            "role": "user",
-            "content": user_response,
-            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        })
-        chat_history.append({
-            "role": "assistant",
-            "content": answer,
-            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        })
-        session["chat_history"] = chat_history
 
     return render_template("index.html", answer=answer, error=error, chat_history=chat_history)
 

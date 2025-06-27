@@ -93,6 +93,71 @@ textarea {
     gap: 12px;
 }
 
+#chat-interface {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#chat-form {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+}
+
+.upload-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.75rem;
+    width: 40px;
+}
+
+.upload-label {
+    background-color: var(--primary-color);
+    color: #fff;
+    border-radius: 4px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+#file-name {
+    margin-bottom: 4px;
+    text-align: center;
+    word-break: break-all;
+}
+
+#chat-form input[type="text"] {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+}
+
+.send-btn {
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.send-btn:hover {
+    background-color: var(--accent-color);
+}
+
 .chat-message {
     padding: 12px 15px;
     border-radius: 8px;

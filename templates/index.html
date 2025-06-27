@@ -10,39 +10,27 @@
     <h1>Qdrant RAG Demo</h1>
     <div id="loading-container"><div id="loading-bar"></div></div>
 
-    {% if chat_history %}
-    <div id="chat-container">
-        {% for msg in chat_history %}
-        <div class="chat-message {{ msg.role }}">
-            <p class="timestamp">{{ msg.timestamp }}</p>
-            <p>{{ msg.content }}</p>
+    <div id="chat-interface">
+        <div id="chat-container">
+            {% for msg in chat_history %}
+            <div class="chat-message {{ msg.role }}">
+                <p class="timestamp">{{ msg.timestamp }}</p>
+                <p>{{ msg.content }}</p>
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
+
+        <form method="post" action="{{ url_for('interact') }}" enctype="multipart/form-data" id="chat-form" class="chat-form">
+            <div class="upload-section">
+                <span id="file-name"></span>
+                <label for="document" class="upload-label">📁</label>
+                <input type="file" name="document" id="document" accept="application/pdf" hidden>
+            </div>
+            <input type="text" name="message" id="query" placeholder="Ask a question">
+            <button type="submit" class="send-btn">➤</button>
+        </form>
     </div>
-    {% endif %}
 
-
-
-    <form method="post" action="{{ url_for('interact') }}" enctype="multipart/form-data" class="main-form">
-        <fieldset>
-            <legend>PDF Document</legend>
-            <input type="file" name="document" id="document" accept="application/pdf">
-        </fieldset>
-
-        <fieldset>
-            <legend>Prompt</legend>
-            <input type="text" name="query" id="query" placeholder="Ask a question">
-        </fieldset>
-
-        {% if chat_history %}
-        <fieldset>
-            <legend>Deine Antwort</legend>
-            <textarea name="response" id="response" rows="3" placeholder="Reply to the answer"></textarea>
-        </fieldset>
-        {% endif %}
-
-        <button type="submit">Submit</button>
-    </form>
 
     <form method="post" action="{{ url_for('clear_chat') }}" class="clear-form">
         <button type="submit">Clear Chat</button>
