@@ -9,10 +9,25 @@
 <div class="container">
     <h1>Qdrant RAG Demo</h1>
     <div id="loading-container"><div id="loading-bar"></div></div>
-    <form method="post" action="{{ url_for('upload') }}" enctype="multipart/form-data" class="upload-form">
-        <label for="document">PDF Document</label>
-        <input type="file" name="document" id="document" accept="application/pdf">
-        <button type="submit">Upload</button>
+    <form method="post" action="{{ url_for('interact') }}" enctype="multipart/form-data" class="main-form">
+        <fieldset>
+            <legend>PDF Document</legend>
+            <input type="file" name="document" id="document" accept="application/pdf">
+        </fieldset>
+
+        <fieldset>
+            <legend>Prompt</legend>
+            <input type="text" name="query" id="query" placeholder="Ask a question">
+        </fieldset>
+
+        {% if chat_history %}
+        <fieldset>
+            <legend>Deine Antwort</legend>
+            <textarea name="response" id="response" rows="3" placeholder="Reply to the answer"></textarea>
+        </fieldset>
+        {% endif %}
+
+        <button type="submit">Submit</button>
     </form>
 
     {% if chat_history %}
@@ -24,12 +39,6 @@
         {% endfor %}
     </div>
     {% endif %}
-
-    <form method="post" action="{{ url_for('query') }}" class="query-form">
-        <label for="query">Prompt</label>
-        <input type="text" name="query" id="query" placeholder="Ask a question" required>
-        <button type="submit">Ask</button>
-    </form>
 
     {% if chat_history %}
     <div class="chat-history">
@@ -44,14 +53,6 @@
     <div class="error">
         <p>{{ error }}</p>
     </div>
-    {% endif %}
-
-    {% if chat_history %}
-    <form method="post" action="{{ url_for('respond') }}" class="response-form">
-        <label for="response">Deine Antwort</label>
-        <textarea name="response" id="response" rows="3" placeholder="Reply to the answer" required></textarea>
-        <button type="submit">Send</button>
-    </form>
     {% endif %}
 </div>
 <script src="{{ url_for('static', filename='script.js') }}"></script>
