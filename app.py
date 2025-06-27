@@ -54,5 +54,12 @@ def query():
     return render_template("index.html", answer=answer, error=error)
 
 
+@app.route("/respond", methods=["POST"])
+def respond():
+    answer = request.form.get("answer", "")
+    user_response = request.form.get("response", "")
+    return render_template("index.html", answer=answer, user_response=user_response, error=None)
+
+
 if __name__ == "__main__":
     app.run(debug=True)
