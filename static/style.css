@@ -146,3 +146,7 @@ textarea {
     max-height: 300px;
     overflow-y: auto;
 }
+
+.clear-form {
+    margin-top: 10px;
+}
