@@ -1,4 +1,5 @@
 import os
+import time
 from tempfile import NamedTemporaryFile
 
 from flask import Flask, render_template, request, redirect, url_for, session
@@ -16,18 +17,31 @@ from Code.qdrant_utils import (
 app = Flask(__name__)
 app.secret_key = os.getenv("FLASK_SECRET_KEY", "dev-secret")
 app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024  # 16 MB limit
+app.config["SERVER_START_TIME"] = time.time()
 
 COLLECTION_NAME = "webapp_collection"
 
 
+def check_server_restart():
+    """Reset session if the server has been restarted."""
+    if session.get("server_start_time") != app.config["SERVER_START_TIME"]:
+        session.clear()
+        session["server_start_time"] = app.config["SERVER_START_TIME"]
+        session["chat_history"] = [
+            {"role": "assistant", "content": "Bitte stelle eine Frage."}
+        ]
+
+
 @app.route("/")
 def index():
+    check_server_restart()
     chat_history = session.get("chat_history", [])
     return render_template("index.html", answer=None, error=None, chat_history=chat_history)
 
 
 @app.route("/interact", methods=["POST"])
 def interact():
+    check_server_restart()
     file = request.files.get("document")
     query_text = request.form.get("query", "").strip()
     user_response = request.form.get("response", "").strip()
