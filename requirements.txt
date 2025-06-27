@@ -1,0 +1,6 @@
+Flask
+qdrant-client
+python-dotenv
+openai
+PyPDF2
+numpy

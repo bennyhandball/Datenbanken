@@ -26,3 +26,35 @@ python Code/qdrant_rag_connection.py
 
 The script performs a simple liveness check to verify that Qdrant is
 reachable.
+
+## Web Interface
+
+The repository contains a small Flask application in `app.py` for uploading
+PDFs and submitting questions. Uploaded documents are chunked, embedded and
+stored in Qdrant. Questions can then be asked against this vector store.
+The web interface uses a **single** form that lets you upload a PDF document,
+send a query and optionally reply to the generated answer. Each interaction is
+added to a persistent chat history which is shown in a ChatGPT-style layout with
+distinct user and assistant bubbles. A simple loading bar gives visual feedback
+while the application processes a request, and the chat area automatically
+scrolls to the latest message after each interaction. The chat history is also
+sent as additional context for follow-up questions.
+
+When the server restarts the session history is reset. After a restart the chat
+shows a single assistant message prompting the user to ask a question.
+
+
+To
+run the web app install the dependencies and start the server:
+
+```bash
+pip install -r requirements.txt
+python app.py
+```
+
+Ensure the `.env` file contains the required `QDRANT_SERVER_IP`,
+`QDRANT_PORT` and optionally `OPENAI_API_KEY` variables. When no OpenAI key is
+set the application will fall back to simple local embeddings and return the
+retrieved context directly.
+The app will be available at
+`http://localhost:5000/`.
