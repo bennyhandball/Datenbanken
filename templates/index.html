@@ -21,8 +21,7 @@
         </div>
 
         <form method="post" action="{{ url_for('interact') }}" enctype="multipart/form-data" id="chat-form" class="chat-form">
-            <div class="upload-section">
-                <span id="file-name"></span>
+            <div>
                 <label for="document" class="upload-label">📁</label>
                 <input type="file" name="document" id="document" accept="application/pdf" hidden>
             </div>
