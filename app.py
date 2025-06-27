@@ -26,9 +26,16 @@ def index():
     return render_template("index.html", answer=None, error=None, chat_history=chat_history)
 
 
-@app.route("/upload", methods=["POST"])
-def upload():
+@app.route("/interact", methods=["POST"])
+def interact():
     file = request.files.get("document")
+    query_text = request.form.get("query", "").strip()
+    user_response = request.form.get("response", "").strip()
+
+    answer = None
+    error = None
+    chat_history = session.get("chat_history", [])
+
     if file and file.filename:
         client = get_qdrant_client()
         filename = secure_filename(file.filename)
@@ -38,15 +45,7 @@ def upload():
             embeddings = embed_chunks(chunks)
             store_embeddings_in_qdrant(client, COLLECTION_NAME, chunks, embeddings)
         os.remove(tmp.name)
-    return redirect(url_for("index"))
 
-
-@app.route("/query", methods=["POST"])
-def query():
-    query_text = request.form.get("query", "")
-    answer = None
-    error = None
-    chat_history = session.get("chat_history", [])
     if query_text:
         client = get_qdrant_client()
         try:
@@ -57,15 +56,8 @@ def query():
             session["chat_history"] = chat_history
         except ValueError as e:
             error = str(e)
-    return render_template("index.html", answer=answer, error=error, chat_history=chat_history)
 
-
-@app.route("/respond", methods=["POST"])
-def respond():
-    user_response = request.form.get("response", "")
-    chat_history = session.get("chat_history", [])
-    answer = None
-    if user_response:
+    elif user_response:
         client = get_qdrant_client()
         retrieved = retrieve_similar_chunks(user_response, client, COLLECTION_NAME, top_k=5)
         history_text = "\n".join(
@@ -76,12 +68,8 @@ def respond():
         chat_history.append({"role": "user", "content": user_response})
         chat_history.append({"role": "assistant", "content": answer})
         session["chat_history"] = chat_history
-    return render_template(
-        "index.html",
-        answer=answer,
-        error=None,
-        chat_history=chat_history,
-    )
+
+    return render_template("index.html", answer=answer, error=error, chat_history=chat_history)
 
 
 if __name__ == "__main__":
