@@ -32,16 +32,13 @@ reachable.
 The repository contains a small Flask application in `app.py` for uploading
 PDFs and submitting questions. Uploaded documents are chunked, embedded and
 stored in Qdrant. Questions can then be asked against this vector store.
-The web interface exposes **three** forms: one for uploading a document, one
-for sending a query and one for replying to the generated answer. Replies are
-
+The web interface uses a **single** form that lets you upload a PDF document,
+send a query and optionally reply to the generated answer. Each interaction is
 added to a persistent chat history which is shown in a ChatGPT-style layout with
 distinct user and assistant bubbles. A simple loading bar gives visual feedback
 while the application processes a request, and the chat area automatically
-scrolls to the latest message after each interaction.
-=======
-added to a persistent chat history which is sent as additional context for
-follow-up questions.
+scrolls to the latest message after each interaction. The chat history is also
+sent as additional context for follow-up questions.
 
 
 To
