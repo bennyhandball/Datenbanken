@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PDF Chat Component</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='chat_component.css') }}">
+</head>
+<body>
+<div class="chat-wrapper">
+    <form class="chat-box" method="post" action="#" enctype="multipart/form-data">
+        <label for="pdf" class="pdf-label">
+            <span>Drop PDF or click to upload</span>
+            <input id="pdf" type="file" accept="application/pdf">
+        </label>
+        <textarea id="prompt" placeholder="Ask anything..."></textarea>
+        <button type="submit">Send</button>
+        <div id="answer" class="answer"></div>
+    </form>
+</div>
+<script>
+const pdfInput = document.getElementById('pdf');
+const label = document.querySelector('.pdf-label');
+
+label.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    label.classList.add('drag');
+});
+label.addEventListener('dragleave', () => label.classList.remove('drag'));
+label.addEventListener('drop', (e) => {
+    e.preventDefault();
+    pdfInput.files = e.dataTransfer.files;
+    label.classList.remove('drag');
+});
+
+document.querySelector('form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const prompt = document.getElementById('prompt').value;
+    document.getElementById('answer').textContent = 'Result: ' + prompt;
+});
+</script>
+</body>
+</html>
