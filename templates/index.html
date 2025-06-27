@@ -9,6 +9,26 @@
 <div class="container">
     <h1>Qdrant RAG Demo</h1>
     <div id="loading-container"><div id="loading-bar"></div></div>
+
+    {% if chat_history %}
+    <div id="chat-container">
+        {% for msg in chat_history %}
+        <div class="chat-message {{ msg.role }}">
+            <p>{{ msg.content }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if chat_history %}
+    <div class="chat-history">
+        <h2>Chat History</h2>
+        {% for msg in chat_history %}
+        <p><strong>{{ msg.role.capitalize() }}:</strong> {{ msg.content }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+
     <form method="post" action="{{ url_for('interact') }}" enctype="multipart/form-data" class="main-form">
         <fieldset>
             <legend>PDF Document</legend>
@@ -29,25 +49,6 @@
 
         <button type="submit">Submit</button>
     </form>
-
-    {% if chat_history %}
-    <div id="chat-container">
-        {% for msg in chat_history %}
-        <div class="chat-message {{ msg.role }}">
-            <p>{{ msg.content }}</p>
-        </div>
-        {% endfor %}
-    </div>
-    {% endif %}
-
-    {% if chat_history %}
-    <div class="chat-history">
-        <h2>Chat History</h2>
-        {% for msg in chat_history %}
-        <p><strong>{{ msg.role.capitalize() }}:</strong> {{ msg.content }}</p>
-        {% endfor %}
-    </div>
-    {% endif %}
 
     {% if error %}
     <div class="error">
