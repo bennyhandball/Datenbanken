@@ -38,7 +38,6 @@ added to a persistent chat history which is shown in a ChatGPT-style layout with
 distinct user and assistant bubbles. A simple loading bar gives visual feedback
 while the application processes a request, and the chat area automatically
 scrolls to the latest message after each interaction.
-
 To
 run the web app install the dependencies and start the server:
 
