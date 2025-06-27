@@ -19,17 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (chat) {
         chat.scrollTop = chat.scrollHeight;
     }
-    const typing = document.getElementById('typing-indicator');
-    const showTyping = () => {
-        if (typing) typing.style.display = 'flex';
-    };
-    const hideTyping = () => {
-        if (typing) typing.style.display = 'none';
-    };
-    hideTyping();
-
-    let typingTimeout;
-
     const fileInput = document.getElementById('document');
     const fileName = document.getElementById('file-name');
     const dropArea = document.querySelector('.upload-section');
@@ -71,22 +60,9 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     }
-    const queryInput = document.getElementById('query');
-    if (queryInput) {
-        queryInput.addEventListener('input', () => {
-            if (queryInput.value.trim()) {
-                showTyping();
-                clearTimeout(typingTimeout);
-                typingTimeout = setTimeout(hideTyping, 1000);
-            } else {
-                hideTyping();
-            }
-        });
-    }
     document.querySelectorAll('form').forEach(form => {
         form.addEventListener('submit', () => {
             startLoading();
-            showTyping();
         });
     });
 });
