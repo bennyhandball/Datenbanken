@@ -40,6 +40,9 @@ while the application processes a request, and the chat area automatically
 scrolls to the latest message after each interaction. The chat history is also
 sent as additional context for follow-up questions.
 
+When the server restarts the session history is reset. After a restart the chat
+shows a single assistant message prompting the user to ask a question.
+
 
 To
 run the web app install the dependencies and start the server:
