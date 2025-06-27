@@ -31,7 +31,7 @@ def check_server_restart():
         session["chat_history"] = [
             {
                 "role": "assistant",
-                "content": "Bitte stelle eine Frage.",
+                "content": "Hi, wie kann ich Dir heute helfen ?.",
                 "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             }
         ]
