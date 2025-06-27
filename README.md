@@ -32,8 +32,8 @@ reachable.
 The repository contains a small Flask application in `app.py` for uploading
 PDFs and submitting questions. Uploaded documents are chunked and embedded and
 stored in Qdrant. Questions can then be asked against this vector store. The
-web interface now exposes **two** separate forms: one for uploading a document
-and one for sending a query.
+ web interface now exposes **three** separate forms: one for uploading a document,
+ one for sending a query and one for replying to the generated answer.
 
 To
 run the web app install the dependencies and start the server:

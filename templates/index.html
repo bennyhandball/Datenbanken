@@ -31,6 +31,18 @@
         <h2>Answer</h2>
         <p>{{ answer }}</p>
     </div>
+    <form method="post" action="{{ url_for('respond') }}" class="response-form">
+        <input type="hidden" name="answer" value="{{ answer }}">
+        <label for="response">Deine Antwort</label>
+        <textarea name="response" id="response" rows="3" placeholder="Reply to the answer" required></textarea>
+        <button type="submit">Send</button>
+    </form>
+    {% endif %}
+    {% if user_response %}
+    <div class="user-response">
+        <h2>Your Response</h2>
+        <p>{{ user_response }}</p>
+    </div>
     {% endif %}
 </div>
 </body>
