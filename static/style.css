@@ -11,20 +11,6 @@ body {
     padding: 40px 0;
 }
 
-.main-layout {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 20px;
-}
-
-.title-container {
-    width: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 .container {
     max-width: 600px;
     margin: auto;
