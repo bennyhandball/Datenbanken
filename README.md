@@ -34,7 +34,8 @@ PDFs and submitting questions. Uploaded documents are chunked, embedded and
 stored in Qdrant. Questions can then be asked against this vector store.
 The web interface exposes **three** forms: one for uploading a document, one
 for sending a query and one for replying to the generated answer. Replies are
-
+visual feedback while the application processes a request. The chat area
+automatically scrolls to the latest message after each interaction.
 added to a persistent chat history which is shown in a ChatGPT-like layout and
 sent as additional context for follow-up questions. A simple loading bar gives
 visual feedback while the application processes a request.

@@ -15,6 +15,10 @@ function stopLoading() {
 
 document.addEventListener('DOMContentLoaded', () => {
     stopLoading();
+    const chat = document.getElementById('chat-container');
+    if (chat) {
+        chat.scrollTop = chat.scrollHeight;
+    }
     document.querySelectorAll('form').forEach(form => {
         form.addEventListener('submit', () => {
             startLoading();

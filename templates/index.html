@@ -16,7 +16,7 @@
     </form>
 
     {% if chat_history %}
-    <div class="chat-history">
+    <div id="chat-container">
         {% for msg in chat_history %}
         <div class="chat-message {{ msg.role }}">
             <p>{{ msg.content }}</p>
