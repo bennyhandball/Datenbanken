@@ -39,8 +39,8 @@ distinct user and assistant bubbles. A simple loading bar gives visual feedback
 while the application processes a request, and the chat area automatically
 scrolls to the latest message after each interaction. The chat history is also
 sent as additional context for follow-up questions. When processing a new
-query, the application now retrieves additional context for the previous user
-message by issuing a second lookup against Qdrant.
+query, the application now retrieves additional context for **all** previous
+user messages by issuing lookups against Qdrant for each of them.
 
 When the server restarts the session history is reset. After a restart the chat
 shows a single assistant message prompting the user to ask a question.

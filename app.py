@@ -77,18 +77,13 @@ def interact():
             # Retrieve context for the current question
             retrieved = retrieve_similar_chunks(message, client, COLLECTION_NAME, top_k=5)
 
-            # Additionally look up the previous user message when available
-            previous_user_message = None
-            for past in reversed(chat_history):
+            # Also look up all previous user messages, not just the last one
+            for past in chat_history:
                 if past.get("role") == "user":
-                    previous_user_message = past.get("content")
-                    break
-
-            if previous_user_message:
-                retrieved_prev = retrieve_similar_chunks(
-                    previous_user_message, client, COLLECTION_NAME, top_k=5
-                )
-                retrieved.extend(retrieved_prev)
+                    retrieved_prev = retrieve_similar_chunks(
+                        past.get("content"), client, COLLECTION_NAME, top_k=5
+                    )
+                    retrieved.extend(retrieved_prev)
 
             if len(chat_history) > 1:
                 history_text = "\n".join(
