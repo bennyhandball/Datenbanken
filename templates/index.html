@@ -6,9 +6,12 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-<div class="container">
-    <h1>Qdrant RAG Demo</h1>
-    <div id="loading-container"><div id="loading-bar"></div></div>
+<div class="main-layout">
+    <div class="title-container">
+        <h1>Qdrant RAG Demo</h1>
+    </div>
+    <div class="container">
+        <div id="loading-container"><div id="loading-bar"></div></div>
 
     <div id="chat-interface">
         <div id="chat-container">
@@ -40,6 +43,7 @@
         <p>{{ error }}</p>
     </div>
     {% endif %}
+    </div>
 </div>
 <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
