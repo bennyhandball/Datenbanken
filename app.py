@@ -1,7 +1,7 @@
 import os
 from tempfile import NamedTemporaryFile
 
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 from werkzeug.utils import secure_filename
 
 from Code.qdrant_utils import (
@@ -14,6 +14,7 @@ from Code.qdrant_utils import (
 )
 
 app = Flask(__name__)
+app.secret_key = os.getenv("FLASK_SECRET_KEY", "dev-secret")
 app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024  # 16 MB limit
 
 COLLECTION_NAME = "webapp_collection"
@@ -21,7 +22,8 @@ COLLECTION_NAME = "webapp_collection"
 
 @app.route("/")
 def index():
-    return render_template("index.html", answer=None, error=None)
+    chat_history = session.get("chat_history", [])
+    return render_template("index.html", answer=None, error=None, chat_history=chat_history)
 
 
 @app.route("/upload", methods=["POST"])
@@ -44,21 +46,42 @@ def query():
     query_text = request.form.get("query", "")
     answer = None
     error = None
+    chat_history = session.get("chat_history", [])
     if query_text:
         client = get_qdrant_client()
         try:
             retrieved = retrieve_similar_chunks(query_text, client, COLLECTION_NAME, top_k=5)
             answer = answer_with_context(query_text, retrieved)
+            chat_history.append({"role": "user", "content": query_text})
+            chat_history.append({"role": "assistant", "content": answer})
+            session["chat_history"] = chat_history
         except ValueError as e:
             error = str(e)
-    return render_template("index.html", answer=answer, error=error)
+    return render_template("index.html", answer=answer, error=error, chat_history=chat_history)
 
 
 @app.route("/respond", methods=["POST"])
 def respond():
-    answer = request.form.get("answer", "")
     user_response = request.form.get("response", "")
-    return render_template("index.html", answer=answer, user_response=user_response, error=None)
+    chat_history = session.get("chat_history", [])
+    answer = None
+    if user_response:
+        client = get_qdrant_client()
+        retrieved = retrieve_similar_chunks(user_response, client, COLLECTION_NAME, top_k=5)
+        history_text = "\n".join(
+            f"{msg['role'].capitalize()}: {msg['content']}" for msg in chat_history
+        )
+        context_chunks = retrieved + [history_text]
+        answer = answer_with_context(user_response, context_chunks)
+        chat_history.append({"role": "user", "content": user_response})
+        chat_history.append({"role": "assistant", "content": answer})
+        session["chat_history"] = chat_history
+    return render_template(
+        "index.html",
+        answer=answer,
+        error=None,
+        chat_history=chat_history,
+    )
 
 
 if __name__ == "__main__":
