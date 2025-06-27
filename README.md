@@ -30,10 +30,13 @@ reachable.
 ## Web Interface
 
 The repository contains a small Flask application in `app.py` for uploading
-PDFs and submitting questions. Uploaded documents are chunked and embedded and
-stored in Qdrant. Questions can then be asked against this vector store. The
- web interface now exposes **three** separate forms: one for uploading a document,
- one for sending a query and one for replying to the generated answer.
+PDFs and submitting questions. Uploaded documents are chunked, embedded and
+stored in Qdrant. Questions can then be asked against this vector store.
+The web interface exposes **three** forms: one for uploading a document, one
+for sending a query and one for replying to the generated answer. Replies are
+added to a persistent chat history which is shown in a ChatGPT-like layout and
+sent as additional context for follow-up questions. A simple loading bar gives
+visual feedback while the application processes a request.
 
 To
 run the web app install the dependencies and start the server:
