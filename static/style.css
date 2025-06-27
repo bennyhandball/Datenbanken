@@ -8,7 +8,7 @@ body {
     font-family: Arial, sans-serif;
     background-color: var(--background-color);
     margin: 0;
-    padding: 40px;
+    padding: 40px 0;
 }
 
 .container {
@@ -17,8 +17,7 @@ body {
     background: #fff;
     padding: 20px;
     border-radius: 8px;
-    border: 1px solid var(--primary-color);
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
 label {
@@ -64,12 +63,6 @@ button:hover {
     background-color: var(--accent-color);
 }
 
-.answer {
-    margin-top: 20px;
-    background: #eef;
-    padding: 15px;
-    border-radius: 4px;
-}
 
 .error {
     margin-top: 20px;
@@ -90,11 +83,52 @@ textarea {
     resize: vertical;
 }
 
-.user-response {
+
+#chat-container {
     margin-top: 20px;
-    background: #efe;
-    padding: 15px;
-    border-radius: 4px;
+    max-height: 400px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.chat-message {
+    padding: 12px 15px;
+    border-radius: 8px;
+    max-width: 80%;
+    line-height: 1.4;
+}
+
+.chat-message.user {
+    background: #dcf8c6;
+    margin-left: auto;
+}
+
+.chat-message.assistant {
+    background: #f7f7f8;
+    margin-right: auto;
+}
+
+#loading-container {
+    width: 100%;
+    height: 4px;
+    background: #eee;
+    margin-top: 10px;
+    display: none;
+    overflow: hidden;
+}
+
+#loading-bar {
+    height: 100%;
+    width: 0;
+    background-color: var(--primary-color);
+    animation: loading 2s linear infinite;
+}
+
+@keyframes loading {
+    0% { width: 0; }
+    100% { width: 100%; }
 }
 
 .chat-history {

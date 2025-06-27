@@ -8,11 +8,22 @@
 <body>
 <div class="container">
     <h1>Qdrant RAG Demo</h1>
+    <div id="loading-container"><div id="loading-bar"></div></div>
     <form method="post" action="{{ url_for('upload') }}" enctype="multipart/form-data" class="upload-form">
         <label for="document">PDF Document</label>
         <input type="file" name="document" id="document" accept="application/pdf">
         <button type="submit">Upload</button>
     </form>
+
+    {% if chat_history %}
+    <div id="chat-container">
+        {% for msg in chat_history %}
+        <div class="chat-message {{ msg.role }}">
+            <p>{{ msg.content }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
 
     <form method="post" action="{{ url_for('query') }}" class="query-form">
         <label for="query">Prompt</label>
@@ -35,11 +46,7 @@
     </div>
     {% endif %}
 
-    {% if answer %}
-    <div class="answer">
-        <h2>Answer</h2>
-        <p>{{ answer }}</p>
-    </div>
+    {% if chat_history %}
     <form method="post" action="{{ url_for('respond') }}" class="response-form">
         <label for="response">Deine Antwort</label>
         <textarea name="response" id="response" rows="3" placeholder="Reply to the answer" required></textarea>
@@ -47,5 +54,6 @@
     </form>
     {% endif %}
 </div>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
