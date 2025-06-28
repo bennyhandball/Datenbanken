@@ -21,8 +21,7 @@
         </div>
 
         <form method="post" action="{{ url_for('interact') }}" enctype="multipart/form-data" id="chat-form" class="chat-form">
-            <div class="upload-section">
-                <span id="file-name"></span>
+            <div>
                 <label for="document" class="upload-label">📁</label>
                 <input type="file" name="document" id="document" accept="application/pdf" hidden>
             </div>
@@ -30,6 +29,7 @@
             <button type="submit" class="send-btn">➤</button>
         </form>
     </div>
+    
 
 
     <form method="post" action="{{ url_for('clear_chat') }}" class="clear-form">
@@ -42,6 +42,15 @@
     </div>
     {% endif %}
 </div>
+
+<div class="container">
+    <h1>Qdrant Vector Database Documents</h1>
+    <div id="loading-container"><div id="loading-bar"></div></div>
+
+
+     
+</div>
+
 <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

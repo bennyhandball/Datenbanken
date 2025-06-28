@@ -22,14 +22,13 @@ body {
 
 label {
     display: block;
-    margin-top: 15px;
+    margin-top: 5px;
     margin-bottom: 5px;
 }
 
 input[type="text"], input[type="file"] {
     width: 100%;
     padding: 8px;
-    margin-bottom: 10px;
     box-sizing: border-box;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -102,28 +101,31 @@ textarea {
 #chat-form {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
     border-top: 1px solid #eee;
     padding-top: 10px;
+    width: 100%; 
 }
 
 .upload-section {
     display: flex;
     align-items: center;
-    gap: 8px;
+    align-self: center;
     font-size: 0.75rem;
-    width: auto;
+    cursor: pointer;
+    padding-top: 0px;
 }
 
 .upload-label {
     background-color: var(--primary-color);
     color: #fff;
-    border-radius: 4px;
     width: 32px;
     height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
+    align-self: center;
     cursor: pointer;
 }
 
@@ -138,6 +140,9 @@ textarea {
 
 #chat-form input[type="text"] {
     flex: 1;
+    display: flex;
+    align-items: center;
+    align-content: center;
     padding: 10px 12px;
     border: 1px solid #ccc;
     border-radius: 20px;

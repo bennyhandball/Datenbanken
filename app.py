@@ -74,7 +74,17 @@ def interact():
     if message:
         client = get_qdrant_client()
         try:
+            # Retrieve context for the current question
             retrieved = retrieve_similar_chunks(message, client, COLLECTION_NAME, top_k=5)
+
+            # Also look up all previous user messages, not just the last one
+            for past in chat_history:
+                if past.get("role") == "user":
+                    retrieved_prev = retrieve_similar_chunks(
+                        past.get("content"), client, COLLECTION_NAME, top_k=5
+                    )
+                    retrieved.extend(retrieved_prev)
+
             if len(chat_history) > 1:
                 history_text = "\n".join(
                     f"{msg['role'].capitalize()}: {msg['content']}" for msg in chat_history
