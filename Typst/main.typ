@@ -532,7 +532,7 @@ Diese Auswahl repräsentiert aktuelle Forschungsthemen aus verschiedenen Informa
 == Data Preparation
 Für jedes der fünf ausgewählten Paper werden fünf inhaltliche Fragen erstellt, die direkt auf das Verständnis und die Kernaussagen des jeweiligen Textes abzielen. Die Fragen und Antworten aus den Publikationen finden sich im Anhang in @Literaturfragen und wurden von Menschen mit der Hilfe von #acrpl("LLM") beantwortet. Die Fragen sind so konzipiert, dass sie ohne Zugriff auf das jeweilige Paper weder für Menschen noch für #acrpl("LLM") zu beantworten sind, da sie spezifische technische Details, Evaluationsergebnisse oder methodische #box("Entscheidungen betreffen.")
 
-Insgesamt liegt ein Datensatz von 35 Fragen (5 × 5 Inhlatsfragen, 5 × 2 Metadatenfragen) vor. Dieser dient im Weiteren als Basis für die Bewertung der #box("Antwortgenauigkeit in "+ref(<Evaluation>)+".")
+Insgesamt liegt somit ein Datensatz von 35 Fragen (5 × 5 Inhlatsfragen, 5 × 2 Metadatenfragen) vor. Dieser dient im Weiteren als Basis für die Entwicklung des #acr("RAG")-Systems und Bewertung der #box("Antwortgenauigkeit in "+ref(<Evaluation>)+".")
 
 == Modelling
 Benny
