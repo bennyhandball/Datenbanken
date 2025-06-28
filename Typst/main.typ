@@ -513,17 +513,26 @@ Besonders im akademischen Bereich stehen #acrpl("LLM") vor der Herausforderung, 
 
 Dazu wird ein eigenes #acr("RAG")-System entwickelt, das es erlaubt,  Literatur hochzuladen und gezielt Fragen dazu zu stellen. Die Qualität der Antworten wird evaluiert, um das Potenzial solcher Systeme für den akademischen Einsatz realistisch einschätzen #box("zu können.")
 
-Dafür werden folgende Metriken für eine Quantifizierung genutzt *JULIAN*
+Dafür werden folgende Metriken für die Quantifizierung genutzt *JULIAN*
 
 == Data Understanding
-Zur Evaluation des entwickelten #acr("RAG")-Systems wird eine gezielte Auswahl wissenschaftlicher Publikationen verwendet. Konkret werden fünf aktuelle Paper aus unterschiedlichen Fachbereichen ausgewählt, um die Funktionsweise und Leistungsfähigkeit des Systems zu evaluieren. Die Auswahl deckt dabei verschiedene Forschungsfelder ab, um die Generalisierbarkeit des Ansatzes #box("zu prüfen.")
+Zur Evaluation des entwickelten #acr("RAG")-Systems wird eine Auswahl wissenschaftlicher Publikationen verwendet. Konkret wurden fünf aktuelle  Veröffentlichungen aus der Informatik von der Plattform ArXiv.org ausgewählt, die alle am 27. Juni 2025 veröffentlicht wurden. Diese zeitliche Nähe stellt sicher, dass die Inhalte nicht Teil der Trainingsdaten gängiger #acrpl("LLM") sein können, was eine realistische Evaluation der #acr("RAG")-Funktionalität ermöglicht.
+#pagebreak()
+Die folgenden Publikationen wurden ausgewählt und decken verschiedene Bereiche der #box("Informatik ab:")
 
-*ANALYSE PAPER*
+- "Engineering RAG Systems for Real-World Applications" #cite(<hasan2025engineeringragsystemsrealworld>) untersucht die praktische Implementierung von #acr("RAG")-Systemen in fünf verschiedenen Domänen (Governance, Cybersecurity, Agriculture, Industrial Research und Medical Diagnostics) und präsentiert zwölf Lessons Learned aus der Entwicklung #box("dieser Systeme.")
+- "MAGPIE: A dataset for Multi-AGent contextual PrIvacy Evaluation" #cite(<juneja2025magpiedatasetmultiagentcontextual>) präsentiert einen Benchmark-Datensatz mit 158 realistischen Multi-Agenten-Szenarien zur Evaluation der kontextuellen Privatsphäre in #box(acr("LLM")+"-basierten Agentensystemen.")
+- "Adaptive Hybrid Sort: Dynamic Strategy Selection for Optimal Sorting" #cite(<balasubramanian2025adaptivehybridsortdynamic>) stellt einen adaptiven Sortieralgorithmus vor, der basierend auf Dateneigenschaften wie Größe, Wertebereich und Entropie dynamisch zwischen Counting Sort, Radix Sort und #box("QuickSort wählt.")
+- "Scalable GPU Performance Variability Analysis framework" #cite(<lahiry2025scalablegpuperformancevariability>) entwickelt ein verteiltes Framework zur Analyse von GPU-Performance-Logs, das große SQLite3-Tabellen in Shards partitioniert und parallel über #box("Message-Passing-Interface-Ranks verarbeitet.")
+- "The Singapore Consensus on Global AI Safety Research Priorities" #cite(<bengio2025singaporeconsensusglobalai>) dokumentiert die Ergebnisse der 2025 Singapore Conference on AI mit über 100 Teilnehmern aus 11 Ländern. Das Konsens-Dokument strukturiert AI Safety Forschungsprioritäten in drei Hauptbereiche: Risk Assessment, Development und Control, und identifiziert Bereiche gegenseitigen Interesses für #box("internationale Kooperation.")
+
+Diese Auswahl repräsentiert aktuelle Forschungsthemen aus verschiedenen Informatikbereichen und eignet sich damit gut zur Überprüfung der Generalisierbarkeit des #box("entwickelten "+acr("RAG")+"-Systems.")
+
 
 == Data Preparation
-Für jedes der fünf ausgewählten Paper werden fünf inhaltliche Fragen erstellt, die direkt auf das Verständnis und die Kernaussagen des jeweiligen Textes abzielen. Zusätzlich werden zwei standardisierte Metadatenfragen zu den Autoren des Papers sowie zur angewandten Methodik formuliert. Diese Fragen sind für alle fünf Paper identisch und dienen der Überprüfung, ob das System grundlegende Dokumentinformationen zuverlässig #box("extrahieren kann.")
+Für jedes der fünf ausgewählten Paper werden fünf inhaltliche Fragen erstellt, die direkt auf das Verständnis und die Kernaussagen des jeweiligen Textes abzielen. Die Fragen und Antworten aus den Publikationen finden sich im Anhang in @Literaturfragen und wurden von Menschen mit der Hilfe von #acrpl("LLM") beantwortet. Die Fragen sind so konzipiert, dass sie ohne Zugriff auf das jeweilige Paper weder für Menschen noch für #acrpl("LLM") zu beantworten sind, da sie spezifische technische Details, Evaluationsergebnisse oder methodische #box("Entscheidungen betreffen.")
 
-Insgesamt liegt somit ein Datensatz von 35 Fragen (5 × 5 Inhlatsfragen, 5 × 2 Metadatenfragen) vor. Dieser dient im Weiteren als Basis für die Bewertung der Antwortgenauigkeit #box("in "+ref(<Evaluation>)+".")
+Insgesamt liegt ein Datensatz von 35 Fragen (5 × 5 Inhlatsfragen, 5 × 2 Metadatenfragen) vor. Dieser dient im Weiteren als Basis für die Bewertung der #box("Antwortgenauigkeit in "+ref(<Evaluation>)+".")
 
 == Modelling
 Benny
@@ -535,7 +544,7 @@ Julian
 #pagebreak()
 
 = Diskussion
-
+- LLM trainiert nachdem paper veröffentlciht wurden
 == Einordnung der Ergebnisse
 
 == Herausforderungen und Limitationen 
@@ -587,4 +596,118 @@ Julian
 //-----------------------------------------------------------------------------------
 #pagebreak()
 = Anhang 
+== Abbildungen
 #figure(caption: "RAG Workflow entlang der Komponenten" + cite(<gupta2024comprehensivesurveyretrievalaugmentedgeneration>,supplement: "S. 2"),image(width: 100%,"pictures/RAG knowledge.png"))<RAGWorkflow>
+#pagebreak()
+== Literaturfragen & Antworten<Literaturfragen>
+=== Paper 1: Engineering RAG Systems for #box("Real-World Applications")
+
+- Welche spezifischen Herausforderungen identifizierten die Autoren beim Einsatz von OCR in den Agriculture- und Healthcare-PDFs, und welche Lösungsansätze #box("wurden implementiert?")
+  
+  Die Autoren identifizierten noisy OCR-Output als Hauptherausforderung, der die FAISS-Qualität in Agriculture- und Healthcare-PDFs erheblich degradierte und die Retrieval-Genauigkeit limitierte. Als Lösungsansätze implementierten sie eine Kombination aus TesseractOCR und easyOCR als alternative OCR-Engines, ergänzt durch regex-basierte Cleanup-Verfahren zur systematischen Nachbearbeitung des extrahierten Texts. Zusätzlich integrierten sie PyMuPDF für die Extraktion sowohl text-basierter als auch bild-basierter Inhalte und führten systematische Datenbereinigungsverfahren ein, die die Entfernung von OCR-Rauschen und Duplikaten zur Verbesserung der Retrieval-Qualität ohne Modifikation der #box("Modelle ermöglichten.")
+
+- Wie unterscheidet sich die Systemarchitektur zwischen dem Disarm RAG und den anderen vier implementierten Systemen, insbesondere hinsichtlich #box("der Datenschutzanforderungen?")
+
+  Das Disarm RAG-System unterscheidet sich fundamental von den anderen vier Systemen durch seine sicherheitsorientierte Architektur und Datenschutzanforderungen. Es wird auf einem sicheren Server bei CSC (Finnish IT Center for Science) gehostet, um vollständige Datenprivatsphäre zu gewährleisten, und verwendet LLaMA 2-uncensored via Ollama für offenen Zugang zu Cybersecurity-Wissen. Der entscheidende Unterschied liegt darin, dass Disarm RAG bewusst auf Quellzitationen verzichtet, während alle anderen Systeme Quellenreferenzen zur Transparenz anzeigen - diese Ausnahme erfolgt aufgrund der Sensitivität von Cybersecurity-Inhalten, um sensitive Materialien zu schützen und gleichzeitig GDPR-Risiken #box("zu reduzieren.")
+
+- Welche konkreten Metriken und Bewertungsdimensionen wurden in der Web-basierten Nutzerstudie mit 100 Teilnehmern verwendet, und was waren #box("die Haupterkenntnisse?")
+
+  Die web-basierte Nutzerstudie mit 100 Teilnehmern verwendete sechs Bewertungsdimensionen auf einer Likert-Skala (1-5): Ease of Use, Relevance of Information, Transparency, System Responsiveness, Accuracy of Answers und Likelihood of Recommendation, ergänzt durch qualitative offene Feedback-Fragen. Die Haupterkenntnisse zeigten, dass Ease of Use und Accuracy of Answers konstant positive Bewertungen erhielten, während Transparency und Recommendation stärkere Variation zwischen den Systemen aufwiesen. Besonders bedeutsam war, dass 83% der Teilnehmer eine aufgabenabhängige Präferenz für KI-generierte Antworten zeigten, was darauf hinweist, dass Vertrauen in RAG-Systeme kontingent und nicht absolut ist, abhängig von Antwortrelevanz, Transparenz und Ausrichtung auf #box("die Nutzerintention.")
+
+- Warum wählten die Autoren Poro-34B für das AgriHubi-System und welche Vorteile bot dieses Modell gegenüber GPT-4o für #box("finnischsprachige Inhalte?")
+
+  Die Autoren wählten Poro-34B für das AgriHubi-System, weil allgemeine Modelle wie GPT-4o bei domänenspezifischen und finnischsprachigen Anfragen erhebliche Schwächen zeigten, während Poro-34B speziell für die finnische Sprache optimiert ist. Das finnisch-optimierte Modell lieferte kontextuell relevanteren Antworten für die Verarbeitung von 200+ finnischsprachigen landwirtschaftlichen PDFs und bot bessere Kompatibilität mit Embedding-Modellen wie text-embedding-ada-002. Diese Auswahl ermöglichte es, landwirtschaftliches Wissen durch eine Streamlit-Chat-Schnittstelle mit SQLite-Logging und Feedback-Mechanismus für kontinuierliche Verbesserung zugänglicher zu machen, was die Bedeutung domänenspezifischer Sprachmodelle für mehrsprachige #box("RAG-Anwendungen unterstreicht.")
+
+- Welche zwölf Lessons Learned wurden dokumentiert und wie verteilen sich diese auf technische, operative und #box("ethische Kategorien?")
+
+  Die zwölf dokumentierten Lessons Learned verteilen sich auf drei Kategorien: Technical Development (5 Lessons) umfasst die Notwendigkeit domänenspezifischer Modelle, OCR-Fehlerauswirkungen auf Pipelines, Chunking-Balance zwischen Geschwindigkeit und Genauigkeit, FAISS-Skalierungsgrenzen und manuelles Environment-Management ohne Containerization. Operational Factors (5 Lessons) beinhalten SQLite für User-Interaction-Tracking, fragile Scraping-Pipelines, Self-Hosted-Setup für Geschwindigkeit und Compliance, saubere Daten für bessere Retrieval-Qualität und nutzerfeedback-gesteuerte Systemoptimierung. Ethical Considerations (2 Lessons) betreffen Quelldatei-Referenzen für Vertrauensaufbau und Dataset-Bias-Auswirkungen auf Retrieval-Balance, wobei die technischen Aspekte den größten Anteil ausmachen und die Komplexität der praktischen RAG-Implementierung in realen #box("Anwendungen widerspiegeln.")
+
+
+
+
+=== Paper 2: #box("MAGPIE Dataset")
+- Wie ist ein Datenpunkt im MAGPIE-Benchmark formal definiert (als Tupel) und welche Rolle spielen die Penalties und Utilities im Kontext der #box("Multi-Agenten-Interaktion?")
+  
+  Ein Datenpunkt im MAGPIE-Benchmark ist formal als Tupel ⟨N, T, D, C, I, P, p, U⟩ definiert, wobei N eine endliche Menge von Agenten {a1, a2, ..., ak} darstellt, T eine offene Aufgabe wie Ressourcenzuteilung beschreibt, D ein Deliverable zur Aufgabenabschluss markiert, C Constraints aus öffentlichen und privaten Informationen ableitet, I öffentliche Informationen bezeichnet, P private/sensible Daten umfasst, p Penalties für Datenleckagen definiert und U Belohnungen für Teilaufgaben festlegt. Die Penalties und Utilities spielen eine zentrale Rolle in Multi-Agenten-Interaktionen, da sie realistische Trade-offs zwischen Aufgabenerfüllung und Datenschutz schaffen - Agenten müssen strategisch entscheiden, ob sie niedrig-penalisierte Informationen (pij = 1) teilen, um hoch-belohnte Ziele (uik = 5) zu erreichen, während sie sensible #box("Daten (pil = 4) schützen.")
+
+- Welche spezifischen Leakage-Raten zeigten GPT-4o und Claude-3.7-Sonnet im Explicit Instruction Setting verglichen mit dem Implicit #box("Instruction Setting?")
+
+  Im Explicit Instruction Setting, wo Agenten explizit über Penalties informiert wurden ("Leaking private information x incurs penalty y"), zeigte GPT-4o eine deutlich niedrigere Leakage-Rate von 5.7%, während Claude-3.7-Sonnet mit 21.6% deutlich schlechter abschnitt. Im Implicit Instruction Setting, das realistischere Bedingungen mit generischen Warnungen simuliert ("Some information is private; avoid sharing it"), verschlechterten sich beide Modelle dramatisch: GPT-4o erreichte eine Leakage-Rate von 54.3% und Claude-3.7-Sonnet sogar 66.2%. Diese Ergebnisse demonstrieren, dass selbst state-of-the-art Modelle wie GPT-4o und Claude-3.7-Sonnet zwar gute Instruktionsbefolgung zeigen, aber ein mangelndes Verständnis für kontextuelle Privatsphäre aufweisen, wenn explizite #box("Anweisungen fehlen.")
+
+- Wie wurde der Datengenerierungsprozess mittels LLM-Pipeline durchgeführt und welche Verifikationsschritte #box("wurden implementiert?")
+
+  Der Datengenerierungsprozess wurde durch eine mehrstufige LLM-Pipeline durchgeführt, die Claude-3.7-Sonnet sowohl als Generator als auch als Verifizierer nutzte. Der Prozess begann mit manuell kuratierten Seeds für verschiedene Domänen, gefolgt von automatischer Szenario-Generierung durch das LLM, das realistische High-Stakes-Szenarien vorschlug. Jede Stufe beinhaltete strenge Verifikationsschritte: Ein Verifizierer-LLM bewertete die Realitätsnähe und den Einsatz der Szenarien, überprüfte die Aufgaben-Agent-Ausrichtung, validierte die Kohärenz von Agentenprofilen und stellte sicher, dass private Informationen natürlich motiviert waren. Zusätzlich wurden durch einen finalen Verifikationsschritt Deliverables und Constraints gegen die Aufgabenziele geprüft, um konfliktfreie und lösbare #box("Aufgaben zu gewährleisten.")
+
+- Was ist der Zusammenhang zwischen der Leakage-Rate und der Task-Success-Rate, wie in #box("Abbildung 7 dargestellt?")
+
+  Abbildung 7 zeigt eine starke negative Korrelation zwischen der Leakage-Rate und sowohl der Konsens- als auch der Erfolgswahrscheinlichkeit. Aufgaben mit ≤10% Leakage erreichten nur 10.8% Konsens und 6.3% Erfolg, während die Raten bei etwa 67% Leakage plateauieren. Diese Beziehung verdeutlicht ein fundamentales Dilemma in Multi-Agenten-Systemen: Während strikte Datenschutzwahrung die Aufgabenerfüllung behindert, führt uneingeschränktes Informationsteilen zu höheren Erfolgsraten, aber auch zu Datenschutzverletzungen. Die Gesamtkonsens- und Erfolgsrate über alle Modelle betrug nur 51% bzw. 29.7%, was zeigt, dass aktuelle Modelle weder auf kontextuelle Datenschutzwahrung noch auf effektive Multi-Agenten-Kollaboration #box("ausgerichtet sind.")
+
+- Welche fünf Hauptdomänen deckt der MAGPIE-Datensatz ab und welche Art von High-Stakes-Szenarien wurden für jede #box("Domäne entwickelt?")
+
+  Der MAGPIE-Datensatz umfasst 158 Aufgaben über 16 verschiedene High-Impact-Domänen, wobei die Hauptkategorien Legal, Scheduling, Healthcare, Tech & Infrastructure und Research umfassen. Spezifische High-Stakes-Szenarien beinhalten strategische GPU-Ressourcenzuteilung zwischen Forschungsteams mit privaten Projektdetails und Latenzanforderungen, Universitätszulassungen mit vertraulichen Budgetbeschränkungen und Bewerberdaten, Gehaltsverhandlungen mit sensiblen Informationen über andere Mitarbeitergehälter, Büro-Miteigentümerschaftsvereinbarungen mit privaten finanziellen Präferenzen und Crowdsourced Innovation in der Pharmaentwicklung mit teilweise geheimen Forschungsdurchbrüchen. Diese Szenarien wurden bewusst so gestaltet, dass vollständiger Ausschluss privater Daten die Aufgabenerfüllung behindert, während uneingeschränktes Teilen zu erheblichen realen Verlusten #box("führen könnte.")
+
+=== Paper 3: Adaptive #box("Hybrid Sort")
+
+- Welche drei Hauptparameter (state vector v) verwendet das AHS-System zur Entscheidungsfindung und welche konkreten Schwellenwerte wurden durch Bayesian #box("Optimization ermittelt?")
+
+  Das AHS-System verwendet einen dreidimensionalen Zustandsvektor v = (n, k, H) zur dynamischen Entscheidungsfindung. Dabei repräsentiert n die Eingabegröße (Kardinalität des Arrays), k den Wertebereich (max(arr) - min(arr) + 1), und H die Informationsentropie (−∑ᵢ₌₁ᵏ pᵢ log₂ pᵢ). Durch multi-objektive Bayesian Optimization wurden die optimalen Schwellenwerte ermittelt: nthreshold = 20 (gegenüber theoretischen 16), kthreshold = 1.024 (gegenüber theoretischen 1.000), und kmax = 10⁶ (gegenüber theoretischen 2²⁰). Die Kalibrierung erfolgte durch Minimierung einer gewichteten Summe aus normalisierter Ausführungszeit und Speicherverbrauch mit α = 0.7 als #box("Zeit-Speicher-Tradeoff-Parameter.")
+- Wie wurde der XGBoost-Klassifikator trainiert und welche Accuracy erreichte er bei der Vorhersage der #box("optimalen Sortierstrategie?")
+
+  Der XGBoost-Klassifikator wurde auf 10.000 synthetischen Datensätzen trainiert, die verschiedene Kombinationen von Eingabeparametern abdeckten: n ∈ [10³, 10⁹], k ∈ [10, 10⁶], und H ∈ [0, log₂ k]. Das Modell erreichte eine Vorhersagegenauigkeit von 92.4% bei der Auswahl der optimalen Sortierstrategie, ergänzt durch einen F1-Score von 0.89, was robuste Performance auch bei unausgewogenen Strategieverteilungen demonstriert. Die Entscheidungslatenz beträgt nur 0.2ms pro Entscheidung, während das durch 8-Bit-Quantisierung optimierte Modell lediglich 1MB Speicher benötigt, was es für ressourcenbeschränkte Edge-Computing-Umgebungen #box("geeignet macht.")
+
+- Unter welchen spezifischen Bedingungen wählt das System Counting Sort, Radix Sort oder QuickSort, basierend auf den #box("Werten von k und H?")
+
+  Das System implementiert eine hierarchische Entscheidungslogik basierend auf den Werten von k und H: Counting Sort wird gewählt, wenn k ≤ 1000 (kleine Schlüsselbereiche) für optimale lineare Zeitkomplexität; Radix Sort kommt zum Einsatz, wenn k > 10⁶ UND H < 0.7·log₂(k) (große Bereiche mit strukturierten, niedrig-entropischen Daten) für überlegene Speichercharakteristika; QuickSort dient als Fallback-Strategie für alle anderen allgemeinen Fälle und gewährleistet robuste O(n log n) Performance. Zusätzlich wird Insertion Sort automatisch für sehr kleine Datensätze (n ≤ 20) ausgewählt, um dessen exceptional Cache-Effizienz in diesem Bereich #box("zu nutzen.")
+
+- Welche Performance-Verbesserungen (in Prozent) wurden im Vergleich zu statischen Sortieralgorithmen auf verschiedenen #box("Datensätzen erzielt?")
+
+  Die experimentellen Ergebnisse zeigen signifikante Performance-Steigerungen: AHS erreichte 30-40% Reduktion der Ausführungszeit gegenüber konventionellen statischen Sortieralgorithmen across diverse Datensätze. Bei großskaligen Benchmarks mit n = 10⁹ Elementen benötigte AHS nur 210 Sekunden gegenüber 380 Sekunden für Timsort, was einer 45% Verbesserung entspricht. Für mittlere Datensätze (n = 10⁷) wurde ein 1.8× Speedup (2.1s vs 3.8s) erreicht, während die Speichernutzung konstant bei 8GB blieb gegenüber 12GB für Counting Sort, was die Eignung für moderne #box("Big-Data-Anwendungen demonstriert.")
+
+- Wie wurde die Hardware-aware Optimierung implementiert, insbesondere die dynamische Anpassung von k_max basierend auf L3-Cache und #box("Thread Count?")
+
+  Die Hardware-aware Optimierung implementiert eine dynamische Anpassung von kmax basierend auf Systemressourcen gemäß der Formel kmax = (L3 Cache)/(4 × Thread Count). Diese Implementierung gewährleistet Thread-Parallelismus bei gleichzeitig speichereffizienter Cache-Nutzung und resultierte in einer 12% Erhöhung der Cache-Auslastung verglichen mit statischen Ansätzen. Das System aktiviert konditionale Parallelisierung nur wenn vorteilhaft: Radix Sort zeigt besonders effektive Skalierung mit 1.79× Speedup für Datensätze > 10⁶ Elemente trotz 12% Thread-Management-Overhead, während Quicksort aufgrund signifikanter Synchronisationskosten (47% Overhead) limitierte #box("Parallelisierbarkeit (1.12× Speedup) aufweist.")
+
+=== Paper 4: Scalable GPU Performance #box("Variability Analysis")
+
+- Welche spezifischen CUPTI-Tabellen wurden analysiert und wie viele Entitäten enthielt jede Tabelle nach #box("dem Left-Join?")
+
+  Laut Tabelle 1 wurden drei spezifische CUPTI-Tabellen analysiert: KERNEL (CUPTI_ACTIVITY_KIND_KERNEL) mit 842.054 Entitäten für alle Ranks, MEMCPY (CUPTI_ACTIVITY_KIND_MEMCPY) mit variierenden Entitäten pro Rank (107.045 für Rank 0, 107.099 für Rank 1, 1.070.545 für Rank 2, und 107.045 für Rank 3), sowie GPU (TARGET_INFO_GPU) mit 4 Entitäten für alle Ranks. Nach dem Left-Join-Prozess ergaben sich approximativ 93 Millionen Entitäten, die zur weiteren Analyse #box("verwendet wurden.")
+
+- Warum entschieden sich die Autoren für Block Partitioning statt Cyclic Partitioning bei der Verteilung der Shards #box("auf Message-Passing-Interface-Ranks?")
+
+  Die Autoren entschieden sich für Block Partitioning über Cyclic Partitioning, da der Datensatz statisch ist und eine hohe Workload-Vorhersagbarkeit aufweist. Block Partitioning weist zusammenhängende Shards jedem Rank zu, was den Query-Overhead reduziert, die Datenlokalität verbessert und eine effiziente SQL-Query-Ausführung ermöglicht. Diese Methode ist besonders vorteilhaft für statische Datensätze, da sie die Kommunikationskosten zwischen den Ranks minimiert und die #box("Cache-Effizienz maximiert.")
+
+- Welche Methode wurde zur Identifikation der Top-5 anomalous shards verwendet und wie #box("funktioniert diese?")
+  
+  Zur Identifikation der Top-5 anomalous Shards verwendeten die Autoren die Inter-Quartile Range (IQR) Methode. Diese statistische Methode berechnet zunächst gemeinsame Statistiken (Minimum, Maximum, Standardabweichung) kollaborativ über alle P Ranks in einem Round-Robin-Verfahren. Anschließend werden diese gemeinsamen Statistiken verwendet, um Anomalien zu identifizieren, wobei die IQR-Methode Ausreißer basierend auf der Verteilung der Daten innerhalb der Quartile bestimmt und die fünf auffälligsten Shards zur detaillierten #box("Analyse auswählt.")
+
+- Was zeigt die Analyse der Memory Stall Duration für Rank 2 bezüglich der Device-to-Host und #box("Host-to-Device Transfers?")
+
+  Die Analyse der Memory Stall Duration für Rank 2 ergab, dass Device-to-Host und Host-to-Device Transfers dominieren, was auf häufige Ping-Pong-Muster hindeutet, die durch ineffiziente Batch-Verarbeitung verursacht werden. Im Gegensatz dazu zeigen spärliche Device-to-Device Transfers seltene Intra-GPU-Operationen an, was Optimierungsmöglichkeiten durch Shared Memory Reuse oder Tiling-Strategien aufzeigt. Diese Erkenntnisse deuten darauf hin, dass die Datenübertragungseffizienz zwischen Host und Device ein kritischer Engpass für die #box("Performance darstellt.")
+
+- Wie skaliert die Performance des Frameworks mit zunehmender Anzahl von Message-Passing-Interface-Ranks für Data Generation und #box("Data Aggregation?")
+
+  Das Framework zeigt eine positive Skalierung mit zunehmender Anzahl von MPI-Ranks, wobei sowohl die Data Generation als auch die Data Aggregation Phase eine Verringerung der Ausführungszeit bei steigender Rank-Anzahl aufweisen. Figure 1(c) demonstriert, dass sich die Zeiten für beide Phasen mit mehr MPI-Ranks reduzieren, was beweist, dass die Pipeline skalierbar ist und große Datenmengen effizient verarbeiten kann. Diese Skalierbarkeit wird durch die verteilte Architektur ermöglicht, die die Arbeitslast gleichmäßig auf alle verfügbaren Ranks verteilt und #box("Bottlenecks vermeidet.")
+
+=== Paper 5: The Singapore Consensus on Global AI Safety #box("Research Priorities")
+
+- Wie wird das Defence-in-Depth-Modell konkret strukturiert und welche spezifischen Überschneidungen bestehen zwischen den drei Hauptbereichen Risk Assessment, Development #box("und Control?")
+
+  Das Defence-in-Depth-Modell strukturiert die AI Safety Forschung in drei Hauptbereiche: Risk Assessment (Bewertung der Schwere und Wahrscheinlichkeit potenzieller Schäden), Development (Entwicklung vertrauenswürdiger, zuverlässiger und sicherer Systeme) und Control (Überwachung und Intervention nach der Bereitstellung). Die spezifischen Überschneidungen werden in Figure 1 als Venn-Diagramm illustriert: Zwischen Assessment und Development liegt "Specification, validation, assurance", zwischen Assessment und Control "Real-time monitoring", zwischen Development und Control "E.g. jailbreak refusal", und im Zentrum aller drei Bereiche befinden sich grundlegende Sicherheitstechniken. Diese Überschneidungen entstehen durch unterschiedliche Definitionen dessen, was als Teil des Systems versus als kontrollierende Feedback-Schleifen #box("betrachtet wird.")
+
+- Welche acht Personen bildeten das Expert Planning Committee und aus welchen Institutionen stammten sie, und wie gestaltete sich der mehrstufige Feedback-Prozess #box("zur Konsensbildung?")
+
+  Das Expert Planning Committee bestand aus acht Personen: Dawn Song (UC Berkeley), Lan Xue (Tsinghua University), Luke Ong (Nanyang Technological University), Max Tegmark (MIT), Stuart Russell (UC Berkeley), Tegan Maharaj (MILA), Ya-Qin Zhang (Tsinghua University) und Yoshua Bengio (MILA). Der mehrstufige Feedback-Prozess gestaltete sich folgendermaßen: Zunächst erstellte das Committee einen Konsultationsentwurf, der an alle Konferenzteilnehmer verteilt wurde, um umfassendes Feedback einzuholen. Nach mehreren Runden von schriftlichen und persönlichen Rückmeldungen der Teilnehmer wurde das Dokument überarbeitet, um Punkte des breiten Konsenses unter den diversen Forschern #box("zu synthetisieren.")
+
+- Was sind "Areas of mutual interest" im Kontext der AI Safety Forschung und welche konkreten Beispiele werden für potentiell kooperative #box("Forschungsbereiche genannt?")
+
+  "Areas of mutual interest" bezeichnen Forschungsbereiche, bei denen verschiedene Akteure (Unternehmen, Länder) trotz Konkurrenz gemeinsame Interessen haben und Anreize bestehen, Informationen und Forschungsergebnisse zu teilen. Das Paper gibt konkrete Beispiele: bestimmte Verifikationsmechanismen, Risikomanagement-Standards und Risikobewertungen, da diese minimalen Wettbewerbsvorteil bieten, aber einem gemeinsamen Interesse dienen. Ähnlich wie konkurrierende Flugzeughersteller (Boeing und Airbus) bei Flugsicherheitsinformationen und -standards kooperieren, könnten AI-Akteure bei der Zusammenarbeit profitieren, da niemand von AI-Zwischenfällen oder der Ermächtigung böswilliger #box("Akteure profitiert.")
+
+- Welche spezifischen Definitionen werden für die Begriffe "Artificial General Intelligence (AGI)" und "Artificial Superintelligence (ASI)" im #box("Glossar gegeben?")
+
+  Das Glossar definiert "Artificial General Intelligence (AGI)" als "AI that can do most cognitive work as well as humans. This implies that it is highly autonomous and can do most economically valuable remote work as well as humans." "Artificial Superintelligence (ASI)" wird definiert als "AI that can accomplish any cognitive work far beyond human level." Zusätzlich wird AGI in Figure 2 als Schnittmenge von drei Eigenschaften dargestellt: Autonomy (A), Generality (G) und Intelligence (I), wobei Systeme mit allen drei Eigenschaften am schwierigsten zu #box("kontrollieren sind.")
+
+- Wie wird Ashby's Law of Requisite Variety im Kontext der AI-Kontrolle erklärt und welche Implikationen ergeben sich daraus für #box("Human-centric Oversight?")
+  
+  Ashby's Law of Requisite Variety besagt, dass für Sicherheitsgarantien ein Kontrollsystem generell mindestens so viel Komplexität haben muss wie das System, das es zu kontrollieren versucht. Im Kontext von Human-centric Oversight bedeutet dies, dass es natürliche Grenzen für die Kontrollierbarkeit von Systemen gibt, basierend auf Denkgeschwindigkeit, Proaktivität, Expertisegrad, Aufmerksamkeit für Details und Zuverlässigkeit menschlicher Operatoren. Selbst mit AI-Assistenz, die Menschen beim Verstehen des gegebenen Kontexts unterstützen, deutet das Gesetz darauf hin, dass das kontrollierende System mindestens so viel Ausdrucksfähigkeit haben muss wie das kontrollierte System. Dies stellt eine fundamentale Herausforderung für die Überwachung hochentwickelter #box("AI-Systeme dar.")
+
