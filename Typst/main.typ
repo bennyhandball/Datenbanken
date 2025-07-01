@@ -483,24 +483,13 @@ Für die technische Umsetzung des dichten Retrievals werden die in Kapitel 2.2 b
 
 === Generative Antworterstellung
 
-*Abwarten was wir nutzen*
+Im #acr("RAG")-System bildet die generative Antworterstellung den abschließenden Verarbeitungsschritt, in dem das vortrainierte Sprachmodell die ursprüngliche Nutzerfrage mit den durch das Retrieval-System identifizierten relevanten Dokumentfragmenten zu einem einzigen, kontextualisierten Prompt kombiniert und darauf basierend regressiv den finalen #box("Antworttext generiert."+cite(<lewis2021retrievalaugmentedgenerationknowledgeintensivenlp>, supplement: "S. 5-7"))
 
-Nachdem die relevanten Informationen abgerufen wurden, formuliert das LLM die Antwort. Das Modell erhält den ursprünglichen Fragestellungstext zusammen mit den gefundenen Dokumentauszügen als Eingabe.
+Für die Qualität der Antwort spielt die Wahl des #acr("LLM") eine entscheidende Rolle. Neueste #acr("LLM") führender Anbieter können Zusammenhänge besser verstehen und detailliertere Antworten geben als bisherige Modelle. Ebenso wichtig ist die Größe des Kontextfensters – also wie viele Informationen das #acr("LLM") gleichzeitig verarbeiten kann. Ist dieses Fenster zu klein, gehen wichtige Quellenpassagen verloren. Ist es zu groß, wird das System langsamer und verbraucht mehr Ressourcen, ohne dass die Antworten proportional #box("besser werden"+cite(<roychowdhury2024erattaextremeragtable>, supplement: "S. 1-4")+".") 
 
-learn.microsoft.com
-Auf dieser Grundlage generiert das Sprachmodell den endgültigen Antworttext. Durch die Bereitstellung der externen Fakten kann das Modell die Antwort direkt auf den Quellen aufbauen, statt sich allein auf sein internes Wissen zu stützen.
+Durch die unmittelbare Integration der abgerufenen Textpassagen in den Generierungsprozess minimiert der #acr("RAG")-Ansatz das Auftreten von Halluzinationen erheblich und gewährleistet, dass jede Antwort faktenbasiert und durch konkrete Quellen verifizierbar bleibt. Dieser Mechanismus eliminiert die Notwendigkeit aufwendiger Nachtrainingsverfahren des Sprachmodells, da neue oder aktualisierte Informationen direkt über die Wissensbasis eingebunden #box("werden können. "+cite(<kulkarni2024geneticapproachmitigatehallucination>, supplement: "S. 1"))
 
-promptingguide.ai
-
-Dieser offene Ansatz sorgt dafür, dass die Antwort präziser und faktentreuer ist. Ein weiterer Vorteil ist, dass das System die Herkunft der Informationen kennt. Da die Antwort auf bestimmten Dokumenten basiert, kann man – sofern gewünscht – die verwendeten Quellen angeben.
-
-research.ibm.com
-
-Nutzer haben so die Möglichkeit, die Fakten selbst zu überprüfen, was das Vertrauen in die Ergebnisse erhöht. Außerdem entfällt das ständige Nachtrainieren des Modells, denn neue Informationen lassen sich einfach über die aktualisierte Wissensbasis bereitstellen.
-
-en.wikipedia.org
-
-Insgesamt ermöglichen RAG-Systeme so verlässlichere und aktuellere Antworten als klassische Sprachmodelle ohne externen Wissenseinbezug.
+Die Transparenz des Verfahrens ermöglicht es darüber hinaus, die verwendeten Quelldokumente zu referenzieren, wodurch Nutzer die Möglichkeit erhalten, die faktische Grundlage der generierten Antworten selbst zu überprüfen und das Vertrauen in die Systemausgaben zu stärken.
 
 #rag_parameter
 
@@ -516,8 +505,12 @@ Dazu wird ein eigenes #acr("RAG")-System entwickelt, das es erlaubt,  Literatur 
 Dafür werden folgende Metriken für die Quantifizierung genutzt *JULIAN*
 
 == Data Understanding
-Zur Evaluation des entwickelten #acr("RAG")-Systems wird eine Auswahl wissenschaftlicher Publikationen verwendet. Konkret wurden fünf aktuelle  Veröffentlichungen aus der Informatik von der Plattform ArXiv.org ausgewählt, die alle am 27. Juni 2025 veröffentlicht wurden. Diese zeitliche Nähe stellt sicher, dass die Inhalte nicht Teil der Trainingsdaten gängiger #acrpl("LLM") sein können, was eine realistische Evaluation der #acr("RAG")-Funktionalität ermöglicht.
-#pagebreak()
+Zur systematischen Evaluation des entwickelten #acr("RAG")-Systems wurde eine kuratierte Auswahl wissenschaftlicher Publikationen als Testdatensatz verwendet. Die Datengrundlage besteht aus fünf aktuellen Veröffentlichungen aus dem Bereich der Informatik, die von der wissenschaftlichen Publikationsplattform ArXiv.org bezogen wurden. Sämtliche ausgewählten Publikationen weisen ein einheitliches Veröffentlichungsdatum vom #box("27. Juni 2025 auf.")
+
+Diese zeitliche Nähe zum Evaluationszeitpunkt stellt eine methodisch wichtige Kontrolle dar, da gewährleistet wird, dass die Inhalte dieser Publikationen mit hoher Wahrscheinlichkeit nicht Bestandteil der Trainingsdaten gängiger #acrpl("LLM") sind. Dadurch wird eine realistische und unvoreingenommene Evaluation der #acr("RAG")-Funktionalität ermöglicht, bei der das System tatsächlich auf die bereitgestellten Dokumente angewiesen ist, anstatt auf bereits internalisiertes Wissen zurückgreifen #box("zu können.")
+
+Zur Validierung dieser Annahme wurde das eingesetzte #acr("LLM") explizit zu seiner Kenntnis der ausgewählten Publikationen befragt. Ohne Zugriff auf das #acr("RAG")-System bestätigte das Modell konsistent seine Unkenntnis bezüglich der spezifischen Inhalte aller fünf Publikationen, was die methodische Grundlage der #box("Evaluation stärkt.")
+
 Die folgenden Publikationen wurden ausgewählt und decken verschiedene Bereiche der #box("Informatik ab:")
 
 - "Engineering RAG Systems for Real-World Applications" #cite(<hasan2025engineeringragsystemsrealworld>) untersucht die praktische Implementierung von #acr("RAG")-Systemen in fünf verschiedenen Domänen (Governance, Cybersecurity, Agriculture, Industrial Research und Medical Diagnostics) und präsentiert zwölf Lessons Learned aus der Entwicklung #box("dieser Systeme.")
@@ -530,7 +523,7 @@ Diese Auswahl repräsentiert aktuelle Forschungsthemen aus verschiedenen Informa
 
 
 == Data Preparation
-Für jedes der fünf ausgewählten Paper werden fünf inhaltliche Fragen erstellt, die direkt auf das Verständnis und die Kernaussagen des jeweiligen Textes abzielen. Die Fragen und Antworten aus den Publikationen finden sich im Anhang in @Literaturfragen und wurden von Menschen mit der Hilfe von #acrpl("LLM") beantwortet. Die Fragen sind so konzipiert, dass sie ohne Zugriff auf das jeweilige Paper weder für Menschen noch für #acrpl("LLM") zu beantworten sind, da sie spezifische technische Details, Evaluationsergebnisse oder methodische #box("Entscheidungen betreffen.")
+Für jedes der fünf ausgewählten Paper werden fünf inhaltliche Fragen erstellt, die direkt auf das Verständnis und die Kernaussagen des jeweiligen Textes abzielen. Die Fragen und Antworten aus den Publikationen finden sich im Anhang in @Literaturfragen und wurden von Menschen mit der Hilfe von #acrpl("LLM") beantwortet. Die Fragen sind so konzipiert, dass sie ohne Zugriff auf das jeweilige Paper weder für Menschen noch für #acrpl("LLM") komplett zu beantworten sind, da sie spezifische technische Details, Evaluationsergebnisse oder methodische #box("Entscheidungen betreffen.")
 
 Insgesamt liegt somit ein Datensatz von 35 Fragen (5 × 5 Inhlatsfragen, 5 × 2 Metadatenfragen) vor. Dieser dient im Weiteren als Basis für die Entwicklung des #acr("RAG")-Systems und Bewertung der #box("Antwortgenauigkeit in "+ref(<Evaluation>)+".")
 
