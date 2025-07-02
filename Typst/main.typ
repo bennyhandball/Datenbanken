@@ -392,13 +392,13 @@ Um den Lesefluss zu verbessern, werden Abbildungen, Codebeispiele und Tabellen, 
 
 = Methodik
 
-Um die Optimierung der Antwortqualität methodisch fundiert zu gestalten, bietet sich der #acrf("CRISP-DM") als bewährtes Modell an. Der #acr("CRISP-DM")-Prozess wurde 1996 von einem Konsortium,  bestehend aus Daimler Chrysler (damals Daimler Benz), SPSS (damals ISL) und National Cash Register (NCR) entwickelt, um ein standardisiertes, nicht proprietäres Prozessmodell zur Verfügung zu haben #cite(<ncr_clinton_2000>, supplement: "S.3").
+*Methodik*
 
-Das #acr("CRISP-DM")-Modell ist ein branchenübergreifendes Standardmodell, das speziell für Data-Mining-Projekte entwickelt wurde #cite(<christoph_schröer_kruse_gómez_2021>, supplement: "S.527") #cite(<lendy_rahmadi_none_hadiyanto_ridwan_sanjaya_arif_prambayun_2023>, supplement: "S.401"). Es bietet eine strukturierte Vorgehensweise, um solche Projekte gezielt, effizient und systematisch umzusetzen #cite(<martinez-plumed_contreras-ochando_ferri_hernandez-orallo_kull_lachiche_ramirez-quintana_flach_2019>, supplement: "S.3048"). #acr("CRISP-DM") hat sich mittlerweile in der Data-Mining-Forschung etabliert und wird als de-facto-Standard anerkannt #cite(<christoph_schröer_kruse_gómez_2021>,supplement: "Abstract, S.526") #cite(<studer_bui_drescher_hanuschkin_winkler_peters_müller_2021>, supplement: "S.2")#cite(<martinez-plumed_contreras-ochando_ferri_hernandez-orallo_kull_lachiche_ramirez-quintana_flach_2019>, supplement: "S.3048").
+#acr("CRISP-DM") ist ein branchenübergreifendes Standardmodell für Data-Mining-Projekte #cite(<christoph_schröer_kruse_gómez_2021>, supplement: "S.527") #cite(<lendy_rahmadi_none_hadiyanto_ridwan_sanjaya_arif_prambayun_2023>, supplement: "S.401"). Es bietet eine strukturierte Vorgehensweise um gezielt, effizient und systematisch vorzugehen #cite(<martinez-plumed_contreras-ochando_ferri_hernandez-orallo_kull_lachiche_ramirez-quintana_flach_2019>, supplement: "S.3048"). #acr("CRISP-DM") hat sich mittlerweile in der Data-Mining und #acr("AI")-Forschung etabliert und wird als de-facto-Standard anerkannt #cite(<christoph_schröer_kruse_gómez_2021>,supplement: "Abstract, S.526") #cite(<studer_bui_drescher_hanuschkin_winkler_peters_müller_2021>, supplement: "S.2")#cite(<martinez-plumed_contreras-ochando_ferri_hernandez-orallo_kull_lachiche_ramirez-quintana_flach_2019>, supplement: "S.3048").
 //Supplement ergänzen
 #figure(caption:
 [Phasen des CRISP-DM Phasenmodells @wirth_hipp_2000 ]
-, image(width:9.9cm,
+, image(width:70%,
 "pictures/CRISP_DM_PA (1).png" 
 ))
 <Phasen_CRISP_DM>
@@ -407,13 +407,13 @@ Der #acr("CRISP-DM") Data-Mining-Prozess kann in sechs iterative Phasen gegliede
 
 
 * 1. Business Understanding*:
-Die erste Phase fokussiert sich auf die Formulierung der geschäftlichen Projektziele und Anforderungen #cite(<christoph_schröer_kruse_gómez_2021>, supplement: "S.527"). Diese werden anschließend in einen Data-Science Kontext überführt. Basierend auf  dieser Grundlage wird das Data-Mining-Problem definiert und ein vorläufiger Plan entwickelt, um die angestrebten Ziele zu erreichen #cite(<ncr_clinton_2000>,supplement: "S.13") #cite(<foroughi_luksch>, supplement: "S.8").
+Die erste Phase fokussiert sich auf die Formulierung der geschäftlichen Projektziele und Anforderungen #cite(<christoph_schröer_kruse_gómez_2021>, supplement: "S.527"). Diese werden anschließend in einen technischen Kontext überführt. Basierend auf  dieser Grundlage wird die Problemstellung definiert und ein Konzept entwickelt um diese #box("zu lösen "+cite(<ncr_clinton_2000>,supplement: "S.13") +cite(<foroughi_luksch>, supplement: "S.8")+".")
 
 * 2. Data Understanding*:
-Die Phase des Data Understandings beginnt mit der initialen Datenerhebung #cite(<foroughi_luksch>, supplement: "S.7"). Anschließend folgt die Datenanalyse, wobei mögliche Verknüpfungen, Zusammenhänge und erste Auffälligkeiten identifiziert werden #cite(<christoph_schröer_kruse_gómez_2021>, supplement: "S.527"). Im Folgenden wird die Qualität der Daten geprüft, um sicher zu stellen, dass die Daten für nachfolgende Analysen geeignet sind #cite(<foroughi_luksch>, supplement: "S.9").
+Die Phase des Data Understandings beginnt mit der initialen Datenbeschreibung #cite(<foroughi_luksch>, supplement: "S.7"). Anschließend folgt die Datenanalyse, wobei Zusammenhänge und Auffälligkeiten untersucht werden #cite(<christoph_schröer_kruse_gómez_2021>, supplement: "S.527"). Zuletzt wird die Qualität der Daten geprüft, um sicherzustellen, dass die Daten für die folgende Modellierung #box("geeignet sind "+cite(<foroughi_luksch>, supplement: "S.9")+".")
 
 * 3. Data Preparation*:
-Die Phase der Data Preparation verfolgt das Ziel, die relevanten Daten gezielt auszuwählen, zu bereinigen, zu transformieren und zu integrieren, sodass ein finaler Datensatz für die Nutzung entsteht #cite(<ncr_clinton_2000>,supplement: "S.14") #box[#cite(<foroughi_luksch>, supplement: "S.9")]. Zudem werden neue Attribute oder Datensätze erstellt, während das Datenformat an die Anforderungen der Modellierungstools #box[angepasst wird #cite(<foroughi_luksch>, supplement: "S.8"). ]
+Die Phase der Data Preparation verfolgt das Ziel, die relevanten Daten auszuwählen, zu bereinigen und aufzubereiten, um einen Datensatz für die Modellierung zu erstellen #cite(<ncr_clinton_2000>,supplement: "S.14") #box[#cite(<foroughi_luksch>, supplement: "S.9")]. Zudem werden neue Attribute erstellt und das Datenformat an die Anforderungen der Modellierungstools #box[angepasst #cite(<foroughi_luksch>, supplement: "S.8"). ]
 
 
 * 4. Modelling*:

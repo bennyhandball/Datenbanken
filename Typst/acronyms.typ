@@ -10,4 +10,5 @@
   DPR:"Dense Passage Retriever",
   F:"Frage",
   A:"Antwort"
+  
 )
