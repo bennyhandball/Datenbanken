@@ -424,8 +424,7 @@ In dieser Phase werden geeignete Modellierungstechniken ausgewählt und anhand d
 In dieser Phase erfolgt die umfassende Evaluation und Bewertung der zuvor erstellten Modelle #cite(<wirth_hipp_2000>, supplement: "S.6"). Zur Beurteilung der Modellqualität werden die zuvor festgelegten Testverfahren sowie die definierten Evaluationsmetriken herangezogen. Dabei wird überprüft, ob die entwickelten Modelle die gewünschten Ergebnisse liefern und die definierten Geschäftsziele vollständig erreichen #box[#cite(<ncr_clinton_2000>,supplement: "S.14") #cite(<wirth_hipp_2000>, supplement: "S.6").]
 
 
-* 6. Deployment*: Die Erstellung des Modells stellt in der Regel nicht das Ende des Projekts dar #cite(<ncr_clinton_2000>,supplement: "S.14") #cite(<wirth_hipp_2000>, supplement: "S.7").
-Je nach Anforderung und Zweck des Modells der geplanten Anwendung wird in diesem Schritt die Implementierung, der Projektabschluss und die Dokumentation des Modells durchgeführt #cite(<ncr_clinton_2000>,supplement: "S.14") #cite(<ncr_clinton_2000>,supplement: "S.32-34") #cite(<wirth_hipp_2000>, supplement: "S.7").
+* 6. Deployment*: Dieser Schritt umfasst die Implementierung des Modells, zum Beispiel als Prototyp, abhängig vom Modells Zweck und #box("geplanter Anwendung "+cite(<ncr_clinton_2000>,supplement: "S.14") +cite(<ncr_clinton_2000>,supplement: "S.32-34") +cite(<wirth_hipp_2000>, supplement: "S.7")+".")
 #pagebreak()
 
 = Grundlagen
@@ -589,8 +588,9 @@ Julian
 //-----------------------------------------------------------------------------------
 #pagebreak()
 = Anhang 
+#set heading(outlined: false)
 == Abbildungen
-#figure(caption: "RAG Workflow entlang der Komponenten" + cite(<gupta2024comprehensivesurveyretrievalaugmentedgeneration>,supplement: "S. 2"),image(width: 100%,"pictures/RAG knowledge.png"))<RAGWorkflow>
+#figure(caption: "RAG Workflow entlang der Komponenten " + cite(<gupta2024comprehensivesurveyretrievalaugmentedgeneration>,supplement: "S. 2"),image(width: 100%,"pictures/RAG knowledge.png"))<RAGWorkflow>
 #pagebreak()
 == Literaturfragen & Antworten<Literaturfragen>
 === Paper 1: Engineering RAG Systems for #box("Real-World Applications")
