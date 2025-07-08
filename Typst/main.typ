@@ -357,7 +357,7 @@ Um den Lesefluss zu verbessern, werden Abbildungen, Codebeispiele und Tabellen, 
 #pagebreak()
 // Abkürzungsverzeichnis (List of Abbreviations)
 #print-acronyms(5em)
-
+#pagebreak()
 // Variablenverzeichnis (List of Variables)
 #print-variables(5em)
 
@@ -387,18 +387,34 @@ Um den Lesefluss zu verbessern, werden Abbildungen, Codebeispiele und Tabellen, 
 #set par(leading: 1.5em, spacing: 2.5em)
 
 = Einleitung
+== Motivation
+In den letzten Jahren hat die Forschung im Bereich der #acrpl("LLM") enorme Fortschritte gemacht. Spätestens mit der Veröffentlichung von Modellen wie GPT-4 ist klar: Generative #acr("AI")-Systeme haben das Potenzial, bestehende Prozesse in Wissenschaft, Wirtschaft und Gesellschaft grundlegend zu verändern. Doch bei aller Euphorie bleibt ein zentrales Problem ungelöst: #acrpl("LLM") basieren ausschließlich auf ihrem statischen Trainingswissen. Für Kontexte, in denen aktuelle oder domänenspezifische Informationen benötigt werden, versagen sie, halluzinieren, liefern veraltete oder schlicht falsche Antworten. Die Antwort der Forschung auf dieses #box("Problem lautet: "+acr("RAG")+".")
+
+#acr("RAG")-Systeme verbinden klassische Sprachmodelle mit externem, dynamisch abrufbarem Wissen. Statt allein auf das interne Modellwissen zu vertrauen, ruft das System bei jeder Anfrage kontextrelevante Inhalte ab und reichert die Antwort dynamisch damit an. Studien wie Hasan et al. #cite(<hasan2025engineeringragsystemsrealworld>) zeigen, dass #acr("RAG") in Praxisfeldern wie Governance oder Medizin bereits erfolgreich eingesetzt werden kann. Für den wissenschaftliche Nutzung, wie die Analyse aktueller Paper, existieren jedoch kaum belastbare Daten zur #box("Leistungsfähigkeit von "+acr("RAG")+"-Systemen.")
+#pagebreak()
+== Forschungsfrage
+Ausgehend von den beschriebenen Herausforderungen und Entwicklungen ergibt #box("sich folgende "+acrf("RQ")+":")
+
+*#acr("RQ")*: Wie leistungsfähig sind #acr("RAG")-Systeme bei der Beantwortung wissenschaftlicher Fachfragen auf Basis aktueller, zuvor nicht im #box("Modelltraining enthaltener Literatur?")
+
+Diese Frage wird im Rahmen eines eigenen #acr("RAG")-Prototyps beantwortet, der für die Nutzung wissenschaftlicher Paper konzipiert wurde. Dabei liegt der Fokus nicht nur auf der technischen Optimierung, sondern auch auf der Bewertung der Antwortqualität #box("anhand etablierter Metriken.")
+
+== Aufbau der Arbeit
+#ref(<Methodik>) erläutert die methodische Herangehensweise auf Basis des #acr("CRISP-DM")-Prozesses. #ref(<Theorie>) liefert die theoretischen und technischen Grundlagen zu #acrpl("LLM"), Embedding-Modellen, Vektordatenbanken und dem #acr("RAG")-Konzept. In #ref(<Praxis>) wird das entwickelte System im Detail vorgestellt, einschließlich Datenbasis, Modellierung und Evaluationsstrategie. #ref(<Diskussion>) diskutiert die Ergebnisse, Limitationen sowie den praktischen Nutzen. #ref(<Fazit>) schließt mit einem Fazit und gibt einen Ausblick auf weiterführende Forschung und sowie #box("Verwendung der Ergebnisse.")
+
 
 #pagebreak()
 
-= Methodik
+= Methodik<Methodik>
 
-*Methodik*
+Zur systematischen Analyse der Forschungsfrage wird das #acrf("CRISP-DM")-Prozessmodell verwendet #cite(<martinez-plumed_contreras-ochando_ferri_hernandez-orallo_kull_lachiche_ramirez-quintana_flach_2019>, supplement: "S.3048"). #acr("CRISP-DM") hat sich in der Praxis und Forschung im Bereich #acr("AI") und Data-Mining als de-facto-Standard etabliert #cite(<christoph_schröer_kruse_gómez_2021>,supplement: "Abstract, S.526") #cite(<studer_bui_drescher_hanuschkin_winkler_peters_müller_2021>, supplement: "S.2")#cite(<martinez-plumed_contreras-ochando_ferri_hernandez-orallo_kull_lachiche_ramirez-quintana_flach_2019>, supplement: "S.3048"), und bietet eine klare Struktur zur Durchführung datengetriebener Projekte #cite(<christoph_schröer_kruse_gómez_2021>, supplement: "S.527") #cite(<lendy_rahmadi_none_hadiyanto_ridwan_sanjaya_arif_prambayun_2023>, supplement: "S.401"). #acr("CRISP-DM") ist domänenunabhängig einsetzbar, und ist insbesondere für komplexe Machine-Learning-Prozesse geeignet, bei welchen Datenauswahl, Modellierung und Evaluation eng verzahnt sind.
 
-#acr("CRISP-DM") ist ein branchenübergreifendes Standardmodell für Data-Mining-Projekte #cite(<christoph_schröer_kruse_gómez_2021>, supplement: "S.527") #cite(<lendy_rahmadi_none_hadiyanto_ridwan_sanjaya_arif_prambayun_2023>, supplement: "S.401"). Es bietet eine strukturierte Vorgehensweise um gezielt, effizient und systematisch vorzugehen #cite(<martinez-plumed_contreras-ochando_ferri_hernandez-orallo_kull_lachiche_ramirez-quintana_flach_2019>, supplement: "S.3048"). #acr("CRISP-DM") hat sich mittlerweile in der Data-Mining und #acr("AI")-Forschung etabliert und wird als de-facto-Standard anerkannt #cite(<christoph_schröer_kruse_gómez_2021>,supplement: "Abstract, S.526") #cite(<studer_bui_drescher_hanuschkin_winkler_peters_müller_2021>, supplement: "S.2")#cite(<martinez-plumed_contreras-ochando_ferri_hernandez-orallo_kull_lachiche_ramirez-quintana_flach_2019>, supplement: "S.3048").
+Im Kontext dieser Arbeit ermöglicht #acr("CRISP-DM") eine methodisch saubere Umsetzung des #acr("RAG")-Prototyps. Von der Zieldefinition bis zur Evaluation der Antwortqualität. Die iterative Natur des Modells erlaubt es zudem, Erkenntnisse aus Zwischenschritten in spätere Phasen zurückzuführen und so das System iterativ #box("zu verbessern "+ref(<Phasen_CRISP_DM>)+".")
+
 //Supplement ergänzen
 #figure(caption:
 [Phasen des CRISP-DM Phasenmodells @wirth_hipp_2000 ]
-, image(width:70%,
+, image(width:51%,
 "pictures/CRISP_DM_PA (1).png" 
 ))
 <Phasen_CRISP_DM>
@@ -427,7 +443,7 @@ In dieser Phase erfolgt die umfassende Evaluation und Bewertung der zuvor erstel
 * 6. Deployment*: Dieser Schritt umfasst die Implementierung des Modells, zum Beispiel als Prototyp, abhängig vom Modells Zweck und #box("geplanter Anwendung "+cite(<ncr_clinton_2000>,supplement: "S.14") +cite(<ncr_clinton_2000>,supplement: "S.32-34") +cite(<wirth_hipp_2000>, supplement: "S.7")+".")
 #pagebreak()
 
-= Grundlagen
+= Grundlagen<Theorie>
 #v(-0.5em)
 == Grundlagen Large Language Modellen
 #acrfpl("LLM") haben das #acrf("NLP") nachhaltig verändert, da diese natürliche Sprache verarbeiten und syntaktisch, semantisch und logisch korrekte Texte generieren können. #acrpl("LLM") werden auf großen Textdatensätzen trainiert und kombinieren neuronale Netze mit spezialisierten Architekturen wie dem Transformer, der den Grundstein für ihre #box("Leistungsfähigkeit legt "+cite(<PLMsPreTraining>, supplement: "S. 1-4")+cite(<AttentionIsAllYouNeed>, supplement:"S. 10")+".")
@@ -495,7 +511,7 @@ Die Transparenz des Verfahrens ermöglicht es darüber hinaus, die verwendeten Q
 #rag_evaluation
 #pagebreak()
 
-= Anwendung
+= Anwendung<Praxis>
 == Business Understanding
 Besonders im akademischen Bereich stehen #acrpl("LLM") vor der Herausforderung, dass sie nur über die Informationen der Trainingsphase verfügen. Dies führt zu stark eingeschränkter Leistung, wenn hochspezialisiertes Wissen oder neue Erkenntnisse eingebunden werden sollen #cite(<karpukhin2020densepassageretrievalopendomain>, supplement: "S. 8") #cite(<lewis2021retrievalaugmentedgenerationknowledgeintensivenlp>, supplement: "S. 9"). Für dieses Problem bieten die in @RAG beschriebenen #acr("RAG")-Systeme eine mögliche Lösung. Ziel dieser Arbeit ist es, zu untersuchen, inwieweit #acr("RAG")-Systeme dazu geeignet sind, Studierenden und Wissenschaftlern schnellen Zugang zu aktueller Forschung zu ermöglichen und literaturbezogene Fragen zuverlässig #box("zu beantworten.")
 
@@ -535,7 +551,7 @@ Julian
 
 #pagebreak()
 
-= Diskussion
+= Diskussion<Diskussion>
 - LLM trainiert nachdem paper veröffentlciht wurden
 == Einordnung der Ergebnisse
 
@@ -545,7 +561,7 @@ Julian
 
 #pagebreak()
 
-= Schlussbetrachtung
+= Schlussbetrachtung<Fazit>
 
 
 == Fazit

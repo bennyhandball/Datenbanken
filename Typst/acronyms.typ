@@ -9,6 +9,6 @@
   ROUGE:"Recall-Oriented Understudy for Gisting Evaluation",
   DPR:"Dense Passage Retriever",
   F:"Frage",
-  A:"Antwort"
-  
+  A:"Antwort",
+  RQ: "Forschungsfrage"
 )

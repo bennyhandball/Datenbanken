@@ -28,7 +28,7 @@ Sie geben Aufschluss, inwiefern eine Modellklassifikation der #box([Referenzklas
 Sei $#vars("c")$ eine #varl("c"), $#vars("L")$ die #varl("L") ${#vars("c")_1, #vars("c")_2, ... #vars("c")_#vars("L")}$ inklusive der Null-Klasse $#vars("c")_\u{2205}$ bei fehlender Label-Zuweisung, $abs(#vars("L"))$ die Kardinalität der Menge $#vars("L")$, $#vars("P")\u{2286}#vars("L")$ die #varl("P") und $#vars("H")\u{2286}#vars("L")$ die #varl("H"). Bei $abs(#vars("L"))=1$ kann eine #acr("LLM")-Vorhersage als klassifiziert oder nicht klassifiziert angesehen werden, wodurch eine binäre Zuordnung in positiv und negativ erlaubt wird. Dies wird für $#vars("P")$ und $#vars("H")$ durchgeführt und den in @ConfusionMatrixOneDimensional dargestellten Mengen je #acr("LLM")-Vorhersage zugewiesen. Anhand dieser Mengen kann eine quantitative Bewertung der Klassifikation berechnet werden
   #cite(<Hu2024LLMEvaluation>, supplement: "S. 7-9").
 
-  #figure(caption: "Confusion Matrix für eindimensionale Klassifizierung je Klasse " + cite(<Lipton2014Thresholding>, supplement: "S. 3"), table(
+  #figure(caption: "Confusion Matrix für eindimensionale Klassifizierung "+box("je Klasse " + cite(<Lipton2014Thresholding>, supplement: "S. 3")), table(
     columns: (auto, auto, auto),
     inset: 8pt,
     align: horizon,
