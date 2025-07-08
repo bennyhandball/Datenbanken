@@ -441,6 +441,10 @@ In dieser Phase erfolgt die umfassende Evaluation und Bewertung der zuvor erstel
 
 
 * 6. Deployment*: Dieser Schritt umfasst die Implementierung des Modells, zum Beispiel als Prototyp, abhängig vom Modells Zweck und #box("geplanter Anwendung "+cite(<ncr_clinton_2000>,supplement: "S.14") +cite(<ncr_clinton_2000>,supplement: "S.32-34") +cite(<wirth_hipp_2000>, supplement: "S.7")+".")
+
+Obwohl #acr("CRISP-DM") diesen etablierten Standard zur Strukturierung datengetriebener Projekte bietet, weist das Modell im Kontext moderner #acr("AI")-Anwendungen wie #acr("RAG") methodische Grenzen auf. Es wurde für klassische Data-Mining-Prozesse entwickelt und bildet neuere Konzepte wie Prompt-Engineering, semantisches Retrieval oder die nicht-deterministische Evaluation generativer Modelle nicht explizit ab #cite(<martinez-plumed_contreras-ochando_ferri_hernandez-orallo_kull_lachiche_ramirez-quintana_flach_2019>, supplement: "S.3049"). Ebenso fehlen integrierte Mechanismen zur Qualitätssicherung über alle Phasen hinweg, was insbesondere bei Systemen mit dynamischen Antwortverhalten wie #acrpl("LLM") #box("relevant ist.")
+
+Trotz dieser Einschränkungen bietet #acr("CRISP-DM") eine geeignete methodische Grundlage für diese Arbeit. Das Modell erlaubt eine strukturierte, nachvollziehbare Durchführung des Entwicklungs- und Evaluationsprozesses. Die Phasen lassen sich flexibel auf die Anforderungen der #acr("RAG")-Systementwicklung übertragen #cite(<christoph_schröer_kruse_gómez_2021>, supplement: "S. 528"). Die iterative Struktur ermöglicht es zudem, Erkenntnisse aus der Evaluationsphase direkt in Modellierung und Datenaufbereitung zurückzuführen #cite(<martinez-plumed_contreras-ochando_ferri_hernandez-orallo_kull_lachiche_ramirez-quintana_flach_2019>, supplement: "S.3051"). Somit wird #acr("CRISP-DM") in dieser Arbeit nicht als starres Framework, sondern als anpassbarer Referenzrahmen genutzt, der gezielt um #acr("AI")-spezifische #box("Elemente ergänzt wird.")
 #pagebreak()
 
 = Grundlagen<Theorie>
