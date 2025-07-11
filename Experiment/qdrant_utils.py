@@ -99,32 +99,39 @@ def retrieve_similar_chunks(query: str, client: QdrantClient, collection_name: s
     return [hit.payload["text"] for hit in search_result]
 
 
-def answer_with_context(query: str, context_chunks: List[str], model: str = "gpt-4o") -> str:
-    """Generate an answer for ``query`` using the provided ``context_chunks``.
+def answer_with_context(query: str, context_chunks: list[str], model: str = "gpt-4o") -> str:
+    """
+    Nutzt OpenAI GPT-4o, um eine Antwort auf eine Frage zu geben – basierend auf den gegebenen Kontext-Chunks.
 
-    When an OpenAI API key is available, the GPT model is queried. If not, the
-    context is returned verbatim so the application remains usable without
-    external services.
+    Args:
+        query (str): Die Benutzerfrage
+        context_chunks (list[str]): Liste von Texten aus Qdrant
+        model (str): OpenAI-Modellname (standardmäßig GPT-4o)
+
+    Returns:
+        str: Generierte Antwort
     """
     load_dotenv()
     api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        raise ValueError("OPENAI_API_KEY was not found in the .env file.")
 
+    client = OpenAI(api_key=api_key)
+
+    # Prompt zusammenbauen
     context = "\n\n".join(context_chunks)
+    prompt = f"Answer the following question based on the context:\n\nContext:\n{context}\n\nQuestion: {query}"
 
-    if api_key:
-        client = OpenAI(api_key=api_key)
-        prompt = (
-            f"Answer the following question based on the context:\n\nContext:\n{context}\n\nQuestion: {query}"
-        )
+    try:
         response = client.chat.completions.create(
             model=model,
             messages=[
                 {"role": "system", "content": "You are a helpful assistant for scientific questions."},
-                {"role": "user", "content": prompt},
+                {"role": "user", "content": prompt}
             ],
-            temperature=0.2,
+            temperature=0.2
         )
         return response.choices[0].message.content.strip()
-
-    # fallback: return raw context when no API key is configured
-    return f"Context:\n{context}\n\nQuestion: {query}"
+    except Exception as e:
+        print(f"Error during answer generation: {e}")
+        return "Error during answer generation."

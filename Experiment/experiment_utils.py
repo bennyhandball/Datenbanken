@@ -35,9 +35,11 @@ def load_processed_ids(filepath: str) -> set:
 def append_result_to_csv(row: Dict[str, str], filepath: str) -> None:
     """Append a single result row to filepath, creating and headering if needed."""
     fieldnames = ["question_id", "question_string", "answer_llm", "answer_gold"]
-    file_exists = os.path.exists(filepath)
+    # Add dynamic metrics keys
+    n = row.get("n", 2)
+    fieldnames += [f"precision-{n}", f"recall-{n}", f"ROUGE-{n}"]
 
-    # Ensure directory exists
+    file_exists = os.path.exists(filepath)
     directory = os.path.dirname(filepath)
     if directory:
         os.makedirs(directory, exist_ok=True)
@@ -46,4 +48,4 @@ def append_result_to_csv(row: Dict[str, str], filepath: str) -> None:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         if not file_exists:
             writer.writeheader()
-        writer.writerow({k: row.get(k, "") for k in fieldnames})
+        writer.writerow(row)
