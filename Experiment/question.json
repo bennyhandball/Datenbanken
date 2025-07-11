@@ -31,6 +31,16 @@
             "question_id": "P1_Q5",
             "question": "Welche zwölf Lessons Learned wurden dokumentiert und wie verteilen sich diese auf technische, operative und ethische Kategorien?",
             "answer": "Die zwölf dokumentierten Lessons Learned verteilen sich auf drei Kategorien: Technical Development (5 Lessons) umfasst die Notwendigkeit domänenspezifischer Modelle, OCR-Fehlerauswirkungen auf Pipelines, Chunking-Balance zwischen Geschwindigkeit und Genauigkeit, FAISS-Skalierungsgrenzen und manuelles Environment-Management ohne Containerization. Operational Factors (5 Lessons) beinhalten SQLite für User-Interaction-Tracking, fragile Scraping-Pipelines, Self-Hosted-Setup für Geschwindigkeit und Compliance, saubere Daten für bessere Retrieval-Qualität und nutzerfeedback-gesteuerte Systemoptimierung. Ethical Considerations (2 Lessons) betreffen Quelldatei-Referenzen für Vertrauensaufbau und Dataset-Bias-Auswirkungen auf Retrieval-Balance, wobei die technischen Aspekte den größten Anteil ausmachen und die Komplexität der praktischen RAG-Implementierung in realen Anwendungen widerspiegeln."
+          },
+          {
+            "question_id": "P1_META_Q1",
+            "question": "Wer sind die Autoren des Papers 'Engineering RAG Systems for Real-World Applications'?",
+            "answer": "Das Framework zeigt eine positive Skalierung mit zunehmender Anzahl von MPI-Ranks, wobei sowohl die Data Generation als auch die Data Aggregation Phase eine Verringerung der Ausführungszeit bei steigender Rank-Anzahl aufweisen. Figure 1(c) demonstriert, dass sich die Zeiten für beide Phasen mit mehr MPI-Ranks reduzieren, was beweist, dass die Pipeline skalierbar ist und große Datenmengen effizient verarbeiten kann. Diese Skalierbarkeit wird durch die verteilte Architektur ermöglicht, die die Arbeitslast gleichmäßig auf alle verfügbaren Ranks verteilt und Bottlenecks vermeidet."
+          },
+          {
+            "question_id": "P1_META_Q2",
+            "question": "Welche Forschungsmethodik wurde im Paper 'Engineering RAG Systems for Real-World Applications' hauptsächlich angewandt?",
+            "answer": "Das Framework zeigt eine positive Skalierung mit zunehmender Anzahl von MPI-Ranks, wobei sowohl die Data Generation als auch die Data Aggregation Phase eine Verringerung der Ausführungszeit bei steigender Rank-Anzahl aufweisen. Figure 1(c) demonstriert, dass sich die Zeiten für beide Phasen mit mehr MPI-Ranks reduzieren, was beweist, dass die Pipeline skalierbar ist und große Datenmengen effizient verarbeiten kann. Diese Skalierbarkeit wird durch die verteilte Architektur ermöglicht, die die Arbeitslast gleichmäßig auf alle verfügbaren Ranks verteilt und Bottlenecks vermeidet."
           }
         ]
       },
@@ -63,6 +73,16 @@
             "question_id": "P2_Q5",
             "question": "Welche fünf Hauptdomänen deckt der MAGPIE-Datensatz ab und welche Art von High-Stakes-Szenarien wurden für jede Domäne entwickelt?",
             "answer": "Der MAGPIE-Datensatz umfasst 158 Aufgaben über 16 verschiedene High-Impact-Domänen, wobei die Hauptkategorien Legal, Scheduling, Healthcare, Tech & Infrastructure und Research umfassen. Spezifische High-Stakes-Szenarien beinhalten strategische GPU-Ressourcenzuteilung zwischen Forschungsteams mit privaten Projektdetails und Latenzanforderungen, Universitätszulassungen mit vertraulichen Budgetbeschränkungen und Bewerberdaten, Gehaltsverhandlungen mit sensiblen Informationen über andere Mitarbeitergehälter, Büro-Miteigentümerschaftsvereinbarungen mit privaten finanziellen Präferenzen und Crowdsourced Innovation in der Pharmaentwicklung mit teilweise geheimen Forschungsdurchbrüchen. Diese Szenarien wurden bewusst so gestaltet, dass vollständiger Ausschluss privater Daten die Aufgabenerfüllung behindert, während uneingeschränktes Teilen zu erheblichen realen Verlusten führen könnte."
+          },
+          {
+            "question_id": "P2_META_Q1",
+            "question": "Wer sind die Autoren des Papers 'MAGPIE: A dataset for Multi-AGent contextual PrIvacy Evaluation'?",
+            "answer": "Das Framework zeigt eine positive Skalierung mit zunehmender Anzahl von MPI-Ranks, wobei sowohl die Data Generation als auch die Data Aggregation Phase eine Verringerung der Ausführungszeit bei steigender Rank-Anzahl aufweisen. Figure 1(c) demonstriert, dass sich die Zeiten für beide Phasen mit mehr MPI-Ranks reduzieren, was beweist, dass die Pipeline skalierbar ist und große Datenmengen effizient verarbeiten kann. Diese Skalierbarkeit wird durch die verteilte Architektur ermöglicht, die die Arbeitslast gleichmäßig auf alle verfügbaren Ranks verteilt und Bottlenecks vermeidet."
+          },
+          {
+            "question_id": "P2_META_Q2",
+            "question": "Welche Forschungsmethodik wurde im Paper 'MAGPIE: A dataset for Multi-AGent contextual PrIvacy Evaluation' hauptsächlich angewandt?",
+            "answer": "Das Framework zeigt eine positive Skalierung mit zunehmender Anzahl von MPI-Ranks, wobei sowohl die Data Generation als auch die Data Aggregation Phase eine Verringerung der Ausführungszeit bei steigender Rank-Anzahl aufweisen. Figure 1(c) demonstriert, dass sich die Zeiten für beide Phasen mit mehr MPI-Ranks reduzieren, was beweist, dass die Pipeline skalierbar ist und große Datenmengen effizient verarbeiten kann. Diese Skalierbarkeit wird durch die verteilte Architektur ermöglicht, die die Arbeitslast gleichmäßig auf alle verfügbaren Ranks verteilt und Bottlenecks vermeidet."
           }
         ]
       },
@@ -95,6 +115,16 @@
             "question_id": "P3_Q5",
             "question": "Wie wurde die Hardware-aware Optimierung implementiert, insbesondere die dynamische Anpassung von k_max basierend auf L3-Cache und Thread Count?",
             "answer": "Die Hardware-aware Optimierung implementiert eine dynamische Anpassung von kmax basierend auf Systemressourcen gemäß der Formel kmax = (L3 Cache)/(4 × Thread Count). Diese Implementierung gewährleistet Thread-Parallelismus bei gleichzeitig speichereffizienter Cache-Nutzung und resultierte in einer 12% Erhöhung der Cache-Auslastung verglichen mit statischen Ansätzen. Das System aktiviert konditionale Parallelisierung nur wenn vorteilhaft: Radix Sort zeigt besonders effektive Skalierung mit 1.79× Speedup für Datensätze > 10⁶ Elemente trotz 12% Thread-Management-Overhead, während Quicksort aufgrund signifikanter Synchronisationskosten (47% Overhead) limitierte Parallelisierbarkeit (1.12× Speedup) aufweist."
+          },
+          {
+            "question_id": "P3_META_Q1",
+            "question": "Wer sind die Autoren des Papers 'Adaptive Hybrid Sort: Dynamic Strategy Selection for Optimal Sorting'?",
+            "answer": "Das Framework zeigt eine positive Skalierung mit zunehmender Anzahl von MPI-Ranks, wobei sowohl die Data Generation als auch die Data Aggregation Phase eine Verringerung der Ausführungszeit bei steigender Rank-Anzahl aufweisen. Figure 1(c) demonstriert, dass sich die Zeiten für beide Phasen mit mehr MPI-Ranks reduzieren, was beweist, dass die Pipeline skalierbar ist und große Datenmengen effizient verarbeiten kann. Diese Skalierbarkeit wird durch die verteilte Architektur ermöglicht, die die Arbeitslast gleichmäßig auf alle verfügbaren Ranks verteilt und Bottlenecks vermeidet."
+          },
+          {
+            "question_id": "P3_META_Q2",
+            "question": "Welche Forschungsmethodik wurde im Paper 'Adaptive Hybrid Sort: Dynamic Strategy Selection for Optimal Sorting' hauptsächlich angewandt?",
+            "answer": "Das Framework zeigt eine positive Skalierung mit zunehmender Anzahl von MPI-Ranks, wobei sowohl die Data Generation als auch die Data Aggregation Phase eine Verringerung der Ausführungszeit bei steigender Rank-Anzahl aufweisen. Figure 1(c) demonstriert, dass sich die Zeiten für beide Phasen mit mehr MPI-Ranks reduzieren, was beweist, dass die Pipeline skalierbar ist und große Datenmengen effizient verarbeiten kann. Diese Skalierbarkeit wird durch die verteilte Architektur ermöglicht, die die Arbeitslast gleichmäßig auf alle verfügbaren Ranks verteilt und Bottlenecks vermeidet."
           }
         ]
       },
@@ -126,6 +156,16 @@
           {
             "question_id": "P4_Q5",
             "question": "Wie skaliert die Performance des Frameworks mit zunehmender Anzahl von MPI-Ranks für Data Generation und Data Aggregation?",
+            "answer": "Das Framework zeigt eine positive Skalierung mit zunehmender Anzahl von MPI-Ranks, wobei sowohl die Data Generation als auch die Data Aggregation Phase eine Verringerung der Ausführungszeit bei steigender Rank-Anzahl aufweisen. Figure 1(c) demonstriert, dass sich die Zeiten für beide Phasen mit mehr MPI-Ranks reduzieren, was beweist, dass die Pipeline skalierbar ist und große Datenmengen effizient verarbeiten kann. Diese Skalierbarkeit wird durch die verteilte Architektur ermöglicht, die die Arbeitslast gleichmäßig auf alle verfügbaren Ranks verteilt und Bottlenecks vermeidet."
+          },
+          {
+            "question_id": "P4_META_Q1",
+            "question": "Wer sind die Autoren des Papers 'Scalable GPU Performance Variability Analysis framework'?",
+            "answer": "Das Framework zeigt eine positive Skalierung mit zunehmender Anzahl von MPI-Ranks, wobei sowohl die Data Generation als auch die Data Aggregation Phase eine Verringerung der Ausführungszeit bei steigender Rank-Anzahl aufweisen. Figure 1(c) demonstriert, dass sich die Zeiten für beide Phasen mit mehr MPI-Ranks reduzieren, was beweist, dass die Pipeline skalierbar ist und große Datenmengen effizient verarbeiten kann. Diese Skalierbarkeit wird durch die verteilte Architektur ermöglicht, die die Arbeitslast gleichmäßig auf alle verfügbaren Ranks verteilt und Bottlenecks vermeidet."
+          },
+          {
+            "question_id": "P4_META_Q2",
+            "question": "Welche Forschungsmethodik wurde im Paper 'Scalable GPU Performance Variability Analysis framework' hauptsächlich angewandt?",
             "answer": "Das Framework zeigt eine positive Skalierung mit zunehmender Anzahl von MPI-Ranks, wobei sowohl die Data Generation als auch die Data Aggregation Phase eine Verringerung der Ausführungszeit bei steigender Rank-Anzahl aufweisen. Figure 1(c) demonstriert, dass sich die Zeiten für beide Phasen mit mehr MPI-Ranks reduzieren, was beweist, dass die Pipeline skalierbar ist und große Datenmengen effizient verarbeiten kann. Diese Skalierbarkeit wird durch die verteilte Architektur ermöglicht, die die Arbeitslast gleichmäßig auf alle verfügbaren Ranks verteilt und Bottlenecks vermeidet."
           }
         ]
@@ -159,67 +199,20 @@
             "question_id": "P5_Q5",
             "question": "Wie wird Ashby's Law of Requisite Variety im Kontext der AI-Kontrolle erklärt und welche Implikationen ergeben sich daraus für Human-centric Oversight?",
             "answer": "Ashby's Law of Requisite Variety besagt, dass für Sicherheitsgarantien ein Kontrollsystem generell mindestens so viel Komplexität haben muss wie das System, das es zu kontrollieren versucht. Im Kontext von Human-centric Oversight bedeutet dies, dass es natürliche Grenzen für die Kontrollierbarkeit von Systemen gibt, basierend auf Denkgeschwindigkeit, Proaktivität, Expertisegrad, Aufmerksamkeit für Details und Zuverlässigkeit menschlicher Operatoren. Selbst mit AI-Assistenz, die Menschen beim Verstehen des gegebenen Kontexts unterstützen, deutet das Gesetz darauf hin, dass das kontrollierende System mindestens so viel Ausdrucksfähigkeit haben muss wie das kontrollierte System. Dies stellt eine fundamentale Herausforderung für die Überwachung hochentwickelter AI-Systeme dar."
+          },
+          {
+            "question_id": "P5_META_Q1",
+            "question": "Wer sind die Autoren des Papers 'The Singapore Consensus on Global AI Safety Research Priorities'?",
+            "answer": "Das Framework zeigt eine positive Skalierung mit zunehmender Anzahl von MPI-Ranks, wobei sowohl die Data Generation als auch die Data Aggregation Phase eine Verringerung der Ausführungszeit bei steigender Rank-Anzahl aufweisen. Figure 1(c) demonstriert, dass sich die Zeiten für beide Phasen mit mehr MPI-Ranks reduzieren, was beweist, dass die Pipeline skalierbar ist und große Datenmengen effizient verarbeiten kann. Diese Skalierbarkeit wird durch die verteilte Architektur ermöglicht, die die Arbeitslast gleichmäßig auf alle verfügbaren Ranks verteilt und Bottlenecks vermeidet."
+          },
+          {
+            "question_id": "P5_META_Q2",
+            "question": "Welche Forschungsmethodik wurde im Paper 'The Singapore Consensus on Global AI Safety Research Priorities' hauptsächlich angewandt?",
+            "answer": "Das Framework zeigt eine positive Skalierung mit zunehmender Anzahl von MPI-Ranks, wobei sowohl die Data Generation als auch die Data Aggregation Phase eine Verringerung der Ausführungszeit bei steigender Rank-Anzahl aufweisen. Figure 1(c) demonstriert, dass sich die Zeiten für beide Phasen mit mehr MPI-Ranks reduzieren, was beweist, dass die Pipeline skalierbar ist und große Datenmengen effizient verarbeiten kann. Diese Skalierbarkeit wird durch die verteilte Architektur ermöglicht, die die Arbeitslast gleichmäßig auf alle verfügbaren Ranks verteilt und Bottlenecks vermeidet."
           }
         ]
       }
     ],
-    "metadata_questions": {
-      "description": "Standardisierte Metadatenfragen für alle Paper zur Evaluation grundlegender Informationsextraktion",
-      "questions": [
-        {
-          "question_id": "META_Q1",
-          "question": "Wer sind die Autoren des Papers?",
-          "papers": [
-            {
-              "paper_id": 1,
-              "answer": "Md Toufique Hasan and Muhammad Waseem and Kai-Kristian Kemell and Ayman Asad Khan and Mika Saari and Pekka Abrahamsson"
-            },
-            {
-              "paper_id": 2,
-              "answer": "Gurusha Juneja and Alon Albalak and Wenyue Hua and William Yang Wang"
-            },
-            {
-              "paper_id": 3,
-              "answer": "Shrinivass Arunachalam Balasubramanian"
-            },
-            {
-              "paper_id": 4,
-              "answer": "Ankur Lahiry and Ayush Pokharel and Seth Ockerman and Amal Gueroudji and Line Pouchard and Tanzima Z. Islam"
-            },
-            {
-              "paper_id": 5,
-              "answer": "Yoshua Bengio and Tegan Maharaj and Luke Ong and Stuart Russell and Dawn Song and Max Tegmark and Lan Xue and Ya-Qin Zhang and Stephen Casper and Wan Sie Lee and Sören Mindermann and Vanessa Wilfred and Vidhisha Balachandran and Fazl Barez and Michael Belinsky and Imane Bello and Malo Bourgon and Mark Brakel and Siméon Campos and Duncan Cass-Beggs and Jiahao Chen and Rumman Chowdhury and Kuan Chua Seah and Jeff Clune and Juntao Dai and Agnes Delaborde and Nouha Dziri and Francisco Eiras and Joshua Engels and Jinyu Fan and Adam Gleave and Noah Goodman and Fynn Heide and Dan Hendrycks and Cyrus Hodes and Bryan Low Kian Hsiang and Minlie Huang and Sami Jawhar and Wang Jingyu and Adam Tauman Kalai and Meindert Kamphuis and Mohan Kankanhalli and Subhash Kantamneni and Mathias Bonde Kirk and Thomas Kwa and Jeffrey Ladish and Kwok-Yan Lam and Wan Lee Sie and Taewhi Lee and Xiaojian Li and Jiajun Liu and Chaochao Lu and Yifan Mai and Richard Mallah and Julian Michael and Nick Moës and Simon Möller and Kihyuk Nam and Kwan Yee Ng and Mark Nitzberg and Besmira Nushi and Seán O hÉigeartaigh and Alejandro Ortega and Pierre Peigné and James Petrie and Benjamin Prud'Homme and Reihaneh Rabbany and Nayat Sanchez-Pi and Sarah Schwettmann and Buck Shlegeris and Saad Siddiqui and Aradhana Sinha and Martín Soto and Cheston Tan and Dong Ting and Robert Trager and Brian Tse and Anthony Tung K. H. and Vanessa Wilfred and John Willes and Denise Wong and Wei Xu and Rongwu Xu and Yi Zeng and HongJiang Zhang and Djordje Žikelić"
-            }
-          ]
-        },
-        {
-          "question_id": "META_Q2",
-          "question": "Welche Forschungsmethodik wurde hauptsächlich angewandt?",
-          "papers": [
-            {
-              "paper_id": 1,
-              "answer": "Die Studie verwendete eine empirische Mixed-Methods-Forschungsmethodik, die sich aus der End-to-End-Entwicklung und -Implementierung von fünf domainspezifischen RAG-Systemen sowie einer strukturierten Benutzer-Evaluation zusammensetzte. In Zusammenarbeit mit fünf realen Organisationen wurden RAG-Systeme für die Bereiche Governance, Cybersecurity, Landwirtschaft, Industrieforschung und Medizinische Diagnostik entwickelt, wobei jedes System an spezifische operative Herausforderungen angepasst wurde und mehrsprachige OCR-Pipelines, semantische Retrieval-Mechanismen über Vektor-Embeddings sowie domainadaptierte LLMs integrierte. Die Evaluation erfolgte durch eine web-basierte Benutzerstudie mit 100 Teilnehmern, die mit Live-Demo-Umgebungen interagierten und realistische, domainspezifische Aufgaben durchführten, wobei sowohl quantitative Daten über Likert-Skala-Bewertungen (1-5) als auch qualitative Erkenntnisse durch offene Feedback-Fragen zu sechs Evaluationskriterien (Benutzerfreundlichkeit, Informationsrelevanz, Transparenz, Systemreaktionsfähigkeit, Antwortgenauigkeit und Weiterempfehlungswahrscheinlichkeit) erhoben wurden. Diese praxisorientierte Methodik ermöglichte es, über technische Benchmarks hinauszugehen und sowohl die technische Leistung als auch die Benutzererfahrung in realen Anwendungsszenarien zu bewerten, wodurch praktische Erkenntnisse für zukünftige RAG-Implementierungen gewonnen werden konnten."
-            },
-            {
-              "paper_id": 2,
-              "answer": "Die Forschungsmethodik im MAGPIE-Paper basiert hauptsächlich auf einer empirischen Benchmark-Entwicklung mit systematischer LLM-Evaluation. Die Autoren entwickelten zunächst einen neuen Benchmark durch eine mehrstufige LLM-getriebene Pipeline, die Claude-3.7-Sonnet als Generator und Verifizierer nutzt, um 158 realistische High-Stakes-Szenarien über 16 Domänen zu erstellen. Anschließend führten sie umfassende empirische Experimente mit vier state-of-the-art LLMs (GPT-4o, Claude-3.7-Sonnet, Llama-3-70B, Mistral-Large-123B) in verschiedenen Settings durch: single-turn Klassifikationsaufgaben zur Bewertung des inhärenten Privatsphäre-Verständnisses, multi-turn Kollaborationsszenarien in passiven und aktiven Modi, sowie explizite und implizite Instruktions-Settings. Die Methodik wurde durch menschliche Annotation und Verifikation mit fünf Annotatoren validiert, die 25 zufällig ausgewählte Aufgaben anhand von sechs strukturierten Kriterien bewerteten, und die Ergebnisse wurden durch quantitative Metriken wie Leakage-Raten, Konsens-Wahrscheinlichkeiten und Task-Success-Raten sowie LLM-as-a-Judge Evaluierung systematisch analysiert."
-            },
-            {
-              "paper_id": 3,
-              "answer": "Die Forschungsmethodik des Adaptive Hybrid Sort Papers basiert hauptsächlich auf einem experimentellen Algorithm-Engineering-Ansatz, der empirische Evaluation mit theoretischer Fundierung kombiniert. Das Vorgehen umfasst: (1) Systematic Algorithm Design durch Entwicklung einer adaptiven Hybrid-Architektur mit Feature-Extraktion und ML-basierter Entscheidungsfindung, (2) Comprehensive Benchmarking mit 15 sorgfältig konstruierten Datensätzen spanning drei Kategorien (synthetisch, real-world, edge cases) zur Stress-Testing aller Entscheidungspfade, (3) Machine Learning Integration durch Training eines XGBoost-Klassifikators auf 10.000 synthetischen Datensätzen mit 92.4% Accuracy, (4) Multi-objective Optimization mittels Bayesian Optimization zur Threshold-Kalibrierung mit gewichteter Zeit-Speicher-Tradeoff-Funktion, und (5) Comparative Performance Analysis gegen etablierte Baseline-Algorithmen (Timsort, Introsort, Radix Sort, Counting Sort) mit detailliertem Microbenchmarking unter kontrollierten Bedingungen. Die Methodologie wird durch formale Verifikation der Korrektheit via struktureller Induktion und theoretische Komplexitätsanalyse ergänzt, wobei die Evaluation auf einer Windows 11/WSL2-Umgebung mit TypeScript/Node.js-Implementation durchgeführt wurde."
-            },
-            {
-              "paper_id": 4,
-              "answer": "Die Autoren entwickelten ein distributed data analysis framework als technische Lösung für das Problem der skalierbaren Analyse von GPU-Performance-Logs. Die Forschungsmethodik umfasste mehrere Komponenten: Zunächst wurde ein zweistufiges Pipeline-Design entworfen, bestehend aus einer Data Generation Phase zur Extraktion und Sharding von Execution Traces und einer Data Aggregation Phase zur Konsolidierung und Analyse der Daten. Das Framework wurde dann experimentell auf dem Texas Advanced Computing Center's Lonestar6 Supercomputer evaluiert, wobei reale HPC- und AI-Workload-Daten von Nsight Compute Traces verwendet wurden. Die empirische Evaluation erfolgte durch Performance-Messungen mit verschiedenen MPI-Konfigurationen, um die Skalierbarkeit des Systems zu demonstrieren. Zusätzlich wendeten die Autoren statistische Analysemethoden wie die Inter-Quartile Range (IQR) zur Anomalieerkennung an und führten eine detaillierte Analyse der Memory Stall Patterns durch. Die Methodik folgt dem typischen Systems Research Ansatz: Problemidentifikation (Skalierbarkeit von GPU-Performance-Analyse), Systemdesign (distributed framework), Implementierung, experimentelle Evaluation auf realer Hardware und empirische Analyse der Ergebnisse zur Validierung der Effektivität des vorgeschlagenen Ansatzes."
-            },
-            {
-              "paper_id": 5,
-              "answer": "Die hauptsächlich angewandte Forschungsmethodik war eine systematische Literatursynthese kombiniert mit einem strukturierten Expertenkonsultationsprozess. Das Dokument stellt eine umfassende Synthese von Forschungsvorschlägen dar, die aus dem International AI Safety Report-B und komplementären aktuellen Forschungspriorisierungsrahmen stammen, einschließlich Arbeiten von UK AISI, Anthropic, Anwar, Bengio, GDM, Hendrycks, Ji, Li, OpenAI, NIST, Reuel, Slattery und Weidinger. Der methodische Ansatz folgte einem mehrstufigen Verfahren: Zunächst erstellte das Expert Planning Committee einen Konsultationsentwurf, der dann an alle Konferenzteilnehmer der SCAI 2025 (über 100 Teilnehmer aus 11 Ländern) verteilt wurde. Nach mehreren Runden von schriftlichem und persönlichem Feedback wurde das Dokument iterativ überarbeitet, um Punkte des breiten Konsenses unter den diversen Forschern zu synthetisieren. Diese Methodik zielte darauf ab, sowohl die bestehende Literatur systematisch zu erfassen als auch durch den Multi-Stakeholder-Konsultationsprozess (Akademie, Industrie, Regierung, Zivilgesellschaft) eine breite Legitimität und Repräsentativität der identifizierten Forschungsprioritäten zu gewährleisten."
-            }
-          ]
-        }
-      ]
-    },
     "metadata": {
       "total_content_questions": 25,
       "total_metadata_questions": 10,
