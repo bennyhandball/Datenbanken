@@ -120,13 +120,13 @@ def answer_with_context(query: str, context_chunks: list[str], model: str = "gpt
 
     # Prompt zusammenbauen
     context = "\n\n".join(context_chunks)
-    prompt = f"Beantworte die folgende Frage auf Deutsch mit dem angehängten Kontext:\n\nFrage: {query}\n\nKontext:\n{context}"
+    prompt = f"Analyze the given context documents and provide accurate, complete answers to user questions using only the information contained inside the context:\n\nQuestion: {query}\n\nContext:\n{context}"
 
     try:
         response = client.chat.completions.create(
             model=model,
             messages=[
-                {"role": "system", "content": "You are a helpful assistant for scientific paper analysis and scientific question answering."},
+                {"role": "system", "content": "System: You are a precise and helpful AI assistant that answers questions IN GERMAN based strictly on the provided context. Your primary goal is to provide accurate, relevant, and well-sourced responses using only the information given in the context."},
                 {"role": "user", "content": prompt}
             ],
             temperature=0.0
@@ -182,9 +182,7 @@ Evaluate on these five criteria exactly:
 Then compute:
 - overall_score = sum of the five individual scores
 - max_score = 10
-- pass = true if overall_score ≥ 8, otherwise false
-
-For any criterion where you give 0 or 1, add a brief note explaining the deduction.
+- pass = true if overall_score ≥ 7, otherwise false
 
 Output your evaluation as a single JSON object with these fields:
 {
