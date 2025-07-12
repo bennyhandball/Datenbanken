@@ -455,9 +455,29 @@ Trotz dieser Einschränkungen bietet #acr("CRISP-DM") eine geeignete methodische
 === Architektur und Funktionsweise
 Die Entwicklung heutiger leistungsfähiger #acrpl("LLM") basiert auf der Transformer-Architektur von Vaswani et al. #cite(<AttentionIsAllYouNeed>), die durch ihren Self-Attention-Mechanismus eine effiziente Verarbeitung natürlicher Sprache ermöglicht. Moderne #acrpl("LLM") werden durch ausgedehntes Vortraining auf umfangreichen Textkorpora entwickelt und können anschließend für spezifische Aufgaben angepasst werden #cite(<PLMsPaper>, supplement: "S. 1"). Die Größe von #acrpl("LLM") bemisst sich an der Zahl der trainierbaren Parameter, die – neben Faktoren wie der Qualität der Trainingsdaten – ihr #box("Sprachverständnis beeinflussen "+cite(<brown2020languagemodelsfewshotlearners>, supplement: "S. 4")+".")
 #v(-0.25em)
-=== Inferenz und Prompt-basierte Interaktion
+=== Inferenz und Prompt-basierte Interaktion <Prompt_Theorie>
 Die praktische Anwendung von #acrpl("LLM") erfolgt in der Inferenz-Phase, in der das trainierte Modell anhand eines #acr("Prompt") und auf Basis der gelernten Sprachmuster eine Ausgabe generiert #cite(<Inference>,supplement: "S. 3"). Der #acr("Prompt") fungiert dabei als zentrale Schnittstelle zwischen Nutzer und Modell und ermöglicht es, das Verhalten des #acrpl("LLM") präzise zu steuern und spezifische Kontextinformationen zu übermitteln.
 Während der Inferenz verarbeitet das #acr("LLM") die Eingabe tokenweise und generiert basierend auf den Wahrscheinlichkeitsverteilungen seiner Parameter eine kohärente Antwort. Die Qualität dieser Ausgabe hängt maßgeblich vom bereitgestellt #box("Kontext ab "+cite(<LLMTaxonomyPrompting>, supplement: "S. 3-6")+".")
+
+Ziel ist es, durch Anpassungen des Prompts die Ausgabe des Modells positiv zu beeinflussen #cite(<marvin_hellen_jjingo_nakatumba_nabende_2024>, supplement: "S.388"). 
+Grundsätzlich unterscheidet man zwischen dem System- und dem User-Prompt.
+
+
+
+*System-Prompt:* 
+Der System-Prompt ist die initiale, funktionsspezifische Anweisung, die 
+den Rahmen zwischen dem #acr("LLM") und dem menschlichen Benutzer definiert #cite(<mctear_ashurkina_2024>, supplement:"S.117"). Innerhalb des System-Promps, kann das Verhalten, die Formalität und Fachsprache definiert werden. Dazu werden der Kontext, die Rolle oder spezifische Regeln für die Interaktion festgelegt. #cite(<mrbullwinkle_2025>). 
+
+
+*User-Prompt:*
+Der User-Prompt ist die spezifische Eingabe des Endnutzers, auf die das Modell reagiert. Diese Anfrage stellt die Grundlage für die erzeugten Antworten dar #cite(<openai_platform_2025>). 
+
+Grundsätzlich lassen sich folgende Empfehlungen für die Formulierung von Prompts aus der Literatur ableiten:
+
+
+- *Klarheit, Struktur und Präzision :* Die Prompts sollen präzise und unmissverständlich formuliert sein, um ungenaue Interpretationen und Fehlinterpretationen zu vermeiden #cite(<taulli_2023>, supplement: "S.54").
+
+- *Kontext und Datengrundlage :* Die Angabe von Kontext und einer passenden Datengrundlage ist relevant, da sie dem #acr("LLM") bei der Interpretation der Anfrage hilft, eine fundierte, aufgabenspezifische Antwort zu generieren #cite(<openai_platform_2025>) #cite(<taulli_2023>, supplement: "S.54").
 #pagebreak()
 
 #import "embedding-modelle.typ": embedding-modelle
@@ -565,7 +585,7 @@ Zur Generierung der Antworten mithilfe des #acr("RAG")-Systems werden, wie in @L
 
 - *Bewertendes Modell GPT-4o:* Als bewertendes Modell für den #acr("LLM")-as-a-Judge Ansatz wurde ebenfalls GPT-4o von OpenAI gewählt. Diese Modell bewertet, wie in @LLM-as-a-Judge  ,die zuvor generieten Antworten des #acr("RAG")-Systems. 
 
-- *Prompting:* Die Erstellung des Prompts für das #acr("RAG")-System erfolgte nach den in der Literatur definierten Kriterien. Das Prompt-Template wurde dabei in allen Iterationen des #acr("RAG")-Systems konsistent eingesetzt. 
+- *Prompting:* Die Erstellung des Prompts für das #acr("RAG")-System erfolgte nach den in der Literatur definierten Kriterien (siehe @Prompt_Theorie). Das Prompt-Template wurde dabei in allen Iterationen des #acr("RAG")-Systems konsistent eingesetzt. 
 
 #figure( table(
     columns: (12%,20%, 70%),
@@ -581,13 +601,13 @@ Zur Generierung der Antworten mithilfe des #acr("RAG")-Systems werden, wie in @L
     [*System:*],[Kontext:], [
       #set par(leading: 0.5em, spacing: 1.5em)
       
-      You are a precise and helpful AI assistant that answers questions based strictly on the provided context. Your primary goal is to provide accurate, relevant, and well-sourced responses using only the information given in the context.
+      You are a precise and helpful AI assistant that answers questions IN GERMAN based strictly on the provided context. Your primary goal is to provide accurate, relevant, and well-sourced responses using only the information given in the context.
 ],
     
 
     [*User:*],[Aufgabe:],[
       #set par(leading: 0.5em, spacing: 1.5em)
-      Analyze the given context documents and provide accurate, complete answers IN GERMAN to user questions using only the information contained within those documents:],
+      Analyze the given context documents and provide accurate, complete answers to user questions using only the information contained within those documents:],
     [],[Question:], [Question to answer: {question} ],
     [],[Context:], [Context documents: {context} ],
 
@@ -598,7 +618,7 @@ Zur Generierung der Antworten mithilfe des #acr("RAG")-Systems werden, wie in @L
   supplement: "Prompt"
   )<ZeroShot>
 
-  Der 
+  Das folgende Prompt-Template zeigt den Prompt für den #acr("LLM")-as-a-Judge Ansatz. Dieser wurde ebenfalls nach den in der Literatur definierten Kriterien (siehe @Prompt_Theorie) erstellt und in allen Iterationen des #acr("RAG")-Systems konsistent eingesetzt.
 
   #figure( table(
     columns: (12%,20%, 70%),
@@ -648,9 +668,13 @@ Output your evaluation as a single JSON object with these fields:
 ],
     
 
-    [*User:*],[Aufgabe:],[Analyze the given context documents and provide accurate, complete answers IN GERMAN to user questions using only the information contained within those documents:],
-    [],[Question:], [Question to answer: {question} ],
-    [],[Context:], [Context documents: {context} ],
+    [*User:*],[Aufgabe:],[
+      #set par(leading: 0.5em, spacing: 1.5em)
+      Evaluate the following question and answers:],
+    [],[question_id:], [{question_id} ],
+    [],[question_string:], [{question} ],
+    [],[answer_llm:], [{answer_llm} ],
+    [],[answer_gold:], [{answer_gold} ],
 
 
   ),
@@ -658,6 +682,8 @@ Output your evaluation as a single JSON object with these fields:
   ,kind: "Prompt",
   supplement: "Prompt"
   )<ZeroShot>
+
+#pagebreak()
 
 *Retrieval Augmented Generation Parameter:*
 
@@ -668,15 +694,12 @@ Output your evaluation as a single JSON object with these fields:
 
 - *Chunk Size /Overlap*
 
-1024 mit 128 Overlap 
+Für die Konfiguration der Chunk-Size des 
 
 - *Distanzmetrik*
 
 Cosine Similarity 
 
-- *Temperature*
-
-0,0 bis 0,2 
 
 - *Verwendete Retrieval-Augmented Generation-Architektur*
 Die RAG-Architektur in (Abbildung) zeigt die projektspezifische Architektur des #acr("RAG")-Systems, die zur Beantwortung der in Abschnitt erläuterten Fragen eingesetzt wurde. Im Folgenden soll das Vorgehen näher erläutert werden.
@@ -692,10 +715,7 @@ Zur Beurteilung der Antwortqualität wurden die generierten -Dateien, sowie die 
 #acr("LLM")-as-a-Judge Modells Claude-3-Opus hinsichtlich Completeness und Correctness bewertet und mit dem Ergebnis der Evaluationsmetriken verglichen. 
 
 
-Die Bewertungskriterien des #acr("LLM")-as-a-Judge wurden wie folgt definiert: 
 
-1. *Correctness* – Is the LLM Answer factually accurate and does it match the intent of the Reference Answer?
-2. *Completeness* – Does the LLM Answer cover all important points mentioned in the Reference Answer?
 
 
 
