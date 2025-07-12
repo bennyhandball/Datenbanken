@@ -595,7 +595,7 @@ Zur Generierung der Antworten mithilfe des #acr("RAG")-Systems werden, wie in @L
 
 - *Bewertendes Modell GPT-4o:* Als bewertendes Modell für den #acr("LLM")-as-a-Judge Ansatz wurde ebenfalls GPT-4o von OpenAI gewählt. Diese Modell bewertet, wie in @LLM-as-a-Judge  ,die zuvor generieten Antworten des #acr("RAG")-Systems. 
 
-- *Prompting:* Die Erstellung des Prompts für das #acr("RAG")-System erfolgte nach den in der Literatur definierten Kriterien (siehe @Prompt_Theorie). Das Prompt-Template wurde dabei in allen Iterationen des #acr("RAG")-Systems konsistent eingesetzt. 
+- *Prompting:* Die Erstellung des Prompts für das #acr("RAG")-System erfolgte nach den in der Literatur definierten Kriterien (siehe ). Das Prompt-Template wurde dabei in allen Iterationen des #acr("RAG")-Systems konsistent eingesetzt. 
 
 #figure( table(
     columns: (12%,20%, 70%),
@@ -628,7 +628,7 @@ Zur Generierung der Antworten mithilfe des #acr("RAG")-Systems werden, wie in @L
   supplement: "Prompt"
   )<ZeroShot>
 
-  Das folgende Prompt-Template zeigt den Prompt für den #acr("LLM")-as-a-Judge Ansatz. Dieser wurde ebenfalls nach den in der Literatur definierten Kriterien (siehe @Prompt_Theorie) erstellt und in allen Iterationen des #acr("RAG")-Systems konsistent eingesetzt.
+  Das folgende Prompt-Template zeigt den Prompt für den #acr("LLM")-as-a-Judge Ansatz. Dieser wurde ebenfalls nach den in der Literatur definierten Kriterien (siehe ) erstellt und in allen Iterationen des #acr("RAG")-Systems konsistent eingesetzt.
 
   #figure( table(
     columns: (12%,20%, 70%),
