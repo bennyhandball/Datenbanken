@@ -6,6 +6,7 @@
 
 #import "rag_evaluation.typ": rag_evaluation
 #import "rag_parameter.typ": rag_parameter
+#import "evaluation_and_deployment.typ": evaluation_and_deployment
 
 // Set global cite style
 #set cite(style: "ieee")
@@ -727,35 +728,21 @@ Zur Beurteilung der Antwortqualität wurden die generierten -Dateien, sowie die 
 
 
 
-
-
-#pagebreak()
-
-
-
-
-== Evaluation<Evaluation>
-Julian
-== Deployment
-Julian
+Das sind die falschen Kriterien du dödel, schau mal rein was ich in evaluation betrachte und im Code welches Schema ich genutzt habe.
 
 #pagebreak()
 
-= Diskussion<Diskussion>
-- LLM trainiert nachdem paper veröffentlciht wurden
-== Einordnung der Ergebnisse
-
-== Herausforderungen und Limitationen 
-
-== Handlungsempfehlungen und zukünftige Forschung
+#evaluation
 
 #pagebreak()
 
 = Schlussbetrachtung<Fazit>
 
+== Zusammenfassung der Ergebnisse
 
-== Fazit
+== Einordnung der Ergebnisse
 
+== Herausforderungen und Limitationen <Diskussion>
 
 == Ausblick
 
