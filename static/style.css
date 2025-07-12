@@ -12,13 +12,17 @@ body {
 }
 
 .container {
-    max-width: 600px;
+    max-width: 700px;
     margin: auto;
     background: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    flex: 1 1 0;
+    box-sizing: border-box;
+    
 }
+
 
 label {
     display: block;
@@ -223,3 +227,17 @@ textarea {
 .clear-form {
     margin-top: 10px;
 }
+
+/* flex‐wrap both containers side by side */
+.containers-wrapper {
+    display: flex;
+    gap: 20px;           
+    align-items: flex-start;
+    padding: 20px;
+  }
+  
+  /* allow each container to grow/shrink evenly */
+  
+
+  
+  

@@ -449,7 +449,7 @@ Trotz dieser Einschränkungen bietet #acr("CRISP-DM") eine geeignete methodische
 
 = Grundlagen<Theorie>
 #v(-0.5em)
-== Grundlagen Large Language Modellen
+== Grundlagen Large Language Modellen <LLM_Theorie>
 #acrfpl("LLM") haben das #acrf("NLP") nachhaltig verändert, da diese natürliche Sprache verarbeiten und syntaktisch, semantisch und logisch korrekte Texte generieren können. #acrpl("LLM") werden auf großen Textdatensätzen trainiert und kombinieren neuronale Netze mit spezialisierten Architekturen wie dem Transformer, der den Grundstein für ihre #box("Leistungsfähigkeit legt "+cite(<PLMsPreTraining>, supplement: "S. 1-4")+cite(<AttentionIsAllYouNeed>, supplement:"S. 10")+".")
 #v(-0.25em)
 === Architektur und Funktionsweise
@@ -557,7 +557,163 @@ Für jedes der fünf ausgewählten Paper werden fünf inhaltliche Fragen erstell
 Insgesamt liegt somit ein Datensatz von 35 Fragen (5 × 5 Inhlatsfragen, 5 × 2 Metadatenfragen) vor. Dieser dient im Weiteren als Basis für die Entwicklung des #acr("RAG")-Systems und Bewertung der #box("Antwortgenauigkeit in "+ref(<Evaluation>)+".")
 
 == Modelling
-Benny
+Im Kontext von #acr("RAG") erfordert die Modelling Phase die systematische Auswahl und Konfiguration der Retrieval Komponente als auch der generativen Sprachmodelle um eine möglichst passende Harmonisierung zwischen dem Abruf relevanter Informationen und der kontextuellen Textgenerierung zu erreichen.
+
+- *Programmiersprache Python:* Python eignet sich für #acr("AI")- und Data-Science-Anwendungen, da es eine klare Syntax, sowie eine breite Auswahl leistungsfähiger Bibliotheken bietet #cite(<nagpal_gabrani_2019>, supplement: "S.141-S.143"). Zusätzlich ermöglicht die Programmiersprache  eine schnelle Prototypentwicklung, modulare Strukturierung und eine gute Integrierbarkeit in bestehende Systeme #cite(<nagpal_gabrani_2019>, supplement: "S.141-S.143"). Python wurde für die Implementierung des #acr("RAG")-Systems und die Analyse der Optimierungsstrategien genutzt.
+
+
+Für die Entwicklung des Modells und die darauffolgende Analyse wurden weitere folgende Komponenten verwendet:
+
+
+- *Embedding Modell text-embedding-3-large:* Das Modell text-embedding-3-large von OpenAI zeichnet sich durch eine Embedding-Dimension von 3072 Dimensionen aus #cite(<openai_text_embedding_3_large>). Des weiteren wird dieses Modell für präzise und höchste Genauigkeit in einem #acr("RAG")-System genutzt #cite(<openai_new_embedding_models_2024>). Damit verbunden ist allerdings auch ein hoher Rechenaufwand und Kostenaufwand, im Vergleich zu den anderen Embedding-Modellen, verbunden #cite(<openai_text_embedding_3_large>).  
+
+
+Zur Generierung der Antworten mithilfe des #acr("RAG")-Systems werden, wie in @LLM_Theorie erläutert, #acrpl("LLM"), augrund ihrer hohen Performance gegenüber alternativen Verfahren eingestetzt. Vom Training eines eigenen Modells wird aufgrund von geringer Datengrundlage sowie Kosten- und Recheneleistung abgesehen und verschiedene #acrpl("PLM") eingesetzt #cite(<strubell_ganesh_mccallum_2019>, supplement: "S.3648,3649"). 
+
+
+- *Generierendes Modell GPT-4o:* GPT-4o von OpenAI, veröffentlicht am 13.Mai 2024, zeichnet sich durch eine hohe Leistungsfähigkeit aus #cite(<gpt_4o>). Nach den Angaben von OpenAI ist das Modell GPT-4o das beste und leistungsfähigste Modell außerhalb der O-Serie #cite(<gpt_4o>). Im Vergleich zu diesen Modellen, wie beispielsweise o3-mini, ist GPT-4o schneller in der Sprachverarbeitung #cite(<gpt_4o>). 
+
+- *Bewertendes Modell GPT-4o:* Als bewertendes Modell für den #acr("LLM")-as-a-Judge Ansatz wurde ebenfalls GPT-4o von OpenAI gewählt. Diese Modell bewertet, wie in @LLM-as-a-Judge  ,die zuvor generieten Antworten des #acr("RAG")-Systems. 
+
+- *Prompting:* Die Erstellung des Prompts für das #acr("RAG")-System erfolgte nach den in der Literatur definierten Kriterien. Das Prompt-Template wurde dabei in allen Iterationen des #acr("RAG")-Systems konsistent eingesetzt. 
+
+#figure( table(
+    columns: (12%,20%, 70%),
+    row-gutter: 0.5em,
+    column-gutter: -0.25em,
+    align: (x, y) => if x == 0 or x == 1 {left + top} else if y == 0 {left + top } else {left + horizon},
+    stroke: (x, y) => if y == 0 or y == 7{
+    (bottom: 0.7pt + black)
+  },
+    table.header(
+    [*Type*],[*Bestandteil*], [*Prompt Text*]
+    ),
+    [*System:*],[Kontext:], [
+      #set par(leading: 0.5em, spacing: 1.5em)
+      
+      You are a precise and helpful AI assistant that answers questions based strictly on the provided context. Your primary goal is to provide accurate, relevant, and well-sourced responses using only the information given in the context.
+],
+    
+
+    [*User:*],[Aufgabe:],[
+      #set par(leading: 0.5em, spacing: 1.5em)
+      Analyze the given context documents and provide accurate, complete answers IN GERMAN to user questions using only the information contained within those documents:],
+    [],[Question:], [Question to answer: {question} ],
+    [],[Context:], [Context documents: {context} ],
+
+
+  ),
+  caption:"Prompt-Template"
+  ,kind: "Prompt",
+  supplement: "Prompt"
+  )<ZeroShot>
+
+  Der 
+
+  #figure( table(
+    columns: (12%,20%, 70%),
+    row-gutter: 0.5em,
+    column-gutter: -0.25em,
+    align: (x, y) => if x == 0 or x == 1 {left + top} else if y == 0 {left + top } else {left + horizon},
+    stroke: (x, y) => if y == 0 or y == 7{
+    (bottom: 0.7pt + black)
+  },
+    table.header(
+    [*Type*],[*Bestandteil*], [*Prompt Text*]
+    ),
+    [*System:*],[Kontext:], [
+      #set par(leading: 0.5em, spacing: 1.5em)
+You are an expert evaluator. Your task is to judge the candidate answer (`answer_llm`) against the reference answer (`answer_gold`)
+for the given question (`question_string`).
+ 
+Use the following three-point scale for each criterion:
+  0 = not fulfilled at all (the answer is incorrect, irrelevant, or missing)
+  1 = partially fulfilled (the answer shows some correct elements but is incomplete or imprecise)
+  2 = fully fulfilled (the answer is correct, complete and precise)
+ 
+Evaluate on these five criteria exactly:
+1. Factual correctness: Are the facts in the answer correct and accurate?
+2. Completeness: Does the answer cover all aspects of the question?
+3. Relevance: Is the answer relevant to the question asked?
+4. Justification: Is the answer well-justified with clear reasoning?
+5. Depth: Does the answer show a deep understanding of the topic?
+ 
+Then compute:
+- overall_score = sum of the five individual scores
+- max_score = 10
+- pass = true if overall_score ≥ 8, otherwise false
+ 
+Output your evaluation as a single JSON object with these fields:
+{
+  "question_id": string,
+  "factual_correctness": 0–2,
+  "completeness":        0–2,
+  "relevance":           0–2,
+  "justification":       0–2,
+  "depth":               0–2,
+  "overall_score":       integer,
+  "max_score":           10,
+  "pass":                boolean,
+}
+],
+    
+
+    [*User:*],[Aufgabe:],[Analyze the given context documents and provide accurate, complete answers IN GERMAN to user questions using only the information contained within those documents:],
+    [],[Question:], [Question to answer: {question} ],
+    [],[Context:], [Context documents: {context} ],
+
+
+  ),
+  caption:"Evaluation-Prompt"
+  ,kind: "Prompt",
+  supplement: "Prompt"
+  )<ZeroShot>
+
+*Retrieval Augmented Generation Parameter:*
+
+
+- *Top-k-Retrieval Parameter:* 
+
+5 als Top-k-Retrieval Parameter
+
+- *Chunk Size /Overlap*
+
+1024 mit 128 Overlap 
+
+- *Distanzmetrik*
+
+Cosine Similarity 
+
+- *Temperature*
+
+0,0 bis 0,2 
+
+- *Verwendete Retrieval-Augmented Generation-Architektur*
+Die RAG-Architektur in (Abbildung) zeigt die projektspezifische Architektur des #acr("RAG")-Systems, die zur Beantwortung der in Abschnitt erläuterten Fragen eingesetzt wurde. Im Folgenden soll das Vorgehen näher erläutert werden.
+
+Um die Fragen mit Hilfe des #acr("RAG")-Systems beantworten zu können, mussten zunächst die Kontextdaten zur Beantwortung der Fragen in die Vektor-Datenbank geladen werden (). 
+Die Daten für das Grounding beinhalten produktspezifische Daten von SAP über Joule, aus Dokumentationen, Guides und Blogs. Dazu wurden zunächst die Texte aus den Dokumenten extrahiert, in definierte Chunks aufgeteilt (Größe, Overlap) und anschließend mit Hilfe von drei Embedding-Modellen in unterschiedliche Datenbanken geladen (). 
+
+Die Fragen wurden zur Beantwortung aus einer -Datei ausgelesen, in Vektor-Embeddings umgewandelt und der Similarity Search zur Suche übergeben. Je nach aufgestellter Hypothese wurde entweder ein unterschiedliches Prompt-Template, ein Paramater wie Chunk-Größe oder der Retrieval-Paramter k für die Analyse verändert. Es wurde jeweils nur ein Parameter verändert, während die anderen Parameter konstant gehalten wurden, um eine direkte Korrelation zwischen dem veränderten Parameter und dem daraus resultierenden Ergebnis zu erhalten. 
+
+Die durch die Similarity-Search ermittelten Chunks wurden dem Prompt als Text-Kontext mitgegeben, der im Anschluss durch das LLM GPT-4o bearbeitet wurde (). Die Ergebnisse des LLM GPT-4o Modells wurden anschließend in eine -Datei geschrieben. 
+
+Zur Beurteilung der Antwortqualität wurden die generierten -Dateien, sowie die manuell erstellte "Ground-Truth"-Antwort (Optimalantwort), mit Hilfe von Evaluationsmetriken (#acr("ROUGE"), Precision und Recall) analysiert. Anschließend wurde die generierte Antwort zusätzlich mit Hilfe des 
+#acr("LLM")-as-a-Judge Modells Claude-3-Opus hinsichtlich Completeness und Correctness bewertet und mit dem Ergebnis der Evaluationsmetriken verglichen. 
+
+
+Die Bewertungskriterien des #acr("LLM")-as-a-Judge wurden wie folgt definiert: 
+
+1. *Correctness* – Is the LLM Answer factually accurate and does it match the intent of the Reference Answer?
+2. *Completeness* – Does the LLM Answer cover all important points mentioned in the Reference Answer?
+
+
+
+#pagebreak()
+
+
+
+
 == Evaluation<Evaluation>
 Julian
 == Deployment

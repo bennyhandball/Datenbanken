@@ -95,7 +95,7 @@ $
   "ROUGE-n" = 2 dot ("Precision"_"n" dot "Recall"_"n") / ("Precision"_"n" + "Recall"_"n")
 $
 
-=== Large Language Model as a Judge
+=== Large Language Model as a Judge <LLM-as-a-Judge>
 #acr("LLM") as a Judge bezeichnet einen Evaluationsansatz, bei dem #acrpl("LLM") zur Bewertung von Ergebnissen anderer Modelle eingesetzt werden
   #cite(<Li2024LLMJudge>, supplement: "S. 1-2"). 
 Das Konzept basiert auf "Stacking"

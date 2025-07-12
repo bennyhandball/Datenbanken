@@ -6,7 +6,7 @@ from datetime import datetime
 from flask import Flask, render_template, request, redirect, url_for, session
 from werkzeug.utils import secure_filename
 
-from Code.qdrant_utils import (
+from Experiment.qdrant_utils import (
     get_qdrant_client,
     load_pdf_and_chunk,
     embed_chunks,
