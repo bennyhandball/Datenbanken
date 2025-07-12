@@ -2,6 +2,8 @@ import os
 import csv
 from typing import List, Dict
 from collections import Counter
+import re
+import json
 
 # === ROUGE-N metric functions ===
 def get_ngrams(text: str, n: int) -> Counter:
@@ -48,7 +50,9 @@ def append_result_to_csv(row: Dict[str, str], filepath: str) -> None:
     fieldnames = [
         "question_id", "question_string", "answer_llm", "answer_gold",
         "precision-1", "recall-1", "ROUGE-1",
-        "precision-2", "recall-2", "ROUGE-2"
+        "precision-2", "recall-2", "ROUGE-2",
+        "factual_correctness", "completeness", "relevance", "justification", "depth",
+        "overall_score", "pass"
     ]
 
     file_exists = os.path.exists(filepath)
@@ -63,3 +67,46 @@ def append_result_to_csv(row: Dict[str, str], filepath: str) -> None:
         # Ensure row only has expected keys
         filtered = {key: row.get(key, "") for key in fieldnames}
         writer.writerow(filtered)
+
+def parse_judge_response(raw: str) -> dict:
+    """
+    Extrahiert den JSON-Teil aus dem rohen LLM-Output und lädt ihn als dict.
+    - Sucht zuerst nach einem ```json …```-Block
+    - Fällt andernfalls auf manuellen Brace-Matching-Algorithmus zurück
+    - Bei JSONDecodeError wird der Extrakt ausgegeben für Debugging
+    """
+    # 1. Versuch: ```json … ```-Block
+    fence_pattern = r"```json\s*([\s\S]+?)\s*```"
+    m = re.search(fence_pattern, raw)
+    if m:
+        json_str = m.group(1)
+    else:
+        # 2. Fallback: finde ersten '{' und matchende '}' per Stack-Zählung
+        start = raw.find('{')
+        if start == -1:
+            raise ValueError("Keine JSON-Struktur gefunden")
+        level = 0
+        end = None
+        for idx, ch in enumerate(raw[start:], start):
+            if ch == '{':
+                level += 1
+            elif ch == '}':
+                level -= 1
+                if level == 0:
+                    end = idx + 1
+                    break
+        if end:
+            json_str = raw[start:end]
+        else:
+            # falls kein schließendes '}' gefunden wird, nimm alles ab start
+            json_str = raw[start:]
+    
+    # 3. Versuch des Parsens mit Debug-Ausgabe im Fehlerfall
+    try:
+        return json.loads(json_str)
+    except json.JSONDecodeError as e:
+        # Debug: zeige den problematischen Teil
+        print("=== Extracted JSON string (for debugging) ===")
+        print(json_str)
+        print("=== End of extracted JSON ===")
+        raise

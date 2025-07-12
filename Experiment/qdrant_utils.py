@@ -15,7 +15,7 @@ def get_qdrant_client() -> QdrantClient:
     return QdrantClient(host=host, port=port)
 
 
-def load_pdf_and_chunk(filepath: str, chunk_size: int = 500, overlap: int = 50) -> List[str]:
+def load_pdf_and_chunk(filepath: str, chunk_size: int = 1024, overlap: int = 128) -> List[str]:
     """Load ``filepath`` using PyPDF2 and split its text into chunks."""
     if not os.path.exists(filepath):
         raise FileNotFoundError(f"The file was not found: {filepath}")
@@ -120,18 +120,101 @@ def answer_with_context(query: str, context_chunks: list[str], model: str = "gpt
 
     # Prompt zusammenbauen
     context = "\n\n".join(context_chunks)
-    prompt = f"Answer the following question based on the context:\n\nContext:\n{context}\n\nQuestion: {query}"
+    prompt = f"Beantworte die folgende Frage auf Deutsch mit dem angehängten Kontext:\n\nFrage: {query}\n\nKontext:\n{context}"
 
     try:
         response = client.chat.completions.create(
             model=model,
             messages=[
-                {"role": "system", "content": "You are a helpful assistant for scientific questions."},
+                {"role": "system", "content": "You are a helpful assistant for scientific paper analysis and scientific question answering."},
                 {"role": "user", "content": prompt}
             ],
-            temperature=0.2
+            temperature=0.0
         )
         return response.choices[0].message.content.strip()
     except Exception as e:
         print(f"Error during answer generation: {e}")
         return "Error during answer generation."
+    
+def evaluate_llm_as_judge(
+    question_id: str,
+    question: str,
+    answer_llm: str,
+    answer_gold: str,
+    model: str = "gpt-4o"
+) -> str:
+    """
+    Nutzt GPT-4o, um eine LLM-as-a-Judge-Bewertung zwischen einer generierten Antwort und der Gold-Referenz zu erstellen.
+
+    Args:
+        question_id (str): ID der Frage
+        question (str): Die gestellte Frage
+        answer_llm (str): Die vom Modell generierte Antwort
+        answer_gold (str): Die Goldstandard-Antwort
+        model (str): OpenAI-Modellname (standardmäßig GPT-4o)
+
+    Returns:
+        str: JSON-String mit den Bewertungen für fünf Kriterien (0–2 Skala), Gesamtpunktzahl, Pass/Fail und Erläuterungsnotizen.
+    """
+    load_dotenv()
+    api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        raise ValueError("OPENAI_API_KEY not found in environment.")
+    client = OpenAI(api_key=api_key)
+
+    system_prompt = """
+You are an expert evaluator.
+Your task is to judge the candidate answer (`answer_llm`) against the reference answer (`answer_gold`) 
+for the given question (`question_string`).
+
+Use the following three-point scale for each criterion:
+  0 = not fulfilled at all (the answer is incorrect, irrelevant, or missing)
+  1 = partially fulfilled (the answer shows some correct elements but is incomplete or imprecise)
+  2 = fully fulfilled (the answer is correct, complete and precise)
+
+Evaluate on these five criteria exactly:
+1. Factual correctness: Are the facts in the answer correct and accurate?
+2. Completeness: Does the answer cover all aspects of the question?
+3. Relevance: Is the answer relevant to the question asked?
+4. Justification: Is the answer well-justified with clear reasoning?
+5. Depth: Does the answer show a deep understanding of the topic?
+
+Then compute:
+- overall_score = sum of the five individual scores
+- max_score = 10
+- pass = true if overall_score ≥ 8, otherwise false
+
+For any criterion where you give 0 or 1, add a brief note explaining the deduction.
+
+Output your evaluation as a single JSON object with these fields:
+{
+  "question_id": string,
+  "factual_correctness": 0–2,
+  "completeness":        0–2,
+  "relevance":           0–2,
+  "justification":       0–2,
+  "depth":               0–2,
+  "overall_score":       integer,
+  "max_score":           10,
+  "pass":                boolean,
+}
+"""
+
+    user_prompt = f"""
+    Evaluate the following question and answers:
+question_id: "{question_id}"
+question_string: "{question}"
+answer_llm: "{answer_llm}"
+answer_gold: "{answer_gold}"
+"""
+
+    response = client.chat.completions.create(
+        model=model,
+        messages=[
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt}
+        ],
+        temperature=0.0
+    )
+
+    return response.choices[0].message.content.strip()
