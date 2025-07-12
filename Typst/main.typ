@@ -552,7 +552,7 @@ Besonders im akademischen Bereich stehen #acrpl("LLM") vor der Herausforderung, 
 
 Dazu wird ein eigenes #acr("RAG")-System entwickelt, das es erlaubt,  Literatur hochzuladen und gezielt Fragen dazu zu stellen. Die Qualität der Antworten wird evaluiert, um das Potenzial solcher Systeme für den akademischen Einsatz realistisch einschätzen #box("zu können.")
 
-Dafür werden folgende Metriken für die Quantifizierung genutzt *JULIAN*
+Dafür werden folgende Metriken für die Quantifizierung der Ergebnisse genutzt *JULIAN*
 
 == Data Understanding
 Zur systematischen Evaluation des entwickelten #acr("RAG")-Systems wurde eine kuratierte Auswahl wissenschaftlicher Publikationen als Testdatensatz verwendet. Die Datengrundlage besteht aus fünf aktuellen Veröffentlichungen aus dem Bereich der Informatik, die von der wissenschaftlichen Publikationsplattform ArXiv.org bezogen wurden. Sämtliche ausgewählten Publikationen weisen ein einheitliches Veröffentlichungsdatum vom #box("27. Juni 2025 auf.")
@@ -732,7 +732,7 @@ Das sind die falschen Kriterien du dödel, schau mal rein was ich in evaluation 
 
 #pagebreak()
 
-#evaluation
+#evaluation_and_deployment
 
 #pagebreak()
 
