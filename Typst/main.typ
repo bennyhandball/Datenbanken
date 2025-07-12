@@ -784,6 +784,23 @@ Das sind die falschen Kriterien du dödel, schau mal rein was ich in evaluation 
 #set heading(outlined: false)
 == Abbildungen
 #figure(caption: "RAG Workflow entlang der Komponenten " + cite(<gupta2024comprehensivesurveyretrievalaugmentedgeneration>,supplement: "S. 2"),image(width: 100%,"pictures/RAG knowledge.png"))<RAGWorkflow>
+== Ergebnisse der Evaluation
+=== Precision-n, Recal-n und ROUGE-n Ergebnisse
+#figure(caption:
+[Phasen des CRISP-DM Phasenmodells @wirth_hipp_2000 ]
+, image(
+"pictures/heatmap.png" 
+))
+<heatmap_n_grams>
+=== LLM-as-a-Judge Ergebnisse
+
+#figure(caption:
+[Phasen des CRISP-DM Phasenmodells @wirth_hipp_2000 ]
+, image(
+"pictures/heatmap_judge.png" 
+))
+<heatmap_judge>
+
 #pagebreak()
 == Literaturfragen & Antworten<Literaturfragen>
 === Paper 1: Engineering RAG Systems for #box("Real-World Applications")
