@@ -184,8 +184,6 @@ Then compute:
 - max_score = 10
 - pass = true if overall_score ≥ 8, otherwise false
 
-For any criterion where you give 0 or 1, add a brief note explaining the deduction.
-
 Output your evaluation as a single JSON object with these fields:
 {
   "question_id": string,
