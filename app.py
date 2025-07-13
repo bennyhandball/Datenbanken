@@ -1,5 +1,6 @@
 import os
 import time
+import json
 from tempfile import NamedTemporaryFile
 from datetime import datetime
 
@@ -21,6 +22,25 @@ app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024  # 16 MB limit
 app.config["SERVER_START_TIME"] = time.time()
 
 COLLECTION_NAME = "webapp_collection"
+# Path to the JSON registry of uploaded filenames
+REGISTRY_PATH = os.path.join(app.root_path, 'uploaded_docs.json')
+
+
+def load_uploaded_docs():
+    """Read the JSON registry, return list of filenames."""
+    if not os.path.exists(REGISTRY_PATH):
+        return []
+    with open(REGISTRY_PATH, 'r', encoding='utf-8') as f:
+        try:
+            return json.load(f)
+        except json.JSONDecodeError:
+            return []
+
+
+def save_uploaded_docs(docs):
+    """Write the list of filenames back to the registry."""
+    with open(REGISTRY_PATH, 'w', encoding='utf-8') as f:
+        json.dump(docs, f, indent=2, ensure_ascii=False)
 
 
 def check_server_restart():
@@ -41,7 +61,14 @@ def check_server_restart():
 def index():
     check_server_restart()
     chat_history = session.get("chat_history", [])
-    return render_template("index.html", answer=None, error=None, chat_history=chat_history)
+    uploaded_docs = load_uploaded_docs()
+    return render_template(
+        "index.html",
+        chat_history=chat_history,
+        uploaded_docs=uploaded_docs,
+        answer=None,
+        error=None
+    )
 
 
 @app.route("/clear_chat", methods=["POST"])
@@ -51,8 +78,11 @@ def clear_chat():
     return redirect(url_for("index"))
 
 
-@app.route("/interact", methods=["POST"])
+@app.route("/interact", methods=["GET", "POST"])
 def interact():
+    if request.method == "GET":
+        return redirect(url_for("index"))
+
     check_server_restart()
     file = request.files.get("document")
     message = request.form.get("message", "").strip()
@@ -61,9 +91,12 @@ def interact():
     error = None
     chat_history = session.get("chat_history", [])
 
+    # ---- Handle file upload ----
     if file and file.filename:
+        # save to Qdrant and temporarily to disk
         client = get_qdrant_client()
         filename = secure_filename(file.filename)
+        # 1) Save temporarily
         with NamedTemporaryFile(delete=False, suffix=os.path.splitext(filename)[1]) as tmp:
             file.save(tmp.name)
             chunks = load_pdf_and_chunk(tmp.name)
@@ -71,29 +104,38 @@ def interact():
             store_embeddings_in_qdrant(client, COLLECTION_NAME, chunks, embeddings)
         os.remove(tmp.name)
 
+        # 2) Append filename to registry (if new)
+        docs = load_uploaded_docs()
+        if filename not in docs:
+            docs.append(filename)
+            save_uploaded_docs(docs)
+
+    # ---- Handle chat message ----
     if message:
         client = get_qdrant_client()
         try:
             # Retrieve context for the current question
             retrieved = retrieve_similar_chunks(message, client, COLLECTION_NAME, top_k=5)
-
-            # Also look up all previous user messages, not just the last one
+            # Also retrieve context for all past user messages
             for past in chat_history:
                 if past.get("role") == "user":
-                    retrieved_prev = retrieve_similar_chunks(
+                    retrieved += retrieve_similar_chunks(
                         past.get("content"), client, COLLECTION_NAME, top_k=5
                     )
-                    retrieved.extend(retrieved_prev)
 
+            # Build answer
             if len(chat_history) > 1:
                 history_text = "\n".join(
-                    f"{msg['role'].capitalize()}: {msg['content']}" for msg in chat_history
+                    f"{msg['role'].capitalize()}: {msg['content']}"
+                    for msg in chat_history
                 )
-                context_chunks = retrieved + [history_text]
-                answer = answer_with_context(message, context_chunks)
+                context = retrieved + [history_text]
             else:
-                answer = answer_with_context(message, retrieved)
+                context = retrieved
 
+            answer = answer_with_context(message, context)
+
+            # Update chat history
             chat_history.append({
                 "role": "user",
                 "content": message,
@@ -105,10 +147,19 @@ def interact():
                 "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             })
             session["chat_history"] = chat_history
+
         except ValueError as e:
             error = str(e)
 
-    return render_template("index.html", answer=answer, error=error, chat_history=chat_history)
+    # Re-load uploaded docs so the template always sees the latest
+    uploaded_docs = load_uploaded_docs()
+    return render_template(
+        "index.html",
+        chat_history=chat_history,
+        uploaded_docs=uploaded_docs,
+        answer=answer,
+        error=error
+    )
 
 
 if __name__ == "__main__":

@@ -392,7 +392,7 @@ Um den Lesefluss zu verbessern, werden Abbildungen, Codebeispiele und Tabellen, 
 #set heading(numbering: "1.",outlined: true)
 #set math.equation(numbering: "(1)")
 
-#set par(leading: 1.5em, spacing: 2.5em)
+#set par(leading: 1.15em, spacing: 2.15em)
 
 = Einleitung
 == Motivation
@@ -463,7 +463,7 @@ Trotz dieser Einschränkungen bietet #acr("CRISP-DM") eine geeignete methodische
 === Architektur und Funktionsweise
 Die Entwicklung heutiger leistungsfähiger #acrpl("LLM") basiert auf der Transformer-Architektur von Vaswani et al. #cite(<AttentionIsAllYouNeed>), die durch ihren Self-Attention-Mechanismus eine effiziente Verarbeitung natürlicher Sprache ermöglicht. Moderne #acrpl("LLM") werden durch ausgedehntes Vortraining auf umfangreichen Textkorpora entwickelt und können anschließend für spezifische Aufgaben angepasst werden #cite(<PLMsPaper>, supplement: "S. 1"). Die Größe von #acrpl("LLM") bemisst sich an der Zahl der trainierbaren Parameter, die – neben Faktoren wie der Qualität der Trainingsdaten – ihr #box("Sprachverständnis beeinflussen "+cite(<brown2020languagemodelsfewshotlearners>, supplement: "S. 4")+".")
 #v(-0.25em)
-=== Inferenz und Prompt-basierte Interaktion
+=== Inferenz und Prompt-basierte Interaktion <Prompt_Kriterien>
 Die praktische Anwendung von #acrpl("LLM") erfolgt in der Inferenz-Phase, in der das trainierte Modell anhand einer #acr("Prompt") und auf Basis der gelernten Sprachmuster eine Ausgabe generiert #cite(<Inference>,supplement: "S. 3"). Der #acr("Prompt") fungiert dabei als zentrale Schnittstelle zwischen Nutzer und Modell und ermöglicht es, das Verhalten des #acrpl("LLM") präzise zu steuern und spezifische Kontextinformationen zu übermitteln. Für die Formulierung von #acrpl("Prompt") haben sich folgende #box("Empfehlungen etabliert:")
 
 - *Klarheit und Präzision*: Prompts sollten unmissverständlich und eindeutig formuliert sein, um ungenaue oder mehrdeutige Antworten #box("zu vermeiden.")
@@ -541,7 +541,7 @@ Die Transparenz des Verfahrens ermöglicht es darüber hinaus, die verwendeten Q
 #rag_evaluation
 #pagebreak()
 
-= Anwendung<Praxis>
+= Praktische Umsetzung<Praxis>
 == Business Understanding
 Besonders im akademischen Bereich stehen #acrpl("LLM") vor der Herausforderung, dass sie nur über die Informationen der Trainingsphase verfügen. Dies führt zu stark eingeschränkter Leistung, wenn hochspezialisiertes Wissen oder neue Erkenntnisse eingebunden werden sollen #cite(<karpukhin2020densepassageretrievalopendomain>, supplement: "S. 8") #cite(<lewis2021retrievalaugmentedgenerationknowledgeintensivenlp>, supplement: "S. 9"). Für dieses Problem bieten die in @RAG beschriebenen #acr("RAG")-Systeme eine mögliche Lösung. Ziel dieser Arbeit ist es, zu untersuchen, inwieweit #acr("RAG")-Systeme dazu geeignet sind, Studierenden und Wissenschaftlern schnellen Zugang zu aktueller Forschung zu ermöglichen und literaturbezogene Fragen zuverlässig #box("zu beantworten.")
 
@@ -549,7 +549,7 @@ Dazu wird ein eigenes #acr("RAG")-System entwickelt, das es erlaubt,  Literatur 
 
 Dafür werden folgende Metriken für die Quantifizierung der Ergebnisse genutzt *JULIAN*
 
-== Data Understanding
+== Data Understanding <Data_Set>
 Zur systematischen Evaluation des entwickelten #acr("RAG")-Systems wurde eine kuratierte Auswahl wissenschaftlicher Publikationen als Testdatensatz verwendet. Die Datengrundlage besteht aus fünf aktuellen Veröffentlichungen aus dem Bereich der Informatik, die von der wissenschaftlichen Publikationsplattform ArXiv.org bezogen wurden. Sämtliche ausgewählten Publikationen weisen ein einheitliches Veröffentlichungsdatum vom #box("27. Juni 2025 auf.")
 
 Diese zeitliche Nähe zum Evaluationszeitpunkt stellt eine methodisch wichtige Kontrolle dar, da gewährleistet wird, dass die Inhalte dieser Publikationen mit hoher Wahrscheinlichkeit nicht Bestandteil der Trainingsdaten gängiger #acrpl("LLM") sind. Dadurch wird eine realistische und unvoreingenommene Evaluation der #acr("RAG")-Funktionalität ermöglicht, bei der das System tatsächlich auf die bereitgestellten Dokumente angewiesen ist, anstatt auf bereits internalisiertes Wissen zurückgreifen #box("zu können.")
@@ -572,7 +572,7 @@ Für jedes der fünf ausgewählten Paper werden fünf inhaltliche Fragen erstell
 
 Insgesamt liegt somit ein Datensatz von 35 Fragen (5 × 5 Inhlatsfragen, 5 × 2 Metadatenfragen) vor. Dieser dient im Weiteren als Basis für die Entwicklung des #acr("RAG")-Systems und Bewertung der #box("Antwortgenauigkeit in "+ref(<Evaluation>)+".")
 
-== Modelling
+== Modelling <Modelling>
 Im Kontext von #acr("RAG") erfordert die Modelling Phase die systematische Auswahl und Konfiguration der Retrieval Komponente als auch der generativen Sprachmodelle um eine möglichst passende Harmonisierung zwischen dem Abruf relevanter Informationen und der kontextuellen Textgenerierung zu erreichen.
 
 - *Programmiersprache Python:* Python eignet sich für #acr("AI")- und Data-Science-Anwendungen, da es eine klare Syntax, sowie eine breite Auswahl leistungsfähiger Bibliotheken bietet #cite(<nagpal_gabrani_2019>, supplement: "S.141-S.143"). Zusätzlich ermöglicht die Programmiersprache  eine schnelle Prototypentwicklung, modulare Strukturierung und eine gute Integrierbarkeit in bestehende Systeme #cite(<nagpal_gabrani_2019>, supplement: "S.141-S.143"). Python wurde für die Implementierung des #acr("RAG")-Systems und die Analyse der Optimierungsstrategien genutzt.
@@ -580,23 +580,25 @@ Im Kontext von #acr("RAG") erfordert die Modelling Phase die systematische Auswa
 
 Für die Entwicklung des Modells und die darauffolgende Analyse wurden weitere folgende Komponenten verwendet:
 
+- *Qdrant Vektordatenbank:* Als Vektordatenbank wurde die QDrant-Vektordatenbank gewählt, da diese speziell für semantische Suche und Ähnlichkeitsabfragen optimiert ist #cite(<qdrant2025>). Zusätzlich unterstützt die Qdrant Vektordatenbank die Speicherung hochdimensionaler Vektoren und ermöglicht schnelle, skalierbare Top‑k‑Abfragen mittels Cosine Similarity oder anderer Distanzmetriken #cite(<qdrant2025>). Durch ihre Open-Source-Natur und einfache Integration lässt sich Qdrant auch ohne komplexe Infrastruktur in kleinere, experimentelle RAG-Systeme einbinden #cite(<qdrant2025>).
+
+
 
 - *Embedding Modell text-embedding-3-large:* Das Modell text-embedding-3-large von OpenAI zeichnet sich durch eine Embedding-Dimension von 3072 Dimensionen aus #cite(<openai_text_embedding_3_large>). Des weiteren wird dieses Modell für präzise und höchste Genauigkeit in einem #acr("RAG")-System genutzt #cite(<openai_new_embedding_models_2024>). Damit verbunden ist allerdings auch ein hoher Rechenaufwand und Kostenaufwand, im Vergleich zu den anderen Embedding-Modellen, verbunden #cite(<openai_text_embedding_3_large>).  
 
 
 Zur Generierung der Antworten mithilfe des #acr("RAG")-Systems werden, wie in @LLM_Theorie erläutert, #acrpl("LLM"), augrund ihrer hohen Performance gegenüber alternativen Verfahren eingestetzt. Vom Training eines eigenen Modells wird aufgrund von geringer Datengrundlage sowie Kosten- und Recheneleistung abgesehen und verschiedene #acrpl("PLM") eingesetzt #cite(<strubell_ganesh_mccallum_2019>, supplement: "S.3648,3649"). 
-
+#pagebreak()
 
 - *Generierendes Modell GPT-4o:* GPT-4o von OpenAI, veröffentlicht am 13.Mai 2024, zeichnet sich durch eine hohe Leistungsfähigkeit aus #cite(<gpt_4o>). Nach den Angaben von OpenAI ist das Modell GPT-4o das beste und leistungsfähigste Modell außerhalb der O-Serie #cite(<gpt_4o>). Im Vergleich zu diesen Modellen, wie beispielsweise o3-mini, ist GPT-4o schneller in der Sprachverarbeitung #cite(<gpt_4o>). 
 
 - *Bewertendes Modell GPT-4o:* Als bewertendes Modell für den #acr("LLM")-as-a-Judge Ansatz wurde ebenfalls GPT-4o von OpenAI gewählt. Diese Modell bewertet, wie in @LLM-as-a-Judge  ,die zuvor generieten Antworten des #acr("RAG")-Systems. 
 
-- *Prompting:* Die Erstellung des Prompts für das #acr("RAG")-System erfolgte nach den in der Literatur definierten Kriterien (siehe ). Das Prompt-Template wurde dabei in allen Iterationen des #acr("RAG")-Systems konsistent eingesetzt. 
+- *Prompting:* Die Erstellung des Prompts für das #acr("RAG")-System erfolgte nach den in der Literatur definierten Kriterien (siehe @Prompt_Kriterien ). Das Prompt-Template wurde dabei in allen Iterationen des #acr("RAG")-Systems konsistent eingesetzt. 
+
+ Auch das Prompt-Template für den #acr("LLM")-as-a-Judge Ansatz wurde nach den Kriterien der Literatur erstellt (siehe @Prompt_Kriterien ) und in allen Iterationen des #acr("RAG")-Systems konsistent eingesetzt. Die Prompt Templates befinden sich im Prompt-Verzeichnis.
 
 
-Das folgende Prompt-Template zeigt den Prompt für den #acr("LLM")-as-a-Judge Ansatz. Dieser wurde ebenfalls nach den in der Literatur definierten Kriterien (siehe ) erstellt und in allen Iterationen des #acr("RAG")-Systems konsistent eingesetzt.
-
-#pagebreak()
 
 *Retrieval Augmented Generation Parameter:*
 
@@ -611,25 +613,25 @@ Für die Implementierung des #acr("RAG")-Systems wurde der Top-k-Retrieval Param
 
 *Distanzmetrik:* Als weitverbreitete und zuverlässige Distanzmetrik wird die Cosinus Ähnlichkeit verwendet #cite(<juvekar2024cos>, supplement: "S.1"). Diese misst den Kosinus Winkel zwischen zwei Vektoren und ist somit geeignet, um semantische Ähnlichkeiten effektiv zu erfassen. 
 
-#pagebreak()
 
+#pagebreak()
 *Verwendete Retrieval-Augmented Generation-Architektur*
 
 #figure(caption:"Übersicht RAG Architektur",image(width: 90%,"pictures/RAG_Architektur.jpg"))<RAG_Architektur>
 
 
 
-Die RAG-Architektur in (Abbildung) zeigt die projektspezifische Architektur des #acr("RAG")-Systems, die zur Beantwortung der in Abschnitt erläuterten Fragen eingesetzt wurde. Im Folgenden soll das Vorgehen näher erläutert werden.
+Die RAG-Architektur in @RAG_Architektur zeigt die projektspezifische Architektur des #acr("RAG")-Systems, die zur Beantwortung der Fragen (siehe Anhang) eingesetzt wird. Im Folgenden soll das Vorgehen näher erläutert werden.
 
-Um die Fragen mit Hilfe des #acr("RAG")-Systems beantworten zu können, mussten zunächst die Kontextdaten zur Beantwortung der Fragen in die Vektor-Datenbank geladen werden (). 
-Die Daten für das Grounding beinhalten produktspezifische Daten von SAP über Joule, aus Dokumentationen, Guides und Blogs. Dazu wurden zunächst die Texte aus den Dokumenten extrahiert, in definierte Chunks aufgeteilt (Größe, Overlap) und anschließend mit Hilfe von drei Embedding-Modellen in unterschiedliche Datenbanken geladen (). 
+Um die Fragen mit Hilfe des #acr("RAG")-Systems beantworten zu können, müssen zunächst die Kontextdaten (Paper Knowledge Base) zur Beantwortung der Fragen in die Vektor-Datenbank (Qdrant) geladen werden. In der vorliegenden Arbeit handelt es sich dabei um die genannten fünf wissenschaftlichen Literaturauszüge (siehe @Data_Set). 
 
-Die Fragen wurden zur Beantwortung aus einer -Datei ausgelesen, in Vektor-Embeddings umgewandelt und der Similarity Search zur Suche übergeben. Je nach aufgestellter Hypothese wurde entweder ein unterschiedliches Prompt-Template, ein Paramater wie Chunk-Größe oder der Retrieval-Paramter k für die Analyse verändert. Es wurde jeweils nur ein Parameter verändert, während die anderen Parameter konstant gehalten wurden, um eine direkte Korrelation zwischen dem veränderten Parameter und dem daraus resultierenden Ergebnis zu erhalten. 
 
-Die durch die Similarity-Search ermittelten Chunks wurden dem Prompt als Text-Kontext mitgegeben, der im Anschluss durch das LLM GPT-4o bearbeitet wurde (). Die Ergebnisse des LLM GPT-4o Modells wurden anschließend in eine -Datei geschrieben. 
+Dazu werden zunächst die Texte aus den Dokumenten extrahiert, in definierte Chunks aufgeteilt (Chunk-Size, Overlap) und anschließend mit Hilfe von dem Embedding-Modell text-embedding-3-large von OpenAI in die Qdrant Vektordatenbank geladen (siehe @RAG_Architektur). Die Fragen werden zur Beantwortung aus einem JSON-Document ausgelesen, in Vektor-Embeddings umgewandelt und der Similarity Search zur Suche übergeben. Das Prompt-Template bleibt dabei stets das selbe. Die durch die Similarity-Search ermittelten Chunks werden dem Prompt als Text-Kontext mitgegeben, der im Anschluss durch das LLM GPT-4o bearbeitet wurde. Die Ergebnisse des LLM GPT-4o Modells werden anschließend in eine #acr("CSV")-Datei geschrieben. 
 
-Zur Beurteilung der Antwortqualität wurden die generierten -Dateien, sowie die manuell erstellte "Ground-Truth"-Antwort (Optimalantwort), mit Hilfe von Evaluationsmetriken (#acr("ROUGE"), Precision und Recall) analysiert. Anschließend wurde die generierte Antwort zusätzlich mit Hilfe des 
-#acr("LLM")-as-a-Judge Modells Claude-3-Opus hinsichtlich Completeness und Correctness bewertet und mit dem Ergebnis der Evaluationsmetriken verglichen. 
+
+Zur Beurteilung der Antwortqualität (Evaluation) werden die generierten-Daten, sowie die erstellte "Ground-Truth"-Antwort (Optimalantwort), mit Hilfe von Evaluationsmetriken (#acr("ROUGE"), Precision und Recall) analysiert. Anschließend wird die generierte Antwort zusätzlich mit Hilfe des 
+#acr("LLM")-as-a-Judge Modells GPT-4o hinsichtlich 
+der Faktuellen Korrektheit, der Vollständigkeit , der Relevanz und der Tiefe bewertet und mit dem Ergebnis der Evaluationsmetriken verglichen. Im Folgenden sollen die Evaluationsergebnisse des Experiments dargestellt werden. 
 
 
 
@@ -645,6 +647,10 @@ Zur Beurteilung der Antwortqualität wurden die generierten -Dateien, sowie die 
 = Schlussbetrachtung<Fazit>
 
 == Zusammenfassung der Ergebnisse
+
+In dieser Arbeit wurde ein prototypisches #acr("RAG")-System implementiert, das aktuelle wissenschaftliche Veröffentlichungen aus diversen Subdomänen der Informatik in Form von PDFs mithilfe eines tokenbasierten Chunkers in Segmente von 1 024 Tokens Länge mit 128 Tokens Überlappung zerlegt, jedes Segment  anschließend durch das text-embedding-3-large-Modell von OpenAI in den Vektorraum überführt und in Qdrant als Vektordatenbank abgelegt. Bei einer Anfrage analysiert der Chatbot die Nutzerfrage, wandelt sie ebenfalls in einen Vektor um und ruft über k-Nearest-Neighbor-Retrieval die relevantesten Chunks ab. Diese Chunks werden via Prompt-Engineering zusammen mit der Originalfrage an OpenAI's GPT-4o übergeben, das die finale Antwort generiert und in natürlicher Sprache ausgibt.
+
+Gegenüber einer reinen LLM-Baseline verdoppelte sich die Precision-1 von 15,5 % auf 32,6 %, der Recall-1 stieg von 8,6 % auf 32,4 % und der ROUGE-1-Score von 11,2 % auf 29,1 %; auch die 2-Gramm-Metriken verbesserten sich um 9–11 Prozentpunkte. Qualitative Bewertungen durch GPT-4o als „Richter“ ergaben im Durchschnitt 1,7/2 Punkten für Faktentreue, 2,0/2 für Relevanz und 1,2/2 für Vollständigkeit (Baseline: 0 Punkte). Die Ergebnisse belegen eindrücklich das Potenzial von RAG, neue wissenschaftliche Publikationen zeitnah und präzise erschließbar zu machen. Auf Basis dieser Ergebnisse wurde ein Prototyp entwickelt, welcher das Hochladen sowie eine Abfrage von Informationen aus jenen Dokumenten in Form einer auf Flask basierenden Webapp erlaubt.
 
 == Einordnung der Ergebnisse
 
@@ -779,7 +785,7 @@ Zur Beurteilung der Antwortqualität wurden die generierten -Dateien, sowie die 
   ,kind: "Prompt",
   supplement: "Prompt"
 )<ZeroShot>
-== Ergebnisse der Evaluation
+== Ergebnisse der Evaluation <evaluation_total_results>
 === Precision-n, Recal-n und ROUGE-n Ergebnisse
 #figure(caption:
 [Phasen des CRISP-DM Phasenmodells @wirth_hipp_2000 ]
