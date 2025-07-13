@@ -10,5 +10,6 @@
   DPR:"Dense Passage Retriever",
   F:"Frage",
   A:"Antwort",
-  RQ: "Forschungsfrage"
+  RQ: "Forschungsfrage",
+  CSV: "Comma-Separated Values"
 )
