@@ -95,6 +95,11 @@ $
   "ROUGE-n" = 2 dot ("Precision"_"n" dot "Recall"_"n") / ("Precision"_"n" + "Recall"_"n")
 $
 
+Die Aussagekraft von #acr("ROUGE")-n ist begrenzt: im Gegensatz zu Metriken wie #acr("LLM")-as-a-Judge, die die semantische Bedeutung eines Textes bewerten, misst #acr("ROUGE")-n lediglich die Überlappung von N-Grammen und kann daher nicht die Qualität der Inhalte oder deren Relevanz für eine bestimmte Aufgabe bewerten
+  #cite(<Hu2024LLMEvaluation>, supplement: "S. 14-15").
+Aus diesem Grund wird #acr("ROUGE")-n häufig in Kombination mit anderen Metriken eingesetzt, um eine umfassendere Bewertung der Qualität von generierten Texten zu ermöglichen
+  #cite(<Hu2024LLMEvaluation>, supplement: "S. 15").
+
 === Large Language Model as a Judge <LLM-as-a-Judge>
 #acr("LLM") as a Judge bezeichnet einen Evaluationsansatz, bei dem #acrpl("LLM") zur Bewertung von Ergebnissen anderer Modelle eingesetzt werden
   #cite(<Li2024LLMJudge>, supplement: "S. 1-2"). 
@@ -102,11 +107,13 @@ Das Konzept basiert auf "Stacking"
   #cite(<wolpert1992stacked>, supplement: "S. 6-15"),
 bei dem mehrere Modelle squentiell hintereinander geschaltet werden und sich gegenseitig bewerten und vervollständigen
   #cite(<Özbligin2025Stacking>, supplement: "S. 6"). 
-#acr("LLM")-as-a-Judge nutzt diesen Ansatz, indem ein #acr("LLM") nach der Produktion eines #acr("LLM")-Outputs eingesetzt wird, um anhand definierter Kriterien diesen zu bewerten und quantitative Metriken zuzuweisen 
-  #cite(<Li2024LLMJudge>, supplement: "S. 2-3").
+#acr("LLM")-as-a-Judge nutzt diesen Ansatz, indem ein #acr("LLM") nach der Produktion eines #acr("LLM")-Outputs eingesetzt wird, um anhand definierter Kriterien diesen zu bewerten und quantitative #box([Metriken zuzuweisen 
+  #cite(<Li2024LLMJudge>, supplement: "S. 2-3").])
 
 #acr("LLM")-as-a-Judge weist Vorteile im Gegensatz zu traditionellen regelbasierten Bewertungsmethoden wie BLEU oder ROUGE auf, da #acrpl("LLM") deutlich besser in der Lage sind, angepasst an dynamischen Umständen und unstrukturierten Texten, diesen zu evaluieren
   #cite(<Liu2016HowNotToEvaluate>, supplement: "S. 2123-2126").
+Ebenfalls kann #acr("LLM")-as-a-Judge die semantische Bedeutung von Texten besser erfassen und komplexe Zusammenhänge verstehen, wodurch eine differenziertere Bewertung möglich ist
+  #cite(<Li2024LLMJudge>, supplement: "S. 2-3").
 Darüber hinaus weisen durch #acr("LLM")-as-a-Judge getroffene Evaluationen hohe Korrelationen mit menschlicher Bewertung auf, wodurch hohe Kosten einer manuellen Evaluation in Teilen eingespart werden können
   #cite(<Krumdick2025NoFreeLabels>, supplement: "S. 1").
   #cite(<Li2024MATEval>, supplement: "S. 8-11").
@@ -118,5 +125,6 @@ Hinzu kommt, dass die Qualität der Bewertung stark von der Fähigkeit des #acrp
 
 Für eine praktische und zuverlässige Anwendung von LLM-as-a-Judge ist es daher unabdingbar, eine Validierung mit von Menschen annotierten Referenzdaten durchzuführen, um ein geeignetes #acr("LLM") zu wählen und systematische Fehlerquellen der Evaluation zu reduzieren 
   #cite(<Krumdick2025NoFreeLabels>, supplement: "S. 1-3").
-
+Darüber hinaus soll #acr("LLM")-as-a-Judge nicht als alleinige Evaluationsmethode eingesetzt werden, sondern in Kombination mit anderen Metriken wie #acr("ROUGE"), um eine umfassendere Bewertung der Qualität von generierten Texten zu ermöglichen und mögliche Verzerrungen durch das evaluierende Modell zu minimieren
+  #cite(<Li2024LLMJudge>, supplement: "S. 2-3").
 ]

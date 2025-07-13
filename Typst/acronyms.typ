@@ -11,5 +11,6 @@
   F:"Frage",
   A:"Antwort",
   RQ: "Forschungsfrage",
-  CSV: "Comma-Separated Values"
+  CSV: "Comma-Separated Values",
+  pp: "Prozentpunkte",
 )

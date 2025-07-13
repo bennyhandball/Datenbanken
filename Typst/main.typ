@@ -781,7 +781,7 @@ der Faktuellen Korrektheit, der Vollständigkeit , der Relevanz und der Tiefe be
   ,kind: "Prompt",
   supplement: "Prompt"
 )<ZeroShot>
-== Ergebnisse der Evaluation
+== Ergebnisse der Evaluation <evaluation_total_results>
 === Precision-n, Recal-n und ROUGE-n Ergebnisse
 #figure(caption:
 [Phasen des CRISP-DM Phasenmodells @wirth_hipp_2000 ]
