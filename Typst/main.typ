@@ -422,7 +422,7 @@ Im Kontext dieser Arbeit ermöglicht #acr("CRISP-DM") eine methodisch saubere Um
 //Supplement ergänzen
 #figure(caption:
 [Phasen des CRISP-DM Phasenmodells @wirth_hipp_2000 ]
-, image(width:51%,
+, image(width:70%,
 "pictures/CRISP_DM_PA (1).png" 
 ))
 <Phasen_CRISP_DM>
@@ -467,18 +467,13 @@ Die Entwicklung heutiger leistungsfähiger #acrpl("LLM") basiert auf der Transfo
 Die praktische Anwendung von #acrpl("LLM") erfolgt in der Inferenz-Phase, in der das trainierte Modell anhand einer #acr("Prompt") und auf Basis der gelernten Sprachmuster eine Ausgabe generiert #cite(<Inference>,supplement: "S. 3"). Der #acr("Prompt") fungiert dabei als zentrale Schnittstelle zwischen Nutzer und Modell und ermöglicht es, das Verhalten des #acrpl("LLM") präzise zu steuern und spezifische Kontextinformationen zu übermitteln. Für die Formulierung von #acrpl("Prompt") haben sich folgende #box("Empfehlungen etabliert:")
 
 - *Klarheit und Präzision*: Prompts sollten unmissverständlich und eindeutig formuliert sein, um ungenaue oder mehrdeutige Antworten #box("zu vermeiden.")
-#v(0.5em)
 - *Bereitstellung von Kontext und relevanten Informationen*: #acrpl("LLM") erzielen bessere Ergebnisse, wenn sie die Zielgruppe sowie den spezifischen Anwendungsbereich und #box("Kontext kennen "+cite(<KNOTH2024100225>, supplement: "S. 5")+".")
-#v(0.5em)
 - *Wahrung von Neutralität und Objektivität*: Um Verzerrungen zu vermeiden, sollten Prompts keine suggestiven oder wertenden Formulierungen enthalten, sodass die Antworten des Modells #box("objektiv bleiben "+cite(<chen2024usingpromptsguidelarge>, supplement: "S. 6-7")+".")
-#v(0.5em)
 - *Nutzung spezifischer Formatvorgaben*: Durch die Definition eines strukturierten Ausgabeformats, etwa in Form von JSON-Schemata, wird die inhaltliche Konsistenz und Nachvollziehbarkeit der generierten Inhalte signifikant erhöht. Dieser Ansatz legt explizite Antwortparameter fest und erleichtert die nachgelagerte Verarbeitung, wodurch eine konsistente und zuverlässige Klassifikation #box("gewährleistet wird "+cite(<OpenAI2025StructuredOutputs>)+ cite(<hewing2024prompt>, supplement: "S. 11")+".")
-#v(0.5em)
-Zudem lassen sich #acrpl("Prompt") in System- und User-#acrpl("Prompt") unterteilen. Ziel ist es durch diese Teilung die Leistung des Modells weiter positiv zu beeinflussen #cite(<marvin_hellen_jjingo_nakatumba_nabende_2024>, supplement: "S.388"). 
-#v(0.5em)
+Zudem lassen sich #acrpl("Prompt") in System- und User-#acrpl("Prompt") unterteilen. Ziel ist es durch diese Teilung die Leistung des Modells weiter positiv zu beeinflussen #cite(<marvin_hellen_jjingo_nakatumba_nabende_2024>, supplement: "S.388"). System- und User-#acrpl("Prompt") lassen sich #box("definieren wie folgt:")
+
 - *System-Prompt:* 
   Der System-Prompt ist die initiale, funktionsspezifische Anweisung, die den Rahmen zwischen dem #acr("LLM") und dem menschlichen Benutzer definiert #cite(<mctear_ashurkina_2024>, supplement:"S.117"). Innerhalb des System-Promps, kann das Verhalten, die Formalität und Fachsprache definiert werden. Dazu werden der Kontext, die Rolle oder spezifische Regeln für die Interaktion festgelegt. #cite(<mrbullwinkle_2025>). 
-#v(0.5em)
 - *User-Prompt:*
   Der User-Prompt ist die spezifische Eingabe des Endnutzers, auf die das Modell reagiert. Diese Anfrage stellt die Grundlage für die erzeugten Antworten dar #cite(<openai_platform_2025>). 
 
@@ -508,15 +503,15 @@ Moderne Vektordatenbanken bieten standardisierte APIs für sowohl Batch-Import g
 == Retrieval Augmented Generation<RAG>
 #acrf("RAG") kombiniert die Stärken von #acrpl("LLM") mit dem gezielten Zugriff auf externe Wissensquellen. Klassische #acr("LLM")-Modelle schöpfen ausschließlich aus dem Trainingswissen und können aktuelle oder spezielle Informationen nicht einbeziehen #cite(<gupta2024comprehensivesurveyretrievalaugmentedgeneration>, supplement: "1"), was bei neuen oder spezialisierten Fragestellungen zu falschen oder „halluzinierten", also erfundenen, Antworten #box("führen kann "+cite(<gupta2024comprehensivesurveyretrievalaugmentedgeneration>, supplement: "1-2")+cite(<Huang_2025>, supplement: "S. 1, 3, 20")+cite(<ibm2023rag>)+".")
 
-#acr("RAG")-Systeme hingegen durchsuchen vor jeder Antwort eine hinterlegte Wissensbasis (Dokumente, Datenbanken o. Ä.) nach relevanten Textpassagen und übergeben diese als zusätzlichen Kontext an das #acr("LLM"). So lassen sich aktuelle Fakten und spezialisierte Informationen direkt einbinden, ohne das #acr("LLM") neu trainieren zu müssen, was Präzision und Nachvollziehbarkeit deutlich #box("erhöht "+cite(<gupta2024comprehensivesurveyretrievalaugmentedgeneration>, supplement: "1-2")+ref(<RAGWorkflow>)+".")
+#acr("RAG")-Systeme hingegen durchsuchen vor jeder Antwort eine hinterlegte Wissensbasis (z.B. Dokumentensammlung, Datenbank oder Internetsuche) nach relevanten Textpassagen und übergeben diese als zusätzlichen Kontext an das #acr("LLM"). So lassen sich aktuelle Fakten und spezialisierte Informationen direkt einbinden, ohne das #acr("LLM") neu trainieren zu müssen, was Präzision und Nachvollziehbarkeit deutlich #box("erhöht "+cite(<gupta2024comprehensivesurveyretrievalaugmentedgeneration>, supplement: "1-2")+ref(<RAGWorkflow>)+".")
 #pagebreak()
 
 ===  Wissensabruf und Anreicherung
-Im #acr("RAG")-Verfahren wird zu jeder Anfrage die Wissensbasis (z.B. Dokumentensammlung, Datenbank oder Internetsuche) nach relevanten Textpassagen durchsucht, die zusammen mit der Frage als zusätzlicher Kontext an das #acr("LLM") übergeben werden. Das #acr("LLM") kann dann die abgerufenen Fakten direkt in seine Antwort einbetten #cite(<lewis2021retrievalaugmentedgenerationknowledgeintensivenlp>, supplement: "S. 9"). So können auch aktuelle Informationen, wie neueste Forschungsergebnisse, einfließen, ohne dass das #acr("LLM") diese im Training lernen musste. Die Antworten basieren auf verifizierten Quellen und bleiben aktuell, da neue Daten einfach in die Wissensbasis aufgenommen werden können, was Qualität und Aktualität gerade bei nischen Themen #box("und neuen Erkenntnissen erhöht "+cite(<karpukhin2020densepassageretrievalopendomain>, supplement: "S. 8") +cite(<lewis2021retrievalaugmentedgenerationknowledgeintensivenlp>, supplement: "S. 9")).
+Im #acr("RAG")-Verfahren wird zu jeder Anfrage die Wissensbasis  nach relevanten Textpassagen durchsucht, die zusammen mit der Frage als zusätzlicher Kontext an das #acr("LLM") übergeben werden. Das #acr("LLM") kann dann die abgerufenen Fakten direkt in seine Antwort einbetten #cite(<lewis2021retrievalaugmentedgenerationknowledgeintensivenlp>, supplement: "S. 9"). So können auch aktuelle Informationen, wie neueste Forschungsergebnisse, einfließen, ohne dass das #acr("LLM") diese im Training lernen musste. Die Antworten basieren auf verifizierten Quellen und bleiben aktuell, da neue Daten einfach in die Wissensbasis aufgenommen werden können, was Qualität und Aktualität gerade bei nischen Themen #box("und neuen Erkenntnissen erhöht "+cite(<karpukhin2020densepassageretrievalopendomain>, supplement: "S. 8") +cite(<lewis2021retrievalaugmentedgenerationknowledgeintensivenlp>, supplement: "S. 9")).
 
 === Retrieval-Verfahren und Suchstrategien
 Die Qualität des Retrievals bestimmt maßgeblich die Verlässlichkeit der #acr("RAG")-Antworten #cite(<manning2008introduction>, supplement: "S. 9"). Dokumente werden zunächst in passageartige Einheiten segmentiert und für die Suche aufbereitet. Bei klassischen Information-Retrieval-Verfahren (sparse Retrieval) kommen TF-IDF und BM25 zum Einsatz:
-
+#v(-0.25em)
 - *TF-IDF*: Gewichtet Terme durch Multiplikation der Termhäufigkeit mit dem inversen Dokumenthäufigkeitsmaß, sodass häufige Terme abgeschwächt und seltene Terme #box("hervorgehoben werden"+cite(<SPARCKJONES>, supplement: "S. 12, 13, 15")+cite(<BM25>,supplement: "S. 347-352")+".")
 - *BM25*: Führt gesättigte Termfrequenz und Dokumentlängennormalisierung ein, um übermäßige Gewichtung und unverhältnismäßige Bevorzugung langer Dokumente #box("zu verhindern"+cite(<BM25>,supplement: "S. 352-369")+".")
 
@@ -537,6 +532,7 @@ Durch die unmittelbare Integration der abgerufenen Textpassagen in den Generieru
 Die Transparenz des Verfahrens ermöglicht es darüber hinaus, die verwendeten Quelldokumente zu referenzieren, wodurch Nutzer die Möglichkeit erhalten, die faktische Grundlage der generierten Antworten selbst zu überprüfen und das Vertrauen in die Systemausgaben zu stärken.
 
 #rag_parameter
+#pagebreak()
 
 #rag_evaluation
 #pagebreak()
