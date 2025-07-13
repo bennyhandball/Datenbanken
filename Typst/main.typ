@@ -398,7 +398,7 @@ Um den Lesefluss zu verbessern, werden Abbildungen, Codebeispiele und Tabellen, 
 == Motivation
 In den letzten Jahren hat die Forschung im Bereich der #acrpl("LLM") enorme Fortschritte gemacht. Spätestens mit der Veröffentlichung von Modellen wie GPT-4 ist klar: Generative #acr("AI")-Systeme haben das Potenzial, bestehende Prozesse in Wissenschaft, Wirtschaft und Gesellschaft grundlegend zu verändern. Doch bei aller Euphorie bleibt ein zentrales Problem ungelöst: #acrpl("LLM") basieren ausschließlich auf ihrem statischen Trainingswissen. Für Kontexte, in denen aktuelle oder domänenspezifische Informationen benötigt werden, versagen sie, halluzinieren, liefern veraltete oder schlicht falsche Antworten. Die Antwort der Forschung auf dieses #box("Problem lautet: "+acr("RAG")+".")
 
-#acr("RAG")-Systeme verbinden klassische Sprachmodelle mit externem, dynamisch abrufbarem Wissen. Statt allein auf das interne Modellwissen zu vertrauen, ruft das System bei jeder Anfrage kontextrelevante Inhalte ab und reichert die Antwort dynamisch damit an. Studien wie Hasan et al. #cite(<hasan2025engineeringragsystemsrealworld>) zeigen, dass #acr("RAG") in Praxisfeldern wie Governance oder Medizin bereits erfolgreich eingesetzt werden kann. Für den wissenschaftliche Nutzung, wie die Analyse aktueller Paper, existieren jedoch kaum belastbare Daten zur #box("Leistungsfähigkeit von "+acr("RAG")+"-Systemen.")
+#acr("RAG")-Systeme verbinden klassische Sprachmodelle mit externem, dynamisch abrufbarem Wissen. Statt allein auf das interne Modellwissen zu vertrauen, ruft das System bei jeder Anfrage kontextrelevante Inhalte ab und reichert die Antwort dynamisch damit an. Studien wie Hasan et al. #cite(<hasan2025engineeringragsystemsrealworld>) zeigen, dass #acr("RAG") in Praxisfeldern wie Governance oder Medizin bereits erfolgreich eingesetzt werden kann. Für die wissenschaftliche Nutzung, wie die Analyse aktueller Paper, existieren jedoch kaum belastbare Daten zur #box("Leistungsfähigkeit von "+acr("RAG")+"-Systemen.")
 #pagebreak()
 == Forschungsfrage
 Ausgehend von den beschriebenen Herausforderungen und Entwicklungen ergibt sich, für #box("uns, folgende "+acrf("RQ")+":")
@@ -408,21 +408,21 @@ Ausgehend von den beschriebenen Herausforderungen und Entwicklungen ergibt sich,
 Diese Frage wird im Rahmen eines eigenen #acr("RAG")-Prototyps beantwortet, der für die Nutzung wissenschaftlicher Paper konzipiert wurde. Dabei liegt der Fokus nicht nur auf der technischen Optimierung, sondern auch auf der Bewertung der Antwortqualität #box("anhand etablierter Metriken.")
 
 == Aufbau der Arbeit
-#ref(<Methodik>) erläutert die methodische Herangehensweise auf Basis des #acr("CRISP-DM")-Prozesses. #ref(<Theorie>) liefert die theoretischen und technischen Grundlagen zu #acrpl("LLM"), Embedding-Modellen, Vektordatenbanken und dem #acr("RAG")-Konzept. In #ref(<Praxis>) wird das entwickelte System im Detail vorgestellt, einschließlich Datenbasis, Modellierung und Evaluationsstrategie. #ref(<Diskussion>) diskutiert die Ergebnisse, Limitationen sowie den praktischen Nutzen. #ref(<Fazit>) schließt mit einem Fazit und gibt einen Ausblick auf weiterführende Forschung und sowie #box("Verwendung der Ergebnisse.")
+#ref(<Methodik>) erläutert die methodische Herangehensweise auf Basis des #acr("CRISP-DM")-Prozesses. #ref(<Theorie>) liefert die theoretischen und technischen Grundlagen zu #acrpl("LLM"), Embedding-Modellen, Vektordatenbanken und dem #acr("RAG")-Konzept. In #ref(<Praxis>) wird das entwickelte System im Detail vorgestellt, einschließlich Datenbasis, Modellierung und Evaluationsstrategie. #ref(<Fazit>) schließt mit einer Zusammenfassung, diskutiert die Ergebnisse, Limitationen sowie den praktischen Nutzen und endet mit einen Ausblick auf weiterführende Forschung und sowie #box("Verwendung der Ergebnisse.")
 
 
 #pagebreak()
 
 = Methodik<Methodik>
 
-Zur systematischen Analyse der Forschungsfrage wird das #acrf("CRISP-DM")-Prozessmodell verwendet #cite(<martinez-plumed_contreras-ochando_ferri_hernandez-orallo_kull_lachiche_ramirez-quintana_flach_2019>, supplement: "S.3048"). #acr("CRISP-DM") hat sich in der Praxis und Forschung im Bereich #acr("AI") und Data-Mining als de-facto-Standard etabliert #cite(<christoph_schröer_kruse_gómez_2021>,supplement: "Abstract, S.526") #cite(<studer_bui_drescher_hanuschkin_winkler_peters_müller_2021>, supplement: "S.2")#cite(<martinez-plumed_contreras-ochando_ferri_hernandez-orallo_kull_lachiche_ramirez-quintana_flach_2019>, supplement: "S.3048"), und bietet eine klare Struktur zur Durchführung datengetriebener Projekte #cite(<christoph_schröer_kruse_gómez_2021>, supplement: "S.527") #cite(<lendy_rahmadi_none_hadiyanto_ridwan_sanjaya_arif_prambayun_2023>, supplement: "S.401"). #acr("CRISP-DM") ist domänenunabhängig einsetzbar, und ist insbesondere für komplexe Machine-Learning-Prozesse geeignet, bei welchen Datenauswahl, Modellierung und Evaluation eng verzahnt sind.
+Zur systematischen Analyse der Forschungsfrage wird das #acrf("CRISP-DM")-Prozessmodell verwendet #cite(<martinez-plumed_contreras-ochando_ferri_hernandez-orallo_kull_lachiche_ramirez-quintana_flach_2019>, supplement: "S.3048"). #acr("CRISP-DM") hat sich in der Praxis und Forschung im Bereich #acr("AI") und Data-Mining als de-facto-Standard etabliert #cite(<christoph_schröer_kruse_gómez_2021>,supplement: "S.526") #cite(<studer_bui_drescher_hanuschkin_winkler_peters_müller_2021>, supplement: "S.2")#cite(<martinez-plumed_contreras-ochando_ferri_hernandez-orallo_kull_lachiche_ramirez-quintana_flach_2019>, supplement: "S.3048"), und bietet eine klare Struktur zur Durchführung datengetriebener Projekte #cite(<christoph_schröer_kruse_gómez_2021>, supplement: "S.527") #cite(<lendy_rahmadi_none_hadiyanto_ridwan_sanjaya_arif_prambayun_2023>, supplement: "S.401"). #acr("CRISP-DM") ist domänenunabhängig einsetzbar, und ist insbesondere für komplexe Machine-Learning-Prozesse geeignet, bei welchen Datenauswahl, Modellierung und Evaluation eng verzahnt sind.
 
-Im Kontext dieser Arbeit ermöglicht #acr("CRISP-DM") eine methodisch saubere Umsetzung des #acr("RAG")-Prototyps. Von der Zieldefinition bis zur Evaluation der Antwortqualität. Die iterative Natur des Modells erlaubt es zudem, Erkenntnisse aus Zwischenschritten in spätere Phasen zurückzuführen und so das System iterativ #box("zu verbessern "+ref(<Phasen_CRISP_DM>)+".")
+Im Kontext dieser Arbeit ermöglicht #acr("CRISP-DM") eine methodisch saubere Umsetzung des #acr("RAG")-Prototyps. Von der Zieldefinition über die zur Evaluation der Antwortqualität bis hin zur Entwicklung eines Prototyps. Die iterative Natur des Modells erlaubt es zudem, Erkenntnisse aus Zwischenschritten in spätere Phasen zurückzuführen und so das System iterativ #box("zu verbessern "+ref(<Phasen_CRISP_DM>)+".")
 
 //Supplement ergänzen
 #figure(caption:
 [Phasen des CRISP-DM Phasenmodells @wirth_hipp_2000 ]
-, image(width:70%,
+, image(width:65%,
 "pictures/CRISP_DM_PA (1).png" 
 ))
 <Phasen_CRISP_DM>
@@ -448,7 +448,7 @@ In dieser Phase werden geeignete Modellierungstechniken ausgewählt und anhand d
 In dieser Phase erfolgt die umfassende Evaluation und Bewertung der zuvor erstellten Modelle #cite(<wirth_hipp_2000>, supplement: "S.6"). Zur Beurteilung der Modellqualität werden die zuvor festgelegten Testverfahren sowie die definierten Evaluationsmetriken herangezogen. Dabei wird überprüft, ob die entwickelten Modelle die gewünschten Ergebnisse liefern und die definierten Geschäftsziele vollständig erreichen #box[#cite(<ncr_clinton_2000>,supplement: "S.14") #cite(<wirth_hipp_2000>, supplement: "S.6").]
 
 
-* 6. Deployment*: Dieser Schritt umfasst die Implementierung des Modells, zum Beispiel als Prototyp, abhängig vom Modells Zweck und #box("geplanter Anwendung "+cite(<ncr_clinton_2000>,supplement: "S.14") +cite(<ncr_clinton_2000>,supplement: "S.32-34") +cite(<wirth_hipp_2000>, supplement: "S.7")+".")
+* 6. Deployment*: Dieser Schritt umfasst die Implementierung des Modells, zum Beispiel als Prototyp, abhängig vom Modell Zweck und #box(" der geplanten Anwendung "+cite(<ncr_clinton_2000>,supplement: "S.14") +cite(<ncr_clinton_2000>,supplement: "S.32-34") +cite(<wirth_hipp_2000>, supplement: "S.7")+".")
 
 Obwohl #acr("CRISP-DM") diesen etablierten Standard zur Strukturierung datengetriebener Projekte bietet, weist das Modell im Kontext moderner #acr("AI")-Anwendungen wie #acr("RAG") methodische Grenzen auf. Es wurde für klassische Data-Mining-Prozesse entwickelt und bildet neuere Konzepte wie Prompt-Engineering, semantisches Retrieval oder die nicht-deterministische Evaluation generativer Modelle nicht explizit ab #cite(<martinez-plumed_contreras-ochando_ferri_hernandez-orallo_kull_lachiche_ramirez-quintana_flach_2019>, supplement: "S.3049"). Ebenso fehlen integrierte Mechanismen zur Qualitätssicherung über alle Phasen hinweg, was insbesondere bei Systemen mit dynamischen Antwortverhalten wie #acrpl("LLM") #box("relevant ist.")
 
@@ -485,15 +485,15 @@ Während der Inferenz verarbeitet das #acr("LLM") die Eingabe tokenweise und gen
 #embedding-modelle
 #pagebreak()
 == Vektordatenbanken
-Vektordatenbanken bilden eine spezialisierte Klasse von Datenbanksystemen, die darauf ausgelegt sind, hochdimensionale Vektorrepräsentationen effizient zu speichern, zu indexieren und durchsuchbar zu machen. Im Kontext von #acr("RAG")-Systemen fungieren sie als zentrale Infrastruktur für die Speicherung und den Abruf von Embedding-Vektoren, die semantische Informationen von #box("Textdokumenten repräsentieren."+cite(<han2023comprehensivesurveyvectordatabase>, supplement: "S. 1-2"))
+Vektordatenbanken bilden eine spezialisierte Klasse von Datenbanksystemen, die darauf ausgelegt sind, hochdimensionale Vektorrepräsentationen effizient zu speichern, zu indexieren und durchsuchbar zu machen. Im Kontext von #acr("RAG")-Systemen fungieren sie als zentrale Infrastruktur für die Speicherung und den Abruf von Embedding-Vektoren, die semantische Informationen von #box("Textdokumenten repräsentieren. "+cite(<han2023comprehensivesurveyvectordatabase>, supplement: "S. 1-2"))
 
 === Architektur und Funktionsweise
-Im Gegensatz zu relationalen Datenbanken speichern Vektordatenbanken Daten als numerische Vektoren in hochdimensionalen Räumen. Jeder Vektor repräsentiert semantische Eigenschaften eines Datenobjekts #cite(<han2023comprehensivesurveyvectordatabase>, supplement: "S. 1"), wobei die räumliche Nähe zwischen Vektoren die semantische Ähnlichkeit der ursprünglichen Inhalte widerspiegelt. Diese Eigenschaft ermöglicht komplexe Ähnlichkeitsabfragen ohne exakte #box("Schlüsselwort-Übereinstimmungen"+cite(<han2023comprehensivesurveyvectordatabase>, supplement: "S. 2")+".")
+Im Gegensatz zu relationalen Datenbanken speichern Vektordatenbanken Daten als numerische Vektoren in hochdimensionalen Räumen. Jeder Vektor repräsentiert semantische Eigenschaften eines Datenobjekts #cite(<han2023comprehensivesurveyvectordatabase>, supplement: "S. 1"), wobei die räumliche Nähe zwischen Vektoren die semantische Ähnlichkeit der ursprünglichen Inhalte widerspiegelt. Diese Eigenschaft ermöglicht komplexe Ähnlichkeitsabfragen ohne exakte #box("Schlüsselwort-Übereinstimmungen "+cite(<han2023comprehensivesurveyvectordatabase>, supplement: "S. 2")+".")
 
-Die Architektur umfasst eine Speicherschicht für persistente Vektordaten, eine Indexierungsschicht für effiziente Organisation sowie eine Abfrageschicht für Ähnlichkeitssuchen. Zusätzlich unterstützen moderne Systeme die Speicherung von Metadaten für hybride Filterung und #box("Verfeinerung der Suchergebnisse."+cite(<pan2023surveyvectordatabasemanagement>, supplement: "S. 1-4"))
+Die Architektur umfasst eine Speicherschicht für persistente Vektordaten, eine Indexierungsschicht für effiziente Organisation sowie eine Abfrageschicht für Ähnlichkeitssuchen. Zusätzlich unterstützen moderne Systeme die Speicherung von Metadaten für hybride Filterung und #box("Verfeinerung der Suchergebnisse. "+cite(<pan2023surveyvectordatabasemanagement>, supplement: "S. 1-4"))
 
 === Indexierung und Suchoptimierung
-Für die effiziente Durchsuchung großer Vektorbestände setzen Vektordatenbanken spezialisierte Indexierungsalgorithmen ein. Hierarchical Navigable Small World (HNSW)-Graphen, eingeführt von Yu A Malkov et al. #cite(<Malkov>) ermöglichen durch mehrschichtige Navigationsstrukturen sublineare Suchzeiten bei hoher Genauigkeit. Alternative Verfahren wie Locality-Sensitive Hashing (LSH) bieten je nach Anwendungsfall spezifische Vorteile hinsichtlich Speichereffizienz #box("oder Suchgeschwindigkeit."+cite(<han2023comprehensivesurveyvectordatabase>, supplement: "S. 4-7"))
+Für die effiziente Durchsuchung großer Vektorbestände setzen Vektordatenbanken spezialisierte Indexierungsalgorithmen ein. Hierarchical Navigable Small World (HNSW)-Graphen, eingeführt von Yu A Malkov et al. #cite(<Malkov>) ermöglichen durch mehrschichtige Navigationsstrukturen sublineare Suchzeiten bei hoher Genauigkeit. Alternative Verfahren wie Locality-Sensitive Hashing (LSH) bieten je nach Anwendungsfall spezifische Vorteile hinsichtlich Speichereffizienz #box("oder Suchgeschwindigkeit. "+cite(<han2023comprehensivesurveyvectordatabase>, supplement: "S. 4-7"))
 #pagebreak()
 Die Approximate Nearest Neighbor (ANN)-Suche bildet das methodische Fundament dieser Verfahren #cite(<Malkov>, supplement: "S. 1-3"). Da exakte Bestimmung der nächstgelegenen Nachbarn in hochdimensionalen Räumen rechnerisch aufwendig ist, approximieren diese Algorithmen die Ergebnisse mit kontrollierbarer Genauigkeit bei #box("reduzierten Rechenzeiten "+cite(<johnson2017billionscalesimilaritysearchgpus>, supplement: "S. 1, 2, 10")+cite(<Malkov>, supplement: "S. 1-5")+".")
 
@@ -503,7 +503,7 @@ Moderne Vektordatenbanken bieten standardisierte APIs für sowohl Batch-Import g
 == Retrieval Augmented Generation<RAG>
 #acrf("RAG") kombiniert die Stärken von #acrpl("LLM") mit dem gezielten Zugriff auf externe Wissensquellen. Klassische #acr("LLM")-Modelle schöpfen ausschließlich aus dem Trainingswissen und können aktuelle oder spezielle Informationen nicht einbeziehen #cite(<gupta2024comprehensivesurveyretrievalaugmentedgeneration>, supplement: "1"), was bei neuen oder spezialisierten Fragestellungen zu falschen oder „halluzinierten", also erfundenen, Antworten #box("führen kann "+cite(<gupta2024comprehensivesurveyretrievalaugmentedgeneration>, supplement: "1-2")+cite(<Huang_2025>, supplement: "S. 1, 3, 20")+cite(<ibm2023rag>)+".")
 
-#acr("RAG")-Systeme hingegen durchsuchen vor jeder Antwort eine hinterlegte Wissensbasis (z.B. Dokumentensammlung, Datenbank oder Internetsuche) nach relevanten Textpassagen und übergeben diese als zusätzlichen Kontext an das #acr("LLM"). So lassen sich aktuelle Fakten und spezialisierte Informationen direkt einbinden, ohne das #acr("LLM") neu trainieren zu müssen, was Präzision und Nachvollziehbarkeit deutlich #box("erhöht "+cite(<gupta2024comprehensivesurveyretrievalaugmentedgeneration>, supplement: "1-2")+ref(<RAGWorkflow>)+".")
+#acr("RAG")-Systeme hingegen durchsuchen vor jeder Antwort eine hinterlegte Wissensbasis (z.B. Dokumentensammlung, Datenbank oder Internetsuche) nach relevanten Textpassagen und übergeben diese als zusätzlichen Kontext an das #acr("LLM"). So lassen sich aktuelle Fakten und spezialisierte Informationen direkt einbinden, ohne das #acr("LLM") neu trainieren zu müssen, was Präzision und Nachvollziehbarkeit deutlich #box("erhöht "+cite(<gupta2024comprehensivesurveyretrievalaugmentedgeneration>, supplement: "1-2")+", ["+ref(<RAGWorkflow>)+"].")
 #pagebreak()
 
 ===  Wissensabruf und Anreicherung
@@ -512,8 +512,8 @@ Im #acr("RAG")-Verfahren wird zu jeder Anfrage die Wissensbasis  nach relevanten
 === Retrieval-Verfahren und Suchstrategien
 Die Qualität des Retrievals bestimmt maßgeblich die Verlässlichkeit der #acr("RAG")-Antworten #cite(<manning2008introduction>, supplement: "S. 9"). Dokumente werden zunächst in passageartige Einheiten segmentiert und für die Suche aufbereitet. Bei klassischen Information-Retrieval-Verfahren (sparse Retrieval) kommen TF-IDF und BM25 zum Einsatz:
 #v(-0.25em)
-- *TF-IDF*: Gewichtet Terme durch Multiplikation der Termhäufigkeit mit dem inversen Dokumenthäufigkeitsmaß, sodass häufige Terme abgeschwächt und seltene Terme #box("hervorgehoben werden"+cite(<SPARCKJONES>, supplement: "S. 12, 13, 15")+cite(<BM25>,supplement: "S. 347-352")+".")
-- *BM25*: Führt gesättigte Termfrequenz und Dokumentlängennormalisierung ein, um übermäßige Gewichtung und unverhältnismäßige Bevorzugung langer Dokumente #box("zu verhindern"+cite(<BM25>,supplement: "S. 352-369")+".")
+- *TF-IDF*: Gewichtet Terme durch Multiplikation der Termhäufigkeit mit dem inversen Dokumenthäufigkeitsmaß, sodass häufige Terme abgeschwächt und seltene Terme #box("hervorgehoben werden "+cite(<SPARCKJONES>, supplement: "S. 12, 13, 15")+cite(<BM25>,supplement: "S. 347-352")+".")
+- *BM25*: Führt gesättigte Termfrequenz und Dokumentlängennormalisierung ein, um übermäßige Gewichtung und unverhältnismäßige Bevorzugung langer Dokumente #box("zu verhindern "+cite(<BM25>,supplement: "S. 352-369")+".")
 
 Diese Verfahren zeigen robuste Leistung, stoßen jedoch bei semantisch anspruchsvollen Anfragen oder Paraphrasen an ihre Grenzen, da sie primär auf exakten #box("Wortüberlappungen beruhen "+cite(<karpukhin2020densepassageretrievalopendomain>, supplement: "S. 1")).
 
@@ -525,11 +525,11 @@ Für die technische Umsetzung des dichten Retrievals werden die in Kapitel 2.2 b
 
 Im #acr("RAG")-System bildet die generative Antworterstellung den abschließenden Verarbeitungsschritt, in dem das vortrainierte Sprachmodell die ursprüngliche Nutzerfrage mit den durch das Retrieval-System identifizierten relevanten Dokumentfragmenten zu einem einzigen, kontextualisierten Prompt kombiniert und darauf basierend regressiv den finalen #box("Antworttext generiert."+cite(<lewis2021retrievalaugmentedgenerationknowledgeintensivenlp>, supplement: "S. 5-7"))
 
-Für die Qualität der Antwort spielt die Wahl des #acr("LLM") eine entscheidende Rolle. Neueste #acr("LLM") führender Anbieter können Zusammenhänge besser verstehen und detailliertere Antworten geben als bisherige Modelle. Ebenso wichtig ist die Größe des Kontextfensters – also wie viele Informationen das #acr("LLM") gleichzeitig verarbeiten kann. Ist dieses Fenster zu klein, gehen wichtige Quellenpassagen verloren. Ist es zu groß, wird das System langsamer und verbraucht mehr Ressourcen, ohne dass die Antworten proportional #box("besser werden"+cite(<roychowdhury2024erattaextremeragtable>, supplement: "S. 1-4")+".") 
+Für die Qualität der Antwort spielt die Wahl des #acr("LLM") eine entscheidende Rolle. Neue #acrpl("LLM") führender Anbieter können Zusammenhänge besser verstehen und detailliertere Antworten geben als bisherige Modelle. Ebenso wichtig ist die Größe des Kontextfensters – also wie viele Informationen das #acr("LLM") gleichzeitig verarbeiten kann. Ist dieses Fenster zu klein, gehen wichtige Quellenpassagen verloren. Ist es zu groß, wird das System langsamer und verbraucht mehr Ressourcen, ohne dass die Antworten proportional #box("besser werden "+cite(<roychowdhury2024erattaextremeragtable>, supplement: "S. 1-4")+".") 
 
 Durch die unmittelbare Integration der abgerufenen Textpassagen in den Generierungsprozess minimiert der #acr("RAG")-Ansatz das Auftreten von Halluzinationen erheblich und gewährleistet, dass jede Antwort faktenbasiert und durch konkrete Quellen verifizierbar bleibt. Dieser Mechanismus eliminiert die Notwendigkeit aufwendiger Nachtrainingsverfahren des Sprachmodells, da neue oder aktualisierte Informationen direkt über die Wissensbasis eingebunden #box("werden können. "+cite(<kulkarni2024geneticapproachmitigatehallucination>, supplement: "S. 1"))
 
-Die Transparenz des Verfahrens ermöglicht es darüber hinaus, die verwendeten Quelldokumente zu referenzieren, wodurch Nutzer die Möglichkeit erhalten, die faktische Grundlage der generierten Antworten selbst zu überprüfen und das Vertrauen in die Systemausgaben zu stärken.
+Die Transparenz des Verfahrens ermöglicht es darüber hinaus, die verwendeten Quelldokumente zu referenzieren, wodurch Nutzer die Möglichkeit erhalten, die faktische Grundlage der generierten Antworten selbst zu überprüfen und das Vertrauen in die Systemausgaben #box("zu stärken.")
 
 #rag_parameter
 #pagebreak()
@@ -548,7 +548,7 @@ Dafür werden folgende Metriken für die Quantifizierung der Ergebnisse genutzt 
 == Data Understanding <Data_Set>
 Zur systematischen Evaluation des entwickelten #acr("RAG")-Systems wurde eine kuratierte Auswahl wissenschaftlicher Publikationen als Testdatensatz verwendet. Die Datengrundlage besteht aus fünf aktuellen Veröffentlichungen aus dem Bereich der Informatik, die von der wissenschaftlichen Publikationsplattform ArXiv.org bezogen wurden. Sämtliche ausgewählten Publikationen weisen ein einheitliches Veröffentlichungsdatum vom #box("27. Juni 2025 auf.")
 
-Diese zeitliche Nähe zum Evaluationszeitpunkt stellt eine methodisch wichtige Kontrolle dar, da gewährleistet wird, dass die Inhalte dieser Publikationen mit hoher Wahrscheinlichkeit nicht Bestandteil der Trainingsdaten gängiger #acrpl("LLM") sind. Dadurch wird eine realistische und unvoreingenommene Evaluation der #acr("RAG")-Funktionalität ermöglicht, bei der das System tatsächlich auf die bereitgestellten Dokumente angewiesen ist, anstatt auf bereits internalisiertes Wissen zurückgreifen #box("zu können.")
+Diese zeitliche Nähe zum Evaluationszeitpunkt (29. Juni 2025) stellt eine methodisch wichtige Kontrolle dar, da gewährleistet wird, dass die Inhalte dieser Publikationen mit hoher Wahrscheinlichkeit nicht Bestandteil der Trainingsdaten gängiger #acrpl("LLM") sind. Dadurch wird eine realistische und unvoreingenommene Evaluation der #acr("RAG")-Funktionalität ermöglicht, bei der das System tatsächlich auf die bereitgestellten Dokumente angewiesen ist, anstatt auf bereits internalisiertes Wissen zurückgreifen #box("zu können.")
 
 Zur Validierung dieser Annahme wurde das eingesetzte #acr("LLM") explizit zu seiner Kenntnis der ausgewählten Publikationen befragt. Ohne Zugriff auf das #acr("RAG")-System bestätigte das Modell konsistent seine Unkenntnis bezüglich der spezifischen Inhalte aller fünf Publikationen, was die methodische Grundlage der #box("Evaluation stärkt.")
 
@@ -586,13 +586,13 @@ Für die Entwicklung des Modells und die darauffolgende Analyse wurden weitere f
 Zur Generierung der Antworten mithilfe des #acr("RAG")-Systems werden, wie in @LLM_Theorie erläutert, #acrpl("LLM"), augrund ihrer hohen Performance gegenüber alternativen Verfahren eingestetzt. Vom Training eines eigenen Modells wird aufgrund von geringer Datengrundlage sowie Kosten- und Recheneleistung abgesehen und verschiedene #acrpl("PLM") eingesetzt #cite(<strubell_ganesh_mccallum_2019>, supplement: "S.3648,3649"). 
 #pagebreak()
 
-- *Generierendes Modell GPT-4o:* GPT-4o von OpenAI, veröffentlicht am 13.Mai 2024, zeichnet sich durch eine hohe Leistungsfähigkeit aus #cite(<gpt_4o>). Nach den Angaben von OpenAI ist das Modell GPT-4o das beste und leistungsfähigste Modell außerhalb der O-Serie #cite(<gpt_4o>). Im Vergleich zu diesen Modellen, wie beispielsweise o3-mini, ist GPT-4o schneller in der Sprachverarbeitung #cite(<gpt_4o>). 
+- *Generierendes Modell GPT-4o:* GPT-4o von OpenAI, veröffentlicht am 13. Mai 2024, zeichnet sich durch eine hohe Leistungsfähigkeit aus #cite(<gpt_4o>). Nach den Angaben von OpenAI ist das Modell GPT-4o das beste und leistungsfähigste Modell außerhalb der O-Serie #cite(<gpt_4o>). Im Vergleich zu diesen Modellen, wie beispielsweise o3-mini, ist GPT-4o schneller in der Sprachverarbeitung #cite(<gpt_4o>). 
 
 - *Bewertendes Modell GPT-4o:* Als bewertendes Modell für den #acr("LLM")-as-a-Judge Ansatz wurde ebenfalls GPT-4o von OpenAI gewählt. Diese Modell bewertet, wie in @LLM-as-a-Judge  ,die zuvor generieten Antworten des #acr("RAG")-Systems. 
 
 - *Prompting:* Die Erstellung des Prompts für das #acr("RAG")-System erfolgte nach den in der Literatur definierten Kriterien (siehe @Prompt_Kriterien ). Das Prompt-Template wurde dabei in allen Iterationen des #acr("RAG")-Systems konsistent eingesetzt. 
 
- Auch das Prompt-Template für den #acr("LLM")-as-a-Judge Ansatz wurde nach den Kriterien der Literatur erstellt (siehe @Prompt_Kriterien ) und in allen Iterationen des #acr("RAG")-Systems konsistent eingesetzt. Die Prompt Templates befinden sich im Prompt-Verzeichnis.
+Auch das Prompt-Template für den #acr("LLM")-as-a-Judge Ansatz wurde nach den Kriterien der Literatur erstellt (siehe @Prompt_Kriterien ) und in allen Iterationen des #acr("RAG")-Systems konsistent eingesetzt. Die Prompt Templates befinden sich im Prompt-Verzeichnis.
 
 
 
@@ -622,17 +622,12 @@ Die RAG-Architektur in @RAG_Architektur zeigt die projektspezifische Architektur
 Um die Fragen mit Hilfe des #acr("RAG")-Systems beantworten zu können, müssen zunächst die Kontextdaten (Paper Knowledge Base) zur Beantwortung der Fragen in die Vektor-Datenbank (Qdrant) geladen werden. In der vorliegenden Arbeit handelt es sich dabei um die genannten fünf wissenschaftlichen Literaturauszüge (siehe @Data_Set). 
 
 
-Dazu werden zunächst die Texte aus den Dokumenten extrahiert, in definierte Chunks aufgeteilt (Chunk-Size, Overlap) und anschließend mit Hilfe von dem Embedding-Modell text-embedding-3-large von OpenAI in die Qdrant Vektordatenbank geladen (siehe @RAG_Architektur). Die Fragen werden zur Beantwortung aus einem JSON-Document ausgelesen, in Vektor-Embeddings umgewandelt und der Similarity Search zur Suche übergeben. Das Prompt-Template bleibt dabei stets das selbe. Die durch die Similarity-Search ermittelten Chunks werden dem Prompt als Text-Kontext mitgegeben, der im Anschluss durch das LLM GPT-4o bearbeitet wurde. Die Ergebnisse des LLM GPT-4o Modells werden anschließend in eine #acr("CSV")-Datei geschrieben. 
+Dazu werden zunächst die Texte aus den Dokumenten extrahiert, in definierte Chunks aufgeteilt (Chunk-Size, Overlap) und anschließend mit Hilfe von dem Embedding-Modell text-embedding-3-large von OpenAI in die Qdrant Vektordatenbank geladen (siehe @RAG_Architektur). Die Fragen werden zur Beantwortung aus einem JSON-Dokument ausgelesen, in Vektor-Embeddings umgewandelt und der Similarity Search zur Suche übergeben. Das Prompt-Template bleibt dabei stets das selbe. Die durch die Similarity-Search ermittelten Chunks werden dem Prompt als Text-Kontext mitgegeben, der im Anschluss durch das LLM GPT-4o bearbeitet wurde. Die Ergebnisse des LLM GPT-4o Modells werden anschließend in eine #acr("CSV")-Datei geschrieben. 
 
 
 Zur Beurteilung der Antwortqualität (Evaluation) werden die generierten-Daten, sowie die erstellte "Ground-Truth"-Antwort (Optimalantwort), mit Hilfe von Evaluationsmetriken (#acr("ROUGE"), Precision und Recall) analysiert. Anschließend wird die generierte Antwort zusätzlich mit Hilfe des 
 #acr("LLM")-as-a-Judge Modells GPT-4o hinsichtlich 
 der Faktuellen Korrektheit, der Vollständigkeit , der Relevanz und der Tiefe bewertet und mit dem Ergebnis der Evaluationsmetriken verglichen. Im Folgenden sollen die Evaluationsergebnisse des Experiments dargestellt werden. 
-
-
-
-
-
 
 #pagebreak()
 

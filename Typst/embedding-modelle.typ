@@ -9,7 +9,7 @@
 
 Embedding-Modelle spielen eine zentrale Rolle im ML, insbesondere in #acr("RAG")-Architekturen. Sie dienen dazu, Wörter, Sätze oder Dokumente in dichte, numerische Vektoren zu transformieren, die semantische Beziehungen im hochdimensionalen Raum abbilden. Sie lösen das Problem, dass Computer nicht direkt mit Wörtern arbeiten können, sondern numerische Repräsentationen benötigen. Embeddings übersetzen Wörter, Sätze oder ganze Dokumente in hochdimensionale Vektorräume, wobei semantische Beziehungen erhalten bleiben. @Embeddings zeigt eine stark vereinfachte Übersicht über den Embedding Prozess. Dieser Prozess soll detailliert im folgenden #box[erläutert werden.]
 
-#figure(caption:"Übersicht Prozess Embedding Modelle"+ " "+cite(<2024vector_embeddings>)+". ",image(width: 90%,"pictures/How-Embeddings-Work.jpg"))<Embeddings>
+#figure(caption:"Übersicht Prozess Embedding Modelle"+ " "+cite(<2024vector_embeddings>)+". ",image(width: 86%,"pictures/How-Embeddings-Work.jpg"))<Embeddings>
 
 Die Umwandlung eines Wortes eines Satzes oder eines Dokuments in einen hochdimensionalen Vektor erfolgt nach folgendem Grundprinzip:
 
@@ -19,7 +19,7 @@ Die Umwandlung eines Wortes eines Satzes oder eines Dokuments in einen hochdimen
 
 + *Vektorraum und semantische Beziehungen:* Die generierten Embedding-Vektoren spannen einen hochdimensionalen Vektorraum auf, in dem semantische Beziehungen zwischen Wörtern durch geometrische Relationen repräsentiert werden. Semantisch ähnliche Wörter befinden sich in diesem Raum in räumlicher Nähe zueinander. Diese Eigenschaft ermöglicht es, semantische Ähnlichkeiten durch Vektoroperationen (Kosinus-Ähnlichkeit) zu erfassen. Darüber hinaus können durch Vektorarithmetik komplexe Beziehungen modelliert werden, wie beispielsweise die bekannte Analogie "König - Mann + Frau ≈ Königin".
 
-+ *Pooling/Aggregation:* Da längere Texte aus mehreren Tokens bestehen, müssen die individuellen Token-Vektoren zu einer einheitlichen Repräsentation für den gesamten Text aggregiert werden. Hierfür können verschiedene Pooling-Strategien genutzt werden. Average Pooling berechnet den Durchschnitt aller Token-Vektoren, während Max Pooling die maximalen Werte jeder Dimension über alle Token verwendet. Min Pooling wählt entsprechend die minimalen Werte aus.
++ *Pooling/Aggregation:* Da längere Texte aus mehreren Token bestehen, müssen die individuellen Token-Vektoren zu einer einheitlichen Repräsentation für den gesamten Text aggregiert werden. Hierfür können verschiedene Pooling-Strategien genutzt werden. Average Pooling berechnet den Durchschnitt aller Token-Vektoren, während Max Pooling die maximalen Werte jeder Dimension über alle Token verwendet. Min Pooling wählt entsprechend die minimalen Werte aus.
 
 + *Normalisierung:* In diesem Schritt werden die Embeddings vergleichbar gemacht, um eine einheitliche Skalierung zu gewährleisten. Die Standardmethode ist die L2-Normalisierung, die jeden Vektor so anpasst, dass seine euklidische Länge (L2-Norm) 1 wird. Dies geschieht durch Division jeder Komponente des Vektors durch die ursprüngliche L2-Norm des Vektors. Die Normalisierung ermöglicht es, dass die Kosinus-Ähnlichkeit als Maß für semantische Ähnlichkeit verwendet werden kann, da normalisierte Vektoren die gleiche Länge haben und somit nur ihre Richtung im Vektorraum relevant ist.
 
