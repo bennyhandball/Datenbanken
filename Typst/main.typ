@@ -392,7 +392,7 @@ Um den Lesefluss zu verbessern, werden Abbildungen, Codebeispiele und Tabellen, 
 #set heading(numbering: "1.",outlined: true)
 #set math.equation(numbering: "(1)")
 
-#set par(leading: 1.5em, spacing: 2.5em)
+#set par(leading: 1.15em, spacing: 2.15em)
 
 = Einleitung
 == Motivation
