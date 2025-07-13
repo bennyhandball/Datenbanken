@@ -354,6 +354,13 @@ Um den Lesefluss zu verbessern, werden Abbildungen, Codebeispiele und Tabellen, 
     title: "Codeverzeichnis",
     target: figure.where(kind: "code")
   )
+#pagebreak()
+// Promptverzeichniss (List of Code) 
+  #outline(
+    title: "Promptverzeichnis",
+    target: figure.where(kind: "Prompt"
+    )
+  )
 
 #pagebreak()
 // Abkürzungsverzeichnis (List of Abbreviations)
