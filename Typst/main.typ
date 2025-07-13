@@ -572,7 +572,7 @@ Für jedes der fünf ausgewählten Paper werden fünf inhaltliche Fragen erstell
 
 Insgesamt liegt somit ein Datensatz von 35 Fragen (5 × 5 Inhlatsfragen, 5 × 2 Metadatenfragen) vor. Dieser dient im Weiteren als Basis für die Entwicklung des #acr("RAG")-Systems und Bewertung der #box("Antwortgenauigkeit in "+ref(<Evaluation>)+".")
 
-== Modelling
+== Modelling <Modelling>
 Im Kontext von #acr("RAG") erfordert die Modelling Phase die systematische Auswahl und Konfiguration der Retrieval Komponente als auch der generativen Sprachmodelle um eine möglichst passende Harmonisierung zwischen dem Abruf relevanter Informationen und der kontextuellen Textgenerierung zu erreichen.
 
 - *Programmiersprache Python:* Python eignet sich für #acr("AI")- und Data-Science-Anwendungen, da es eine klare Syntax, sowie eine breite Auswahl leistungsfähiger Bibliotheken bietet #cite(<nagpal_gabrani_2019>, supplement: "S.141-S.143"). Zusätzlich ermöglicht die Programmiersprache  eine schnelle Prototypentwicklung, modulare Strukturierung und eine gute Integrierbarkeit in bestehende Systeme #cite(<nagpal_gabrani_2019>, supplement: "S.141-S.143"). Python wurde für die Implementierung des #acr("RAG")-Systems und die Analyse der Optimierungsstrategien genutzt.

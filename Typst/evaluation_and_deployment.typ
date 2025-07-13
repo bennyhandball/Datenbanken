@@ -50,7 +50,20 @@ Zusammenfassend belegen die Ergebnisse eine signifikante Verbesserung der Antwor
 Aufgrund der positiven Ergebnisse in @Evaluation wird im Rahmen dieser Arbeit ein Prototyp angefertigt, welcher folgende Funktionalitäten bietet:
 
 - *Datenpflege:* Nutzer können Dokumente in einer Vektordatenbank speichern, die für #acr("RAG")-Abfragen genutzt werden.
-- *Abfrage von Inhalten:*: In einem Chat können Nutzer Fragen stellen, die das System mit Hilfe von #acr("RAG") beantwortet. Dabei werden relevante Dokumente aus der Vektordatenbank abgerufen und die Antworten generiert.
+- *Abfrage von Inhalten:* In einem Chat können Nutzer Fragen stellen, die das System mit Hilfe von #acr("RAG") beantwortet. Dabei werden relevante Dokumente aus der Vektordatenbank abgerufen und die Antworten generiert.
+- *Übersicht hochgeladener Dokumente:* Unter dem Chat werden die hochgeladenen Dokumente aufgelistet, die für die #acr("RAG")-Abfrage genutzt werden.
 
-Der Prototyp nutzt Flask als Web-Framework und ermöglicht es, Dokumente in einer Vektordatenbank zu speichern und #acr("RAG")-Abfragen durchzuführen. Die Benutzeroberfläche ist einfach gehalten und ermöglicht eine intuitive Interaktion mit dem System.
+Der Prototyp nutzt Flask als Web-Framework und Qdrant als Vektordatenbank. Aufgrund der positiven Ergebnisse aus @Evaluation wurde die in @Modelling vorgestellte Architektur sowie identischen Modelle eingesetzt. Die 
+
+#figure(caption:
+[Korrelation zwischen N-Gramm/LLM-as-a-Judge. Eigene Darstellung.]
+, image(width: 65%,
+"pictures/prototype.png" 
+))
+<prototype>
+
+Wie aus @prototype ersichtlich können Nutzer Dokumente hochladen, die dann in der Vektordatenbank gespeichert werden. Anschließend können sie im Chat Fragen stellen, auf die das System mit Hilfe von #acr("RAG") antwortet und Informationen in Form einer Nachricht zurückgibt. Unter dem Chat werden hochgeladene Dokumente aufgelistet, die für die #acr("RAG")-Abfrage genutzt werden.
+
+Im Folgenden wird in der Schlussbetrachtung auf die Ergebnisse der Arbeit eingegangen, diese hinsichtlich ihrer Herausforderungen und Limitationen diskutiert ein Ausblick zur weiteren Forschung betrachtet.
+
 ]
