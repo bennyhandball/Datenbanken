@@ -475,7 +475,6 @@ Zudem lassen sich #acrpl("Prompt") in System- und User-#acrpl("Prompt") untertei
 - *User-Prompt:*
   Der User-Prompt ist die spezifische Eingabe des Endnutzers, auf die das Modell reagiert. Diese Anfrage stellt die Grundlage für die erzeugten Antworten dar #cite(<openai_platform_2025>). 
 
-
 Während der Inferenz verarbeitet das #acr("LLM") die Eingabe tokenweise und generiert basierend auf den Wahrscheinlichkeitsverteilungen seiner Parameter eine kohärente Antwort. Die Qualität dieser Ausgabe hängt maßgeblich vom bereitgestellt #box("Kontext ab "+cite(<LLMTaxonomyPrompting>, supplement: "S. 3-6")+".")
 
 #pagebreak()
@@ -587,101 +586,8 @@ Zur Generierung der Antworten mithilfe des #acr("RAG")-Systems werden, wie in @L
 
 - *Prompting:* Die Erstellung des Prompts für das #acr("RAG")-System erfolgte nach den in der Literatur definierten Kriterien (siehe ). Das Prompt-Template wurde dabei in allen Iterationen des #acr("RAG")-Systems konsistent eingesetzt. 
 
-#figure( table(
-    columns: (12%,20%, 70%),
-    row-gutter: 0.5em,
-    column-gutter: -0.25em,
-    align: (x, y) => if x == 0 or x == 1 {left + top} else if y == 0 {left + top } else {left + horizon},
-    stroke: (x, y) => if y == 0 or y == 7{
-    (bottom: 0.7pt + black)
-  },
-    table.header(
-    [*Type*],[*Bestandteil*], [*Prompt Text*]
-    ),
-    [*System:*],[Kontext:], [
-      #set par(leading: 0.5em, spacing: 1.5em)
-      
-      You are a precise and helpful AI assistant that answers questions IN GERMAN based strictly on the provided context. Your primary goal is to provide accurate, relevant, and well-sourced responses using only the information given in the context.
-],
-    
 
-    [*User:*],[Aufgabe:],[
-      #set par(leading: 0.5em, spacing: 1.5em)
-      Analyze the given context documents and provide accurate, complete answers to user questions using only the information contained within those documents:],
-    [],[Question:], [Question to answer: {question} ],
-    [],[Context:], [Context documents: {context} ],
-
-
-  ),
-  caption:"Prompt-Template"
-  ,kind: "Prompt",
-  supplement: "Prompt"
-  )<ZeroShot>
-
-  Das folgende Prompt-Template zeigt den Prompt für den #acr("LLM")-as-a-Judge Ansatz. Dieser wurde ebenfalls nach den in der Literatur definierten Kriterien (siehe ) erstellt und in allen Iterationen des #acr("RAG")-Systems konsistent eingesetzt.
-
-  #figure( table(
-    columns: (12%,20%, 70%),
-    row-gutter: 0.5em,
-    column-gutter: -0.25em,
-    align: (x, y) => if x == 0 or x == 1 {left + top} else if y == 0 {left + top } else {left + horizon},
-    stroke: (x, y) => if y == 0 or y == 7{
-    (bottom: 0.7pt + black)
-  },
-    table.header(
-    [*Type*],[*Bestandteil*], [*Prompt Text*]
-    ),
-    [*System:*],[Kontext:], [
-      #set par(leading: 0.5em, spacing: 1.5em)
-You are an expert evaluator. Your task is to judge the candidate answer (`answer_llm`) against the reference answer (`answer_gold`)
-for the given question (`question_string`).
- 
-Use the following three-point scale for each criterion:
-  0 = not fulfilled at all (the answer is incorrect, irrelevant, or missing)
-  1 = partially fulfilled (the answer shows some correct elements but is incomplete or imprecise)
-  2 = fully fulfilled (the answer is correct, complete and precise)
- 
-Evaluate on these five criteria exactly:
-1. Factual correctness: Are the facts in the answer correct and accurate?
-2. Completeness: Does the answer cover all aspects of the question?
-3. Relevance: Is the answer relevant to the question asked?
-4. Justification: Is the answer well-justified with clear reasoning?
-5. Depth: Does the answer show a deep understanding of the topic?
- 
-Then compute:
-- overall_score = sum of the five individual scores
-- max_score = 10
-- pass = true if overall_score ≥ 8, otherwise false
- 
-Output your evaluation as a single JSON object with these fields:
-{
-  "question_id": string,
-  "factual_correctness": 0–2,
-  "completeness":        0–2,
-  "relevance":           0–2,
-  "justification":       0–2,
-  "depth":               0–2,
-  "overall_score":       integer,
-  "max_score":           10,
-  "pass":                boolean,
-}
-],
-    
-
-    [*User:*],[Aufgabe:],[
-      #set par(leading: 0.5em, spacing: 1.5em)
-      Evaluate the following question and answers:],
-    [],[question_id:], [{question_id} ],
-    [],[question_string:], [{question} ],
-    [],[answer_llm:], [{answer_llm} ],
-    [],[answer_gold:], [{answer_gold} ],
-
-
-  ),
-  caption:"Evaluation-Prompt"
-  ,kind: "Prompt",
-  supplement: "Prompt"
-  )<ZeroShot>
+Das folgende Prompt-Template zeigt den Prompt für den #acr("LLM")-as-a-Judge Ansatz. Dieser wurde ebenfalls nach den in der Literatur definierten Kriterien (siehe ) erstellt und in allen Iterationen des #acr("RAG")-Systems konsistent eingesetzt.
 
 #pagebreak()
 
@@ -771,6 +677,95 @@ Das sind die falschen Kriterien du dödel, schau mal rein was ich in evaluation 
 #set heading(outlined: false)
 == Abbildungen
 #figure(caption: "RAG Workflow entlang der Komponenten " + cite(<gupta2024comprehensivesurveyretrievalaugmentedgeneration>,supplement: "S. 2"),image(width: 100%,"pictures/RAG knowledge.png"))<RAGWorkflow>
+== Verwendete Prompts
+#figure( table(
+    columns: (12%,20%, 70%),
+    row-gutter: 0.5em,
+    column-gutter: -0.25em,
+    align: (x, y) => if x == 0 or x == 1 {left + top} else if y == 0 {left + top } else {left + horizon},
+    stroke: (x, y) => if y == 0 or y == 7{
+    (bottom: 0.7pt + black)
+  },
+    table.header(
+    [*Type*],[*Bestandteil*], [*Prompt Text*]
+    ),
+    [*System:*],[Kontext:], [
+      #set par(leading: 0.5em, spacing: 1.5em)
+      
+      You are a precise and helpful AI assistant that answers questions IN GERMAN based strictly on the provided context. Your primary goal is to provide accurate, relevant, and well-sourced responses using only the information given in the context.
+],
+    
+
+    [*User:*],[Aufgabe:],[
+      #set par(leading: 0.5em, spacing: 1.5em)
+      Analyze the given context documents and provide accurate, complete answers to user questions using only the information contained within those documents:],
+    [],[Question:], [Question to answer: {question} ],
+    [],[Context:], [Context documents: {context} ],
+
+
+  ),
+  caption:"Prompt-Template"
+  ,kind: "Prompt",
+  supplement: "Prompt"
+)<ZeroShot>
+#figure( table(
+    columns: (12%,20%, 70%),
+    row-gutter: 0.5em,
+    column-gutter: -0.25em,
+    align: (x, y) => if x == 0 or x == 1 {left + top} else if y == 0 {left + top } else {left + horizon},
+    stroke: (x, y) => if y == 0 or y == 7{
+    (bottom: 0.7pt + black)
+  },
+    table.header(
+    [*Type*],[*Bestandteil*], [*Prompt Text*]
+    ),
+    [*System:*],[Kontext:], [
+      #set par(leading: 0.5em, spacing: 1.5em)
+  You are an expert evaluator. Your task is to judge the candidate answer (`answer_llm`) against the reference answer (`answer_gold`)
+  for the given question (`question_string`).
+ 
+  Use the following three-point scale for each criterion:
+  0 = not fulfilled at all (the answer is incorrect, irrelevant, or missing)
+  1 = partially fulfilled (the answer shows some correct elements but is incomplete or imprecise)
+  2 = fully fulfilled (the answer is correct, complete and precise)
+ 
+  Evaluate on these five criteria exactly:
+  1. Factual correctness: Are the facts in the answer correct and accurate?
+  2. Completeness: Does the answer cover all aspects of the question?
+  3. Relevance: Is the answer relevant to the question asked?
+  4. Justification: Is the answer well-justified with clear reasoning?
+  5. Depth: Does the answer show a deep understanding of the topic?
+  
+  Then compute:
+  - overall_score = sum of the five individual scores
+  - max_score = 10
+  - pass = true if overall_score ≥ 8, otherwise false
+  
+  Output your evaluation as a single JSON object with these fields:
+  {
+    "question_id": string,
+    "factual_correctness": 0–2,
+    "completeness":        0–2,
+    "relevance":           0–2,
+    "justification":       0–2,
+    "depth":               0–2,
+    "overall_score":       integer,
+    "max_score":           10,
+    "pass":                boolean,
+  }
+  ],
+    [*User:*],[Aufgabe:],[
+      #set par(leading: 0.5em, spacing: 1.5em)
+      Evaluate the following question and answers:],
+    [],[question_id:], [{question_id} ],
+    [],[question_string:], [{question} ],
+    [],[answer_llm:], [{answer_llm} ],
+    [],[answer_gold:], [{answer_gold} ],
+  ),
+  caption:"Evaluation-Prompt"
+  ,kind: "Prompt",
+  supplement: "Prompt"
+)<ZeroShot>
 == Ergebnisse der Evaluation
 === Precision-n, Recal-n und ROUGE-n Ergebnisse
 #figure(caption:
