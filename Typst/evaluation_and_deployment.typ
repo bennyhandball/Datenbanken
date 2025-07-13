@@ -8,13 +8,13 @@
 == Evaluation <Evaluation>
   
 #figure(caption:
-[Aggregierte Metriken des entwickelten #acr("RAG")-Systems]
+[Aggregierte Metriken vor/nach #acr("RAG")-Implementierung. Eigene Darstellung.]
 , image(
 "pictures/metrics_aggregated.png" 
 ))
 <aggregated_metrics>
 
-@aggregated_metrics zeigt die Ergebnisse der Evaluation des entwickelten #acr("RAG")-Systems. Die Metriken wurden aggregiert, um einen Überblick über die Leistung des Systems zu geben. Die Ergebnisse zeigen, dass das System in der Lage ist, qualitativ hochwertige Antworten auf gestellte Fragen zu liefern.
+@aggregated_metrics zeigt die aggregierten Ergebnisse über alle Fragen hinweg, aufgeteilt in N-Gramm basierte Daten und #acr("LLM")-as-a-Judge Metriken....
 
 #figure(caption:
 [Phasen des CRISP-DM Phasenmodells @wirth_hipp_2000 ]
