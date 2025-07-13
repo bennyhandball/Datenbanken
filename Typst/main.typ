@@ -466,29 +466,18 @@ Die praktische Anwendung von #acrpl("LLM") erfolgt in der Inferenz-Phase, in der
 - *Wahrung von Neutralität und Objektivität*: Um Verzerrungen zu vermeiden, sollten Prompts keine suggestiven oder wertenden Formulierungen enthalten, sodass die Antworten des Modells #box("objektiv bleiben "+cite(<chen2024usingpromptsguidelarge>, supplement: "S. 6-7")+".")
 #v(0.5em)
 - *Nutzung spezifischer Formatvorgaben*: Durch die Definition eines strukturierten Ausgabeformats, etwa in Form von JSON-Schemata, wird die inhaltliche Konsistenz und Nachvollziehbarkeit der generierten Inhalte signifikant erhöht. Dieser Ansatz legt explizite Antwortparameter fest und erleichtert die nachgelagerte Verarbeitung, wodurch eine konsistente und zuverlässige Klassifikation #box("gewährleistet wird "+cite(<OpenAI2025StructuredOutputs>)+ cite(<hewing2024prompt>, supplement: "S. 11")+".")
-#v(.5em)
+#v(0.5em)
+Zudem lassen sich #acrpl("Prompt") in System- und User-#acrpl("Prompt") unterteilen. Ziel ist es durch diese Teilung die Leistung des Modells weiter positiv zu beeinflussen #cite(<marvin_hellen_jjingo_nakatumba_nabende_2024>, supplement: "S.388"). 
+#v(0.5em)
+- *System-Prompt:* 
+  Der System-Prompt ist die initiale, funktionsspezifische Anweisung, die den Rahmen zwischen dem #acr("LLM") und dem menschlichen Benutzer definiert #cite(<mctear_ashurkina_2024>, supplement:"S.117"). Innerhalb des System-Promps, kann das Verhalten, die Formalität und Fachsprache definiert werden. Dazu werden der Kontext, die Rolle oder spezifische Regeln für die Interaktion festgelegt. #cite(<mrbullwinkle_2025>). 
+#v(0.5em)
+- *User-Prompt:*
+  Der User-Prompt ist die spezifische Eingabe des Endnutzers, auf die das Modell reagiert. Diese Anfrage stellt die Grundlage für die erzeugten Antworten dar #cite(<openai_platform_2025>). 
+
 
 Während der Inferenz verarbeitet das #acr("LLM") die Eingabe tokenweise und generiert basierend auf den Wahrscheinlichkeitsverteilungen seiner Parameter eine kohärente Antwort. Die Qualität dieser Ausgabe hängt maßgeblich vom bereitgestellt #box("Kontext ab "+cite(<LLMTaxonomyPrompting>, supplement: "S. 3-6")+".")
 
-Ziel ist es, durch Anpassungen des Prompts die Ausgabe des Modells positiv zu beeinflussen #cite(<marvin_hellen_jjingo_nakatumba_nabende_2024>, supplement: "S.388"). 
-Grundsätzlich unterscheidet man zwischen dem System- und dem User-Prompt.
-
-
-
-*System-Prompt:* 
-Der System-Prompt ist die initiale, funktionsspezifische Anweisung, die 
-den Rahmen zwischen dem #acr("LLM") und dem menschlichen Benutzer definiert #cite(<mctear_ashurkina_2024>, supplement:"S.117"). Innerhalb des System-Promps, kann das Verhalten, die Formalität und Fachsprache definiert werden. Dazu werden der Kontext, die Rolle oder spezifische Regeln für die Interaktion festgelegt. #cite(<mrbullwinkle_2025>). 
-
-
-*User-Prompt:*
-Der User-Prompt ist die spezifische Eingabe des Endnutzers, auf die das Modell reagiert. Diese Anfrage stellt die Grundlage für die erzeugten Antworten dar #cite(<openai_platform_2025>). 
-
-Grundsätzlich lassen sich folgende Empfehlungen für die Formulierung von Prompts aus der Literatur ableiten:
-
-
-- *Klarheit, Struktur und Präzision :* Die Prompts sollen präzise und unmissverständlich formuliert sein, um ungenaue Interpretationen und Fehlinterpretationen zu vermeiden #cite(<taulli_2023>, supplement: "S.54").
-
-- *Kontext und Datengrundlage :* Die Angabe von Kontext und einer passenden Datengrundlage ist relevant, da sie dem #acr("LLM") bei der Interpretation der Anfrage hilft, eine fundierte, aufgabenspezifische Antwort zu generieren #cite(<openai_platform_2025>) #cite(<taulli_2023>, supplement: "S.54").
 #pagebreak()
 
 #import "embedding-modelle.typ": embedding-modelle
