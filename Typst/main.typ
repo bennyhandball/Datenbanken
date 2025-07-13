@@ -401,7 +401,7 @@ In den letzten Jahren hat die Forschung im Bereich der #acrpl("LLM") enorme Fort
 #acr("RAG")-Systeme verbinden klassische Sprachmodelle mit externem, dynamisch abrufbarem Wissen. Statt allein auf das interne Modellwissen zu vertrauen, ruft das System bei jeder Anfrage kontextrelevante Inhalte ab und reichert die Antwort dynamisch damit an. Studien wie Hasan et al. #cite(<hasan2025engineeringragsystemsrealworld>) zeigen, dass #acr("RAG") in Praxisfeldern wie Governance oder Medizin bereits erfolgreich eingesetzt werden kann. Für den wissenschaftliche Nutzung, wie die Analyse aktueller Paper, existieren jedoch kaum belastbare Daten zur #box("Leistungsfähigkeit von "+acr("RAG")+"-Systemen.")
 #pagebreak()
 == Forschungsfrage
-Ausgehend von den beschriebenen Herausforderungen und Entwicklungen ergibt #box("sich folgende "+acrf("RQ")+":")
+Ausgehend von den beschriebenen Herausforderungen und Entwicklungen ergibt sich, für #box("uns, folgende "+acrf("RQ")+":")
 
 *#acr("RQ")*: Wie leistungsfähig sind #acr("RAG")-Systeme bei der Beantwortung wissenschaftlicher Fachfragen auf Basis aktueller, zuvor nicht im #box("Modelltraining enthaltener Literatur?")
 
