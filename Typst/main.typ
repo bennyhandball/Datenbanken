@@ -648,6 +648,10 @@ der Faktuellen Korrektheit, der Vollständigkeit , der Relevanz und der Tiefe be
 
 == Zusammenfassung der Ergebnisse
 
+In dieser Arbeit wurde ein prototypisches #acr("RAG")-System implementiert, das aktuelle wissenschaftliche Veröffentlichungen aus diversen Subdomänen der Informatik in Form von PDFs mithilfe eines tokenbasierten Chunkers in Segmente von 1 024 Tokens Länge mit 128 Tokens Überlappung zerlegt, jedes Segment  anschließend durch das text-embedding-3-large-Modell von OpenAI in den Vektorraum überführt und in Qdrant als Vektordatenbank abgelegt. Bei einer Anfrage analysiert der Chatbot die Nutzerfrage, wandelt sie ebenfalls in einen Vektor um und ruft über k-Nearest-Neighbor-Retrieval die relevantesten Chunks ab. Diese Chunks werden via Prompt-Engineering zusammen mit der Originalfrage an OpenAI's GPT-4o übergeben, das die finale Antwort generiert und in natürlicher Sprache ausgibt.
+
+Gegenüber einer reinen LLM-Baseline verdoppelte sich die Precision-1 von 15,5 % auf 32,6 %, der Recall-1 stieg von 8,6 % auf 32,4 % und der ROUGE-1-Score von 11,2 % auf 29,1 %; auch die 2-Gramm-Metriken verbesserten sich um 9–11 Prozentpunkte. Qualitative Bewertungen durch GPT-4o als „Richter“ ergaben im Durchschnitt 1,7/2 Punkten für Faktentreue, 2,0/2 für Relevanz und 1,2/2 für Vollständigkeit (Baseline: 0 Punkte). Die Ergebnisse belegen eindrücklich das Potenzial von RAG, neue wissenschaftliche Publikationen zeitnah und präzise erschließbar zu machen. Auf Basis dieser Ergebnisse wurde ein Prototyp entwickelt, welcher das Hochladen sowie eine Abfrage von Informationen aus jenen Dokumenten in Form einer auf Flask basierenden Webapp erlaubt.
+
 == Einordnung der Ergebnisse
 
 == Herausforderungen und Limitationen <Diskussion>
