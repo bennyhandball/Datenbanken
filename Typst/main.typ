@@ -604,7 +604,13 @@ Für die Implementierung des #acr("RAG")-Systems wurde der Top-k-Retrieval Param
 
 *Distanzmetrik:* Als weitverbreitete und zuverlässige Distanzmetrik wird die Cosinus Ähnlichkeit verwendet #cite(<juvekar2024cos>, supplement: "S.1"). Diese misst den Kosinus Winkel zwischen zwei Vektoren und ist somit geeignet, um semantische Ähnlichkeiten effektiv zu erfassen. 
 
+#pagebreak()
+
 *Verwendete Retrieval-Augmented Generation-Architektur*
+
+#figure(caption:"Übersicht RAG Architektur",image(width: 90%,"pictures/RAG_Architektur.jpg"))<RAG_Architektur>
+
+
 
 Die RAG-Architektur in (Abbildung) zeigt die projektspezifische Architektur des #acr("RAG")-Systems, die zur Beantwortung der in Abschnitt erläuterten Fragen eingesetzt wurde. Im Folgenden soll das Vorgehen näher erläutert werden.
 
@@ -621,7 +627,7 @@ Zur Beurteilung der Antwortqualität wurden die generierten -Dateien, sowie die 
 
 
 
-Das sind die falschen Kriterien du dödel, schau mal rein was ich in evaluation betrachte und im Code welches Schema ich genutzt habe.
+
 
 #pagebreak()
 
