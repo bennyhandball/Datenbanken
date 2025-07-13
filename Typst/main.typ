@@ -687,21 +687,19 @@ Output your evaluation as a single JSON object with these fields:
 
 *Retrieval Augmented Generation Parameter:*
 
-
-- *Top-k-Retrieval Parameter:* 
-
-5 als Top-k-Retrieval Parameter
-
-- *Chunk Size /Overlap*
-
-Für die Konfiguration der Chunk-Size des 
-
-- *Distanzmetrik*
-
-Cosine Similarity 
+Grundsätzlich gibt es keine expliziten Vorgaben für die Wahl der #acr("RAG") Parameter #cite(<chiang2024optimizing>). Diese sind Use-Case und Anforderungsspezifisch #cite(<chiang2024optimizing>). Für den vorliegenden Use-Case müsste man durch mehrere Experiment die beste Konfiguration der kombinierten Parameter ermitteln, da dies jedoch nicht der Fokus der Arbeit ist, soll im Folgenden die Wahl der Paramter begründet werden. 
 
 
-- *Verwendete Retrieval-Augmented Generation-Architektur*
+*Top-k-Retrieval Parameter:* 
+Für die Implementierung des #acr("RAG")-Systems wurde der Top-k-Retrieval Parameter auf den Wert 5 gesetzt. Diese Entschidung basiert auf der in der Fachliteratur empfohlenen Praxis, verschiedene k-Werte systematisch zu evaluieren und einen ausgewogenen Mittelwert zu wählen #cite(<chiang2024optimizing>). Der Wert k=5 stellt dabei einen Kompromiss zwischen einem niedrigen -Wert (k=1-2), die relevante Informationen übersehen könnten, und einem zu hohen k-Wert (k>=10), die zu einer Verschlechterung der Präzision durch irrelevante Treffer führen können dar #cite(<chiang2024optimizing>). 
+
+
+*Chunk Size/Overlap: *Für die Konfiguration der Chunk-Size des #acr("RAG")-Systems wird eine Chunk-Size von 1024 Tokens mit einem Overlap von 128 Token gewählt. Erfahrungen aus einem vergleichbaren Use-Case zeigenm dass diese naive Chunking-Methode passende Retrieval-Ergebnisse liefert #cite(<Ammar2025OptimizingRAG>). Gleichzeitig ermöglicht die gewählte Chunkgröße in Kombination mit einem Obverlap von 128 Token eine schnelle Verarbeitung bei hoher Genauigkeit. Daher stellt die Konfiguration mit 1024 Tokens und 128 Tokens Overlap eine passende Balance zwischen Qualität und Effizienz dar #cite(<Ammar2025OptimizingRAG>). 
+
+*Distanzmetrik:* Als weitverbreitete und zuverlässige Distanzmetrik wird die Cosinus Ähnlichkeit verwendet #cite(<juvekar2024cos>, supplement: "S.1"). Diese misst den Kosinus Winkel zwischen zwei Vektoren und ist somit geeignet, um semantische Ähnlichkeiten effektiv zu erfassen. 
+
+*Verwendete Retrieval-Augmented Generation-Architektur*
+
 Die RAG-Architektur in (Abbildung) zeigt die projektspezifische Architektur des #acr("RAG")-Systems, die zur Beantwortung der in Abschnitt erläuterten Fragen eingesetzt wurde. Im Folgenden soll das Vorgehen näher erläutert werden.
 
 Um die Fragen mit Hilfe des #acr("RAG")-Systems beantworten zu können, mussten zunächst die Kontextdaten zur Beantwortung der Fragen in die Vektor-Datenbank geladen werden (). 
