@@ -543,7 +543,7 @@ Besonders im akademischen Bereich stehen #acrpl("LLM") vor der Herausforderung, 
 Dazu wird ein eigenes #acr("RAG")-System entwickelt, das es erlaubt,  Literatur hochzuladen und gezielt Fragen dazu zu stellen. Die Qualität der Antworten wird evaluiert, um das Potenzial solcher Systeme für den akademischen Einsatz realistisch einschätzen #box("zu können.")
 
 Dafür werden die in @EvaluationParameters genannten Metriken für die Quantifizierung der Ergebnisse genutzt:
-- *N-Gramm-basierten Metriken*: Metriken wie Precision-n, Recall-n und ROUGE-n vergleichen die generierten Antworten mit Referenzantworten, indem sie die Übereinstimmung von N-Grammen messen. Diese wird als Wert zwischen 0 und 1 wiedergegeben.
+- *N-Gramm-basierten Metriken*: Metriken wie Precision-n, Recall-n und #acr("ROUGE")-n vergleichen die generierten Antworten mit Referenzantworten, indem sie die Übereinstimmung von N-Grammen messen. Diese wird als Wert zwischen 0 und 1 wiedergegeben.
 - *#acr("LLM")-as-a-Judge*: Diese Metrik nutzt ein #acr("LLM") als Bewertungsinstanz, um die Qualität der generierten Antworten zu beurteilen. Das #acr("LLM") bewertet die Antworten auf Basis der Kriterien "Total Correctness", "Completeness", "Relevance", "Justfiication" und "Depth", indem dieses eine numerische Punktzahl zwischen 0 und 2 je Kategorie vergibt.
 
 == Data Understanding
@@ -595,8 +595,6 @@ Zur Generierung der Antworten mithilfe des #acr("RAG")-Systems werden, wie in @L
 
 Das folgende Prompt-Template zeigt den Prompt für den #acr("LLM")-as-a-Judge Ansatz. Dieser wurde ebenfalls nach den in der Literatur definierten Kriterien (siehe ) erstellt und in allen Iterationen des #acr("RAG")-Systems konsistent eingesetzt.
 
-#pagebreak()
-
 *Retrieval Augmented Generation Parameter:*
 
 Grundsätzlich gibt es keine expliziten Vorgaben für die Wahl der #acr("RAG") Parameter #cite(<chiang2024optimizing>). Diese sind Use-Case und Anforderungsspezifisch #cite(<chiang2024optimizing>). Für den vorliegenden Use-Case müsste man durch mehrere Experiment die beste Konfiguration der kombinierten Parameter ermitteln, da dies jedoch nicht der Fokus der Arbeit ist, soll im Folgenden die Wahl der Paramter begründet werden. 
@@ -641,10 +639,6 @@ Zur Beurteilung der Antwortqualität wurden die generierten -Dateien, sowie die 
 = Schlussbetrachtung<Fazit>
 
 == Zusammenfassung der Ergebnisse
-
-In dieser Arbeit wurde ein prototypisches #acr("RAG")-System implementiert, das aktuelle wissenschaftliche Veröffentlichungen aus diversen Subdomänen der Informatik in Form von PDFs mithilfe eines tokenbasierten Chunkers in Segmente von 1 024 Tokens Länge mit 128 Tokens Überlappung zerlegt, jedes Segment  anschließend durch das text-embedding-3-large-Modell von OpenAI in den Vektorraum überführt und in Qdrant als Vektordatenbank abgelegt. Bei einer Anfrage analysiert der Chatbot die Nutzerfrage, wandelt sie ebenfalls in einen Vektor um und ruft über k-Nearest-Neighbor-Retrieval die relevantesten Chunks ab. Diese Chunks werden via Prompt-Engineering zusammen mit der Originalfrage an OpenAI's GPT-4o übergeben, das die finale Antwort generiert und in natürlicher Sprache ausgibt.
-
-Gegenüber einer reinen LLM-Baseline verdoppelte sich die Precision-1 von 15,5 % auf 32,6 %, der Recall-1 stieg von 8,6 % auf 32,4 % und der ROUGE-1-Score von 11,2 % auf 29,1 %; auch die 2-Gramm-Metriken verbesserten sich um 9–11 Prozentpunkte. Qualitative Bewertungen durch GPT-4o als „Richter“ ergaben im Durchschnitt 1,7/2 Punkten für Faktentreue, 2,0/2 für Relevanz und 1,2/2 für Vollständigkeit (Baseline: 0 Punkte). Die Ergebnisse belegen eindrücklich das Potenzial von RAG, neue wissenschaftliche Publikationen zeitnah und präzise erschließbar zu machen. Auf Basis dieser Ergebnisse wurde ein Prototyp entwickelt, welcher das Hochladen sowie eine Abfrage von Informationen aus jenen Dokumenten in Form einer auf Flask basierenden Webapp erlaubt.
 
 In dieser Arbeit wurde ein prototypisches #acr("RAG")-System implementiert, das aktuelle wissenschaftliche Veröffentlichungen aus diversen Subdomänen der Informatik in Form von PDFs mithilfe eines tokenbasierten Chunkers in Segmente von 1 024 Tokens Länge mit 128 Tokens Überlappung zerlegt, jedes Segment  anschließend durch das text-embedding-3-large-Modell von OpenAI in den Vektorraum überführt und in Qdrant als Vektordatenbank abgelegt. Bei einer Anfrage analysiert der Chatbot die Nutzerfrage, wandelt sie ebenfalls in einen Vektor um und ruft über k-Nearest-Neighbor-Retrieval die relevantesten Chunks ab. Diese Chunks werden via Prompt-Engineering zusammen mit der Originalfrage an OpenAI's GPT-4o übergeben, das die finale Antwort generiert und in natürlicher Sprache ausgibt.
 
@@ -800,7 +794,7 @@ Langfristig bietet sich die Integration solcher Systeme in wissenschaftliche Sof
 == Ergebnisse der Evaluation <evaluation_total_results>
 === Precision-n, Recal-n und ROUGE-n Ergebnisse
 #figure(caption:
-[Phasen des CRISP-DM Phasenmodells @wirth_hipp_2000 ]
+[Precision-n, Recall-n und ROUGE-n je Frage. Eigene Darstellung. ]
 , image(
 "pictures/heatmap.png" 
 ))
@@ -808,7 +802,7 @@ Langfristig bietet sich die Integration solcher Systeme in wissenschaftliche Sof
 === LLM-as-a-Judge Ergebnisse
 
 #figure(caption:
-[Phasen des CRISP-DM Phasenmodells @wirth_hipp_2000 ]
+[LLM-as-a-Judge Metriken je Frage. Eigene Darstellung. ]
 , image(
 "pictures/heatmap_judge.png" 
 ))
