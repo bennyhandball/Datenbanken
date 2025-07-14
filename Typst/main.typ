@@ -604,7 +604,7 @@ Für die Implementierung des #acr("RAG")-Systems wurde der Top-k-Retrieval Param
 
 #pagebreak()
 *Verwendete Retrieval-Augmented Generation-Architektur*
-#figure(caption:"Übersicht RAG Architektur",image(width: 90%,"pictures/RAG_Architektur.jpg"))<RAG_Architektur>
+#figure(caption:"Übersicht RAG Architektur. "+ box("Eigene Darstellung."),image(width: 90%,"pictures/RAG_Architektur.jpg"))<RAG_Architektur>
 
 
 

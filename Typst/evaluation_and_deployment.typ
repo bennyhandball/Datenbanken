@@ -9,7 +9,7 @@
 Die Ergebnisse aus @Modelling wurden erfasst und in tabellarischer Form gesammelt. Anschließend wurden diese mit den in @EvaluationParameters definierten Metriken ausgewertet. @aggregated_metrics präsentiert die über alle Fragen hinweg aggregierten Resultate, differenziert nach N-Gramm-basierten Metriken und #acr("LLM")-as-a-Judge-Bewertungen. Die Ergebnisse je Frage befinden sich in @evaluation_total_results im Anhang.
 
 #figure(caption:
-[Aggregierte Metriken vor/nach #acr("RAG")-Implementierung. Eigene Darstellung.]
+[Aggregierte Metriken vor/nach RAG-Implementierung. #box("Eigene Darstellung.")]
 , image(
 "pictures/metrics_aggregated.png" 
 ))
@@ -36,7 +36,7 @@ Bei der Betrachtung der Ergebnisse auf Ebene der einzelnen Fragen (siehe @heatma
 Die Analyse offenbart eine moderate positive Korrelation zwischen beiden Bewertungsansätzen: Mit steigenden N-Gramm-Werten nehmen tendenziell auch die #acr("LLM")-Bewertungen zu. Bemerkenswert ist die asymmetrische Bewertungscharakteristik des #acr("LLM"): Qualitativ unzureichende Antworten werden verstärkt negativ bewertet $(#vars("r") = –0.21)$, während besonders hohe N-Gramm-Scores überproportional positiv honoriert werden $(#vars("r") = 0.44)$. Diese Beobachtung unterstreicht den komplementären Charakter der #acr("LLM")-basierten Evaluation zu den rein quantitativen Metriken.
 
 #figure(caption:
-[Korrelation zwischen N-Gramm/LLM-as-a-Judge. Eigene Darstellung.]
+[Korrelation zwischen N-Gramm/LLM-as-a-Judge. #box("Eigene Darstellung.")]
 , image(width: 80%,
 "pictures/correlation_judge_n_grams.png" 
 ))
