@@ -54,7 +54,7 @@ Aufgrund der positiven Ergebnisse in @Evaluation wird im Rahmen dieser Arbeit ei
 - *Abfrage von Inhalten:* In einem Chat können Nutzer Fragen stellen, die das System mit Hilfe von #acr("RAG") beantwortet. Dabei werden relevante Dokumente aus der Vektordatenbank abgerufen und die Antworten generiert.
 - *Übersicht hochgeladener Dokumente:* Unter dem Chat werden die hochgeladenen Dokumente aufgelistet, die für die #acr("RAG")-Abfrage genutzt werden.
 
-Der Prototyp nutzt Flask als Web-Framework und Qdrant als Vektordatenbank. Aufgrund der positiven Ergebnisse aus @Evaluation wurde die in @Modelling vorgestellte Architektur sowie identischen Modelle eingesetzt. Die 
+Der Prototyp nutzt Flask als Web-Framework und Qdrant als Vektordatenbank. Aufgrund der positiven Ergebnisse aus @Evaluation wurde die in @Modelling vorgestellte Architektur sowie identischen Modelle eingesetzt.
 
 #figure(caption:
 [Oberfläche des RAG-Chatbot-Prototypen. Eigene Darstellung.]
