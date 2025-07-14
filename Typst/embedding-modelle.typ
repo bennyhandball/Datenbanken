@@ -9,7 +9,7 @@
 
 Embedding-Modelle spielen eine zentrale Rolle im ML, insbesondere in RAG-Architekturen. Sie transformieren Wörter, Sätze oder Dokumente in dichte, numerische Vektoren, die semantische Beziehungen im hochdimensionalen Raum abbilden. Da Computer nicht direkt mit Wörtern arbeiten können, übersetzen Embeddings textuelle Inhalte in Vektorräume, wobei semantische Beziehungen erhalten bleiben. @Embeddings zeigt eine vereinfachte Übersicht über den Embedding-Prozess, der im folgenden detailliert erläutert wird.
 
-#figure(caption:"Übersicht Prozess Embedding Modelle"+ " "+cite(<2024vector_embeddings>)+". ",image(width: 90%,"pictures/How-Embeddings-Work.jpg"))<Embeddings>
+#figure(caption:"Übersicht Prozess Embedding Modelle"+ " "+cite(<2024vector_embeddings>)+". ",image(width: 86%,"pictures/How-Embeddings-Work.jpg"))<Embeddings>
 
 Die Umwandlung eines Wortes eines Satzes oder eines Dokuments in einen hochdimensionalen Vektor erfolgt nach folgendem Grundprinzip:
 
