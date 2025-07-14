@@ -115,6 +115,44 @@
     align(right, text(size: 12pt, weight: "regular", counter(page).display(numbering)))
   )
 }
+#let generate-footer-content3(numbering) = context {
+  let heading_selector = heading.where(level: 1)
+    // .or(heading.where(level: 2))
+    // .or(heading.where(level: 3))
+  
+  // Query all headings matching the selector
+  let all_headings = query(heading_selector)
+  let current_page = here().page()
+  
+  let relevant_headings = ()
+  for i in range(all_headings.len()) {
+    let h = all_headings.at(i)
+    let heading_page = h.location().page()
+    let next_heading_page = if i + 1 < all_headings.len() { 
+      all_headings.at(i + 1).location().page() 
+    } else { 
+      current_page + 1
+    }
+    
+    if heading_page == current_page or (heading_page < current_page and next_heading_page > current_page) {
+      relevant_headings.push(h)
+    }
+  }
+  v(1.5cm)
+  line(length: 100%)
+  stack(
+    dir: ltr,
+    spacing: 1em,
+    align(left, {
+      if relevant_headings.len() > 0 {
+        relevant_headings.map(h => h.body).join(" • ")
+      } else {
+        ""
+      }
+    }),
+    align(right, text(size: 12pt, weight: "regular", counter(page).display(numbering)))
+  )
+}
 
 //-----------------------------------------------------------------------------------
 // Title Page
@@ -319,8 +357,20 @@ Um den Lesefluss zu verbessern, werden Abbildungen, Codebeispiele und Tabellen, 
 //-----------------------------------------------------------------------------------
 // Inhaltsverzeichnis, Abbildungsverzeichnis, Tabellenverzeichnis
 //-----------------------------------------------------------------------------------
-#pagebreak()
 
+#set page(
+  paper: "a4",
+   margin: (
+    left: 2cm,
+    right: 2cm,
+    top: 2.5cm,
+    bottom: 4cm,
+  ),
+  header: header-content,
+  footer: generate-footer-content3("I"),
+  numbering: "I",
+)
+#pagebreak()
 #show outline.entry.where(
   level: 1
 ): it => {
@@ -335,8 +385,20 @@ Um den Lesefluss zu verbessern, werden Abbildungen, Codebeispiele und Tabellen, 
     depth: 3,
     indent: 1em,
     )
-#pagebreak()
 
+#set page(
+  paper: "a4",
+   margin: (
+    left: 2cm,
+    right: 2cm,
+    top: 2.5cm,
+    bottom: 2cm
+  ),
+  header: header-content,
+  footer: generate-footer-content("I"),
+  numbering: "I",
+)
+#pagebreak()
 // Abbildungsverzeichnis (List of Figures)
   #outline(
     title: "Abbildungsverzeichnis",
@@ -481,14 +543,15 @@ Während der Inferenz verarbeitet das #acr("LLM") die Eingabe tokenweise und gen
 #pagebreak()
 == Vektordatenbanken
 Vektordatenbanken bilden eine spezialisierte Klasse von Datenbanksystemen, die darauf ausgelegt sind, hochdimensionale Vektorrepräsentationen effizient zu speichern, zu indexieren und durchsuchbar zu machen. Im Kontext von #acr("RAG")-Systemen fungieren sie als zentrale Infrastruktur für die Speicherung und den Abruf von Embedding-Vektoren, die semantische Informationen von #box("Textdokumenten repräsentieren. "+cite(<han2023comprehensivesurveyvectordatabase>, supplement: "S. 1-2"))
-
+#v(-0.5em)
 === Architektur und Funktionsweise
 Im Gegensatz zu relationalen Datenbanken speichern Vektordatenbanken Daten als numerische Vektoren in hochdimensionalen Räumen. Jeder Vektor repräsentiert semantische Eigenschaften eines Datenobjekts #cite(<han2023comprehensivesurveyvectordatabase>, supplement: "S. 1"), wobei die räumliche Nähe zwischen Vektoren die semantische Ähnlichkeit der ursprünglichen Inhalte widerspiegelt. Diese Eigenschaft ermöglicht komplexe Ähnlichkeitsabfragen ohne exakte #box("Schlüsselwort-Übereinstimmungen "+cite(<han2023comprehensivesurveyvectordatabase>, supplement: "S. 2")+".")
-
+#v(-0.5em)
 Die Architektur umfasst eine Speicherschicht für persistente Vektordaten, eine Indexierungsschicht für effiziente Organisation sowie eine Abfrageschicht für Ähnlichkeitssuchen. Zusätzlich unterstützen moderne Systeme die Speicherung von Metadaten für hybride Filterung und #box("Verfeinerung der Suchergebnisse. "+cite(<pan2023surveyvectordatabasemanagement>, supplement: "S. 1-4"))
-
+#v(-0.5em)
 === Indexierung und Suchoptimierung
 Für die effiziente Durchsuchung großer Vektorbestände setzen Vektordatenbanken spezialisierte Indexierungsalgorithmen ein. Hierarchical Navigable Small World (HNSW)-Graphen, eingeführt von Yu A Malkov et al. #cite(<Malkov>) ermöglichen durch mehrschichtige Navigationsstrukturen sublineare Suchzeiten bei hoher Genauigkeit. Alternative Verfahren wie Locality-Sensitive Hashing (LSH) bieten je nach Anwendungsfall spezifische Vorteile hinsichtlich Speichereffizienz #box("oder Suchgeschwindigkeit. "+cite(<han2023comprehensivesurveyvectordatabase>, supplement: "S. 4-7"))
+#v(-0.5em)
 
 Die Approximate Nearest Neighbor (ANN)-Suche bildet das methodische Fundament dieser Verfahren #cite(<Malkov>, supplement: "S. 1-3"). Da exakte Bestimmung der nächstgelegenen Nachbarn in hochdimensionalen Räumen rechnerisch aufwendig ist, approximieren diese Algorithmen die Ergebnisse mit kontrollierbarer Genauigkeit bei #box("reduzierten Rechenzeiten "+cite(<johnson2017billionscalesimilaritysearchgpus>, supplement: "S. 1, 2, 10")+cite(<Malkov>, supplement: "S. 1-5")+".")
 
@@ -514,7 +577,7 @@ Diese Verfahren zeigen robuste Leistung, stoßen jedoch bei semantisch anspruchs
 Modernes dichtes Retrieval (dense Retrieval) bildet Fragen und Dokument-Passagen in einen gemeinsamen Vektorraum ab. Duale Encoder (Fragen Encoder und Passagen Encoder) auf Transformer-Basis werden darauf trainiert, semantisch ähnliche Frage-Passage-Paare im Vektorraum zu verorten. Der #acr("DPR") von Karpukhin et al. #cite(<karpukhin2020densepassageretrievalopendomain>)) zeigt, dass solche Verfahren herkömmliche BM25-Systeme in der Retrieval-Genauigkeit deutlich #box("übertreffen können "+cite(<karpukhin2020densepassageretrievalopendomain>, supplement: "S. 1-3")).
 
 Für die technische Umsetzung des dichten Retrievals werden die in Kapitel 2.2 beschriebenen Vektordatenbanken eingesetzt, die eine effiziente Speicherung und Durchsuchung der Embedding-Vektoren ermöglichen. Hybride Strategien kombinieren schnelle sparse Vorfilterung per BM25 mit dichter Feinsortierung über Vektordatenbanken, um Effizienz und Präzision zu balancieren. Metadaten können als Filterbedingung einfließen, um irrelevante oder veraltete Passagen #box("frühzeitig auszuschließen "+cite(<kuzi2020leveragingsemanticlexicalmatching>,supplement: "S. 1-4")).
-
+#pagebreak()
 === Generative Antworterstellung
 
 Im #acr("RAG")-System bildet die generative Antworterstellung den abschließenden Verarbeitungsschritt, in dem das vortrainierte Sprachmodell die ursprüngliche Nutzerfrage mit den durch das Retrieval-System identifizierten relevanten Dokumentfragmenten zu einem einzigen, kontextualisierten Prompt kombiniert und darauf basierend regressiv den finalen #box("Antworttext generiert."+cite(<lewis2021retrievalaugmentedgenerationknowledgeintensivenlp>, supplement: "S. 5-7"))
@@ -537,10 +600,11 @@ Besonders im akademischen Bereich stehen #acrpl("LLM") vor der Herausforderung, 
 
 Dazu wird ein eigenes #acr("RAG")-System entwickelt, das es erlaubt,  Literatur hochzuladen und gezielt Fragen dazu zu stellen. Die Qualität der Antworten wird evaluiert, um das Potenzial solcher Systeme für den akademischen Einsatz realistisch einschätzen #box("zu können.")
 
-Dafür werden die in @EvaluationParameters genannten Metriken für die Quantifizierung der Ergebnisse genutzt:
+Für die Evaluation werden die in @EvaluationParameters genannten Metriken für die Quantifizierung der #box("Ergebnisse genutzt:")
+
 - *N-Gramm-basierten Metriken*: Metriken wie Precision-n, Recall-n und #acr("ROUGE")-n vergleichen die generierten Antworten mit Referenzantworten, indem sie die Übereinstimmung von N-Grammen messen. Diese wird als Wert zwischen 0 und 1 wiedergegeben.
 - *#acr("LLM")-as-a-Judge*: Diese Metrik nutzt ein #acr("LLM") als Bewertungsinstanz, um die Qualität der generierten Antworten zu beurteilen. Das #acr("LLM") bewertet die Antworten auf Basis der Kriterien "Total Correctness", "Completeness", "Relevance", "Justfiication" und "Depth", indem dieses eine numerische Punktzahl zwischen 0 und 2 je Kategorie vergibt.
-
+#pagebreak()
 == Data Understanding
 Zur systematischen Evaluation des entwickelten #acr("RAG")-Systems wurde eine kuratierte Auswahl wissenschaftlicher Publikationen als Testdatensatz verwendet. Die Datengrundlage besteht aus fünf aktuellen Veröffentlichungen aus dem Bereich der Informatik, die von der wissenschaftlichen Publikationsplattform ArXiv.org bezogen wurden. Sämtliche ausgewählten Publikationen weisen ein einheitliches Veröffentlichungsdatum vom #box("27. Juni 2025 auf.")
 
@@ -563,14 +627,12 @@ Diese Auswahl repräsentiert aktuelle Forschungsthemen aus verschiedenen Informa
 Für jedes der fünf ausgewählten Paper werden fünf inhaltliche Fragen erstellt, die direkt auf das Verständnis und die Kernaussagen des jeweiligen Textes abzielen. Die Fragen und Antworten aus den Publikationen finden sich im Anhang in @Literaturfragen und wurden von Menschen mit der Hilfe von #acrpl("LLM") beantwortet. Die Fragen sind so konzipiert, dass sie ohne Zugriff auf das jeweilige Paper weder für Menschen noch für #acrpl("LLM") komplett zu beantworten sind, da sie spezifische technische Details, Evaluationsergebnisse oder methodische #box("Entscheidungen betreffen.")
 
 Insgesamt liegt somit ein Datensatz von 35 Fragen (5 × 5 Inhlatsfragen, 5 × 2 Metadatenfragen) vor. Dieser dient im Weiteren als Basis für die Entwicklung des #acr("RAG")-Systems und Bewertung der #box("Antwortgenauigkeit in "+ref(<Evaluation>)+".")
+#pagebreak()
 
 == Modelling <Modelling>
-Im Kontext von #acr("RAG") erfordert die Modelling Phase die systematische Auswahl und Konfiguration der Retrieval Komponente als auch der generativen Sprachmodelle um eine möglichst passende Harmonisierung zwischen dem Abruf relevanter Informationen und der kontextuellen Textgenerierung zu erreichen.
+Im Kontext von #acr("RAG") erfordert die Modelling Phase die systematische Auswahl und Konfiguration der Retrieval Komponente als auch der generativen Sprachmodelle um eine möglichst passende Harmonisierung zwischen dem Abruf relevanter Informationen und der kontextuellen Textgenerierung zu erreichen. Für die Entwicklung des Modells und die darauffolgende Analyse wurden folgende Technologien verwendet:
 
 - *Programmiersprache Python:* Python eignet sich für #acr("AI")- und Data-Science-Anwendungen, da es eine klare Syntax, sowie eine breite Auswahl leistungsfähiger Bibliotheken bietet #cite(<nagpal_gabrani_2019>, supplement: "S.141-S.143"). Zusätzlich ermöglicht die Programmiersprache  eine schnelle Prototypentwicklung, modulare Strukturierung und eine gute Integrierbarkeit in bestehende Systeme #cite(<nagpal_gabrani_2019>, supplement: "S.141-S.143"). Python wurde für die Implementierung des #acr("RAG")-Systems und die Analyse der Optimierungsstrategien genutzt.
-
-
-Für die Entwicklung des Modells und die darauffolgende Analyse wurden weitere folgende Komponenten verwendet:
 
 - *Qdrant Vektordatenbank:* Als Vektordatenbank wurde die QDrant-Vektordatenbank gewählt, da diese speziell für semantische Suche und Ähnlichkeitsabfragen optimiert ist #cite(<qdrant2025>). Zusätzlich unterstützt die Qdrant Vektordatenbank die Speicherung hochdimensionaler Vektoren und ermöglicht schnelle, skalierbare Top‑k‑Abfragen mittels Cosine Similarity oder anderer Distanzmetriken #cite(<qdrant2025>). Durch ihre Open-Source-Natur und einfache Integration lässt sich Qdrant auch ohne komplexe Infrastruktur in kleinere, experimentelle RAG-Systeme einbinden #cite(<qdrant2025>).
 
@@ -583,39 +645,32 @@ Zur Generierung der Antworten mithilfe des #acr("RAG")-Systems werden, wie in @L
 
 - *Generierendes Modell GPT-4o:* GPT-4o von OpenAI, veröffentlicht am 13. Mai 2024, zeichnet sich durch eine hohe Leistungsfähigkeit aus #cite(<gpt_4o>). Nach den Angaben von OpenAI ist das Modell GPT-4o das beste und leistungsfähigste Modell außerhalb der O-Serie #cite(<gpt_4o>). Im Vergleich zu diesen Modellen, wie beispielsweise o3-mini, ist GPT-4o schneller in der Sprachverarbeitung #cite(<gpt_4o>). 
 
-- *Bewertendes Modell GPT-4o:* Als bewertendes Modell für den #acr("LLM")-as-a-Judge Ansatz wurde ebenfalls GPT-4o von OpenAI gewählt. Diese Modell bewertet, wie in @LLM-as-a-Judge  ,die zuvor generieten Antworten des #acr("RAG")-Systems. 
+- *Bewertendes Modell GPT-4o:* Als bewertendes Modell für den #acr("LLM")-as-a-Judge Ansatz wurde ebenfalls GPT-4o von OpenAI gewählt. Diese Modell bewertet, wie in @LLM-as-a-Judge, die zuvor generieten Antworten des #acr("RAG")-Systems. 
 
-- *Prompting:* Die Erstellung des Prompts für das #acr("RAG")-System erfolgte nach den in der Literatur definierten Kriterien (siehe @Prompt_Kriterien ). Das Prompt-Template wurde dabei in allen Iterationen des #acr("RAG")-Systems konsistent eingesetzt. 
-
-
-Das folgende Prompt-Template zeigt den Prompt für den #acr("LLM")-as-a-Judge Ansatz. Dieser wurde ebenfalls nach den in der Literatur definierten Kriterien (siehe ) erstellt und in allen Iterationen des #acr("RAG")-Systems konsistent eingesetzt.
-
-*Retrieval Augmented Generation Parameter:*
-
-Grundsätzlich gibt es keine expliziten Vorgaben für die Wahl der #acr("RAG") Parameter #cite(<chiang2024optimizing>). Diese sind Use-Case und Anforderungsspezifisch #cite(<chiang2024optimizing>). Für den vorliegenden Use-Case müsste man durch mehrere Experiment die beste Konfiguration der kombinierten Parameter ermitteln, da dies jedoch nicht der Fokus der Arbeit ist, soll im Folgenden die Wahl der Paramter begründet werden. 
-
-*Top-k-Retrieval Parameter:* 
-Für die Implementierung des #acr("RAG")-Systems wurde der Top-k-Retrieval Parameter auf den Wert 5 gesetzt. Diese Entschidung basiert auf der in der Fachliteratur empfohlenen Praxis, verschiedene k-Werte systematisch zu evaluieren und einen ausgewogenen Mittelwert zu wählen #cite(<chiang2024optimizing>). Der Wert k=5 stellt dabei einen Kompromiss zwischen einem niedrigen -Wert (k=1-2), die relevante Informationen übersehen könnten, und einem zu hohen k-Wert (k>=10), die zu einer Verschlechterung der Präzision durch irrelevante Treffer führen können dar #cite(<chiang2024optimizing>). 
-
-*Chunk Size/Overlap: *Für die Konfiguration der Chunk-Size des #acr("RAG")-Systems wird eine Chunk-Size von 1024 Tokens mit einem Overlap von 128 Token gewählt. Erfahrungen aus einem vergleichbaren Use-Case zeigenm dass diese naive Chunking-Methode passende Retrieval-Ergebnisse liefert #cite(<Ammar2025OptimizingRAG>). Gleichzeitig ermöglicht die gewählte Chunkgröße in Kombination mit einem Obverlap von 128 Token eine schnelle Verarbeitung bei hoher Genauigkeit. Daher stellt die Konfiguration mit 1024 Tokens und 128 Tokens Overlap eine passende Balance zwischen Qualität und Effizienz dar #cite(<Ammar2025OptimizingRAG>). 
-
-*Distanzmetrik:* Als weitverbreitete und zuverlässige Distanzmetrik wird die Cosinus Ähnlichkeit verwendet #cite(<juvekar2024cos>, supplement: "S.1"). Diese misst den Kosinus Winkel zwischen zwei Vektoren und ist somit geeignet, um semantische Ähnlichkeiten effektiv zu erfassen. 
+- *Prompting:* Die Erstellung des Prompts für das #acr("RAG")-System erfolgte nach den in der Literatur definierten Kriterien (siehe @Prompt_Kriterien). Das Prompt-Template (#ref(<ZeroShot>)), wurde dabei in allen Iterationen des #acr("RAG")-Systems konsistent eingesetzt. 
 
 
-#pagebreak()
-*Verwendete Retrieval-Augmented Generation-Architektur*
-#figure(caption:"Übersicht RAG Architektur. "+ box("Eigene Darstellung."),image(width: 90%,"pictures/RAG_Architektur.jpg"))<RAG_Architektur>
+Das angehängte Prompt-Template (#ref(<LLMJUDGE>)) zeigt den Prompt für den #acr("LLM")-as-a-Judge Ansatz. Dieser wurde ebenfalls nach den in der Literatur definierten Kriterien (siehe #ref(<Prompt_Kriterien>)) erstellt und in allen Iterationen des #acr("RAG")-Systems konsistent eingesetzt.
+
+Für die #acr("RAG")-Parameter gibt es keine expliziten Vorgaben für die Wahl der #acr("RAG") Parameter #cite(<chiang2024optimizing>). Diese sind Use-Case und Anforderungsspezifisch #cite(<chiang2024optimizing>). Für den vorliegenden Use-Case müsste man durch mehrere Experiment die beste Konfiguration der kombinierten Parameter ermitteln, da dies jedoch nicht der Fokus der Arbeit ist, soll im Folgenden die Wahl der Paramter begründet werden. 
+
+- *Top-k-Retrieval Parameter:* Für die Implementierung des #acr("RAG")-Systems wurde der Top-k-Retrieval Parameter auf den Wert 5 gesetzt. Diese Entschidung basiert auf der in der Fachliteratur empfohlenen Praxis, verschiedene k-Werte systematisch zu evaluieren und einen ausgewogenen Mittelwert zu wählen #cite(<chiang2024optimizing>). Der Wert k=5 stellt dabei einen Kompromiss zwischen einem niedrigen k-Wert (k=1-2), die relevante Informationen übersehen könnten, und einem zu hohen k-Wert (k>=10), die zu einer Verschlechterung der Präzision durch irrelevante Treffer führen können dar #cite(<chiang2024optimizing>). 
+
+- *Chunk Size/Overlap: *Für die Konfiguration der Chunk-Size des #acr("RAG")-Systems wird eine Chunk-Size von 1024 Tokens mit einem Overlap von 128 Token gewählt. Erfahrungen aus einem vergleichbaren Use-Case zeigenm dass diese naive Chunking-Methode passende Retrieval-Ergebnisse liefert #cite(<Ammar2025OptimizingRAG>). Gleichzeitig ermöglicht die gewählte Chunkgröße in Kombination mit einem Obverlap von 128 Token eine schnelle Verarbeitung bei hoher Genauigkeit. Daher stellt die Konfiguration mit 1024 Tokens und 128 Tokens Overlap eine passende Balance zwischen Qualität und Effizienz dar #cite(<Ammar2025OptimizingRAG>). 
+
+- *Distanzmetrik:* Als weitverbreitete und zuverlässige Distanzmetrik wird die Cosinus Ähnlichkeit verwendet #cite(<juvekar2024cos>, supplement: "S.1"). Diese misst den Kosinus Winkel zwischen zwei Vektoren und ist somit geeignet, um semantische Ähnlichkeiten effektiv zu erfassen. 
+
+#figure(caption:"Übersicht RAG Architektur. "+ box("Eigene Darstellung."),image(width: 98%,"pictures/RAG_Architektur.jpg"))<RAG_Architektur>
 
 
+Die RAG-Architektur in (@RAG_Architektur) zeigt die projektspezifische Architektur des #acr("RAG")-Systems, die zur Beantwortung der in Abschnitt erläuterten Fragen eingesetzt wurde. Im Folgenden soll das Vorgehen näher erläutert werden.
 
-Die RAG-Architektur in (Abbildung) zeigt die projektspezifische Architektur des #acr("RAG")-Systems, die zur Beantwortung der in Abschnitt erläuterten Fragen eingesetzt wurde. Im Folgenden soll das Vorgehen näher erläutert werden.
-
-Um die Fragen mit Hilfe des #acr("RAG")-Systems beantworten zu können, mussten zunächst die Kontextdaten zur Beantwortung der Fragen in die Vektor-Datenbank geladen werden (). 
-Die Daten für das Grounding beinhalten produktspezifische Daten von SAP über Joule, aus Dokumentationen, Guides und Blogs. Dazu wurden zunächst die Texte aus den Dokumenten extrahiert, in definierte Chunks aufgeteilt (Größe, Overlap) und anschließend mit Hilfe von drei Embedding-Modellen in unterschiedliche Datenbanken geladen (). 
+Um die Fragen mit Hilfe des #acr("RAG")-Systems beantworten zu können, mussten zunächst die Kontextdaten zur Beantwortung der Fragen in die Vektor-Datenbank geladen werden. 
+Die Daten für das Grounding beinhalten produktspezifische Daten von SAP über Joule, aus Dokumentationen, Guides und Blogs. Dazu wurden zunächst die Texte aus den Dokumenten extrahiert, in definierte Chunks aufgeteilt (Größe, Overlap) und anschließend mit Hilfe von drei Embedding-Modellen in unterschiedliche Datenbanken geladen. 
 
 Die Fragen wurden zur Beantwortung aus einer -Datei ausgelesen, in Vektor-Embeddings umgewandelt und der Similarity Search zur Suche übergeben. Je nach aufgestellter Hypothese wurde entweder ein unterschiedliches Prompt-Template, ein Paramater wie Chunk-Größe oder der Retrieval-Paramter k für die Analyse verändert. Es wurde jeweils nur ein Parameter verändert, während die anderen Parameter konstant gehalten wurden, um eine direkte Korrelation zwischen dem veränderten Parameter und dem daraus resultierenden Ergebnis zu erhalten. 
 
-Die durch die Similarity-Search ermittelten Chunks wurden dem Prompt als Text-Kontext mitgegeben, der im Anschluss durch das LLM GPT-4o bearbeitet wurde (). Die Ergebnisse des LLM GPT-4o Modells wurden anschließend in eine -Datei geschrieben. 
+Die durch die Similarity-Search ermittelten Chunks wurden dem Prompt als Text-Kontext mitgegeben, der im Anschluss durch das LLM GPT-4o bearbeitet wurde. Die Ergebnisse des LLM GPT-4o Modells wurden anschließend in eine -Datei geschrieben. 
 
 Zur Beurteilung der Antwortqualität wurden die generierten -Dateien, sowie die manuell erstellte "Ground-Truth"-Antwort (Optimalantwort), mit Hilfe von Evaluationsmetriken (#acr("ROUGE"), Precision und Recall) analysiert. Anschließend wurde die generierte Antwort zusätzlich mit Hilfe des 
 #acr("LLM")-as-a-Judge Modells Claude-3-Opus hinsichtlich Completeness und Correctness bewertet und mit dem Ergebnis der Evaluationsmetriken verglichen. 
@@ -635,21 +690,19 @@ Zur Beurteilung der Antwortqualität wurden die generierten -Dateien, sowie die 
 
 == Zusammenfassung der Ergebnisse
 
-In dieser Arbeit wurde ein prototypisches #acr("RAG")-System implementiert, das aktuelle wissenschaftliche Veröffentlichungen aus diversen Subdomänen der Informatik in Form von PDFs mithilfe eines tokenbasierten Chunkers in Segmente von 1 024 Tokens Länge mit 128 Tokens Überlappung zerlegt, jedes Segment  anschließend durch das text-embedding-3-large-Modell von OpenAI in den Vektorraum überführt und in Qdrant als Vektordatenbank abgelegt. Bei einer Anfrage analysiert der Chatbot die Nutzerfrage, wandelt sie ebenfalls in einen Vektor um und ruft über k-Nearest-Neighbor-Retrieval die relevantesten Chunks ab. Diese Chunks werden via Prompt-Engineering zusammen mit der Originalfrage an OpenAI's GPT-4o übergeben, das die finale Antwort generiert und in natürlicher Sprache ausgibt.
+In dieser Arbeit wurde ein prototypisches #acr("RAG")-System implementiert, das aktuelle wissenschaftliche Veröffentlichungen aus diversen Subdomänen der Informatik in Form von PDFs mithilfe eines tokenbasierten Chunkers in Segmente von 1024 Tokens Länge mit 128 Tokens Überlappung zerlegt, jedes Segment  anschließend durch das text-embedding-3-large-Modell von OpenAI in den Vektorraum überführt und in Qdrant als Vektordatenbank abgelegt. Bei einer Anfrage analysiert der Chatbot die Nutzerfrage, wandelt sie ebenfalls in einen Vektor um und ruft über k-Nearest-Neighbor-Retrieval die relevantesten Chunks ab. Diese Chunks werden via Prompt-Engineering zusammen mit der Originalfrage an OpenAI's GPT-4o übergeben, das die finale Antwort generiert und in natürlicher Sprache ausgibt.
 
-Im Rahmen Gegenüber einer reinen LLM-Baseline verdoppelte sich die Precision-1 von 15,5% auf 32,6%, der Recall-1 stieg von 8,6% auf 32,4% und der #acr("ROUGE")-1-Score von 11,2% auf 29,1%; auch die 2-Gramm-Metriken verbesserten sich um 9–11 Prozentpunkte. Qualitative Bewertungen durch GPT-4o als „Richter“ ergaben im Durchschnitt 1,7/2 Punkten für Faktentreue, 2,0/2 für Relevanz und 1,2/2 für Vollständigkeit (Baseline: 0 Punkte). Die Ergebnisse belegen eindrücklich das Potenzial von #acr("RAG"), neue wissenschaftliche Publikationen zeitnah und präzise erschließbar zu machen. Auf Basis dieser Ergebnisse wurde ein Prototyp entwickelt, welcher das Hochladen sowie eine Abfrage von Informationen aus jenen Dokumenten in Form einer auf Flask basierenden Webapp erlaubt.
-
+Im Rahmen Gegenüber einer reinen LLM-Baseline verdoppelte sich die Precision-1 von 15,5% auf 32,6%, der Recall-1 stieg von 8,6% auf 32,4% und der #acr("ROUGE")-1-Score von 11,2% auf 29,1%; auch die 2-Gramm-Metriken verbesserten sich um 9–11 Prozentpunkte. Qualitative Bewertungen durch GPT-4o als „Richter“ ergaben im Durchschnitt 1,7/2 Punkten für Faktentreue, 2/2 für Relevanz und 1,2/2 für Vollständigkeit (Baseline: 0 Punkte). Die Ergebnisse belegen eindrücklich das Potenzial von #acr("RAG"), neue wissenschaftliche Publikationen zeitnah und präzise erschließbar zu machen. Auf Basis dieser Ergebnisse wurde ein Prototyp entwickelt, welcher das Hochladen sowie eine Abfrage von Informationen aus jenen Dokumenten in Form einer auf Flask basierenden Webapp erlaubt.
+#pagebreak()
 == Einordnung der Ergebnisse <Diskussion>
-Die Ergebnisse aus @Evaluation reihen sich in die aktuelle Literatur zu #acr("RAG")-Systemen ein, die deren Potenzial zur Verbesserung der Antwortqualität von #acrpl("LLM") belegen. Die erreichte signifikante Verbesserung der Evaluationsmetriken um mehr als 100% ist vergleichbar mit den Ergebnissen von #cite(<lewis2021retrievalaugmentedgenerationknowledgeintensivenlp>, form: "prose", supplement: "S. 8") und #cite(<gupta2024comprehensivesurveyretrievalaugmentedgeneration>, form: "prose", supplement: "S. 10"), wobei die in dieser Arbeit erzielten Werte im Vergleich zu den in der Literatur berichteten Ergebnissen höher ausfallen. Dies könnte auf die spezifische Auswahl der Publikationen und die Leistungsfähigkeit neuerer #acr("LLM")-Modelle zurückzuführen sein, die in dieser Arbeit verwendet wurden.
+Die Ergebnisse aus @Evaluation reihen sich in die aktuelle Literatur zu #acr("RAG")-Systemen ein, die deren Potenzial zur Verbesserung der Antwortqualität von #acrpl("LLM") belegen. Die erreichte signifikante Verbesserung der Evaluationsmetriken ist vergleichbar mit den Ergebnissen von #cite(<lewis2021retrievalaugmentedgenerationknowledgeintensivenlp>, form: "prose", supplement: "S. 8") und #cite(<gupta2024comprehensivesurveyretrievalaugmentedgeneration>, form: "prose", supplement: "S. 10"), wobei die in dieser Arbeit erzielten Werte im Vergleich zu den in der Literatur berichteten Ergebnissen höher ausfallen. Dies könnte auf die spezifische Auswahl der Publikationen und die Leistungsfähigkeit neuerer #acr("LLM")-Modelle zurückzuführen sein, die in dieser Arbeit verwendet wurden.
 
-Trotz allem unterliegen die Ergebnisse Limitationen hinsichtlich ihrer Aussagekräftigkeit, die in zukünftigen Arbeiten adressiert werden sollten. Folgende Herausforderungen und Limitationen wurden identifiziert:
+Trotz allem unterliegen die Ergebnisse Limitationen hinsichtlich ihrer Aussagekräftigkeit, die in zukünftigen Arbeiten adressiert werden sollten. Folgende Herausforderungen und Limitationen wurden im Rahmen dieser Arbeit identifiziert:
 
 - *#acr("CRISP-DM")*: Die Arbeit orientierte sich an der #acr("CRISP-DM")-Methode, die eine strukturierte Herangehensweise an Data Science-Projekte bietet. Dennoch könnte eine detailliertere Dokumentation der einzelnen Schritte und Entscheidungen im #acr("CRISP-DM")-Prozess die Nachvollziehbarkeit und Reproduzierbarkeit der Ergebnisse verbessern. #cite(<martinez-plumed_contreras-ochando_ferri_hernandez-orallo_kull_lachiche_ramirez-quintana_flach_2019>, supplement: "S. 1-3")
 - *Begrenzte Datenbasis:* Die Evaluation basierte auf fünf Publikationen, aller dieser aus der Domäne der Informatik, was die Generalisierbarkeit der Ergebnisse einschränkt. Eine größere und diversifizierte Datengrundlage sowie eine Untersuchung der Evaluationsergebnisse bei Publikationen aus anderen Domänen könnte die Robustheit und Verallgemeinerbarkeit der Ergebnisse erhöhen. #cite(<salman2019overfittingmechanismavoidancedeep>, supplement: "S. 1-2")
 - *Technische Limitationen:* Die Ergebnisse hängen stark von der Qualität und den Fähigkeiten der eingesetzten Technologien wie Embedding- und generierenden #acrpl("LLM") sowie der verwendeten Vektordatenbank von QDrant ab. Zukünftige Arbeiten sollten verschiedene #acr("LLM")-Modelle diverser Anbieter sowie mehrere Datenbanken vergleichen, um die bestmögliche Leistung zu erzielen und ein Vendor-Lock-In zu vermeiden. #cite(<choi2025advantages>, supplement: "S. 3-7")
 - *Evaluationsmethoden:* Die verwendeten Metriken (Precision-n, Recall-n, #acr("ROUGE")-n, #acr("LLM")-as-a-Judge) sind standardisiert, aber möglicherweise nicht ausreichend, um die Qualität der Antworten vollständig zu erfassen #cite(<Hu2024LLMEvaluation>, supplement: "11-15"). Zukünftige Arbeiten sollten zusätzliche qualitative Bewertungsmethoden einbeziehen, um ein umfassenderes Bild der Antwortqualität zu erhalten sowie eine Validierung von Menschen vornehmen #cite(<Li2024LLMJudge>, supplement: "S. 1-3").
-
-Im Folgenden Abschnitt wird ein Ausblick auf zukünftige Forschung und identifizierte Möglichkeiten der Weiterentwicklung gegeben.
 
 #pagebreak()
 
@@ -659,7 +712,6 @@ Die Ergebnisse der Arbeit zeigen, dass #acr("RAG") ein vielversprechender Ansatz
 Zukünfig sollte der Fokus auf die Optimierung der #acr("RAG")-Komponenten liegen. Insbesondere bei der Auswahl von Embedding-Modellen, der dynamischen Anpassung der Retrieval-Parameter sowie dem Einsatz spezialisierter LLMs für wissenschaftliche Domänen gibt es offene Optimierungspotenzialle. Darüber hinaus sind robustere Evaluationsstrategien notwendig, um subjektive Aspekte wie Relevanz oder Tiefe #box("objektiver zu messen.")
 
 Langfristig bietet sich die Integration solcher Systeme in wissenschaftliche Software wie  akademische Suchmaschinen an. Ziel ist eine nahtlose, zuverlässige Ergänzung für #box("Forschung und Lehre.")
-#pagebreak()
 
 
 
@@ -785,7 +837,7 @@ Langfristig bietet sich die Integration solcher Systeme in wissenschaftliche Sof
   caption:"Evaluation-Prompt"
   ,kind: "Prompt",
   supplement: "Prompt"
-)<ZeroShot>
+)<LLMJUDGE>
 == Ergebnisse der Evaluation <evaluation_total_results>
 === Precision-n, Recal-n und ROUGE-n Ergebnisse
 #figure(caption:
@@ -814,7 +866,7 @@ Langfristig bietet sich die Integration solcher Systeme in wissenschaftliche Sof
 - Wie unterscheidet sich die Systemarchitektur zwischen dem Disarm RAG und den anderen vier implementierten Systemen, insbesondere hinsichtlich #box("der Datenschutzanforderungen?")
 
   Das Disarm RAG-System unterscheidet sich fundamental von den anderen vier Systemen durch seine sicherheitsorientierte Architektur und Datenschutzanforderungen. Es wird auf einem sicheren Server bei CSC (Finnish IT Center for Science) gehostet, um vollständige Datenprivatsphäre zu gewährleisten, und verwendet LLaMA 2-uncensored via Ollama für offenen Zugang zu Cybersecurity-Wissen. Der entscheidende Unterschied liegt darin, dass Disarm RAG bewusst auf Quellzitationen verzichtet, während alle anderen Systeme Quellenreferenzen zur Transparenz anzeigen - diese Ausnahme erfolgt aufgrund der Sensitivität von Cybersecurity-Inhalten, um sensitive Materialien zu schützen und gleichzeitig GDPR-Risiken #box("zu reduzieren.")
-
+#pagebreak()
 - Welche konkreten Metriken und Bewertungsdimensionen wurden in der Web-basierten Nutzerstudie mit 100 Teilnehmern verwendet, und was waren #box("die Haupterkenntnisse?")
 
   Die web-basierte Nutzerstudie mit 100 Teilnehmern verwendete sechs Bewertungsdimensionen auf einer Likert-Skala (1-5): Ease of Use, Relevance of Information, Transparency, System Responsiveness, Accuracy of Answers und Likelihood of Recommendation, ergänzt durch qualitative offene Feedback-Fragen. Die Haupterkenntnisse zeigten, dass Ease of Use und Accuracy of Answers konstant positive Bewertungen erhielten, während Transparency und Recommendation stärkere Variation zwischen den Systemen aufwiesen. Besonders bedeutsam war, dass 83% der Teilnehmer eine aufgabenabhängige Präferenz für KI-generierte Antworten zeigten, was darauf hinweist, dass Vertrauen in RAG-Systeme kontingent und nicht absolut ist, abhängig von Antwortrelevanz, Transparenz und Ausrichtung auf #box("die Nutzerintention.")
@@ -822,6 +874,7 @@ Langfristig bietet sich die Integration solcher Systeme in wissenschaftliche Sof
 - Warum wählten die Autoren Poro-34B für das AgriHubi-System und welche Vorteile bot dieses Modell gegenüber GPT-4o für #box("finnischsprachige Inhalte?")
 
   Die Autoren wählten Poro-34B für das AgriHubi-System, weil allgemeine Modelle wie GPT-4o bei domänenspezifischen und finnischsprachigen Anfragen erhebliche Schwächen zeigten, während Poro-34B speziell für die finnische Sprache optimiert ist. Das finnisch-optimierte Modell lieferte kontextuell relevanteren Antworten für die Verarbeitung von 200+ finnischsprachigen landwirtschaftlichen PDFs und bot bessere Kompatibilität mit Embedding-Modellen wie text-embedding-ada-002. Diese Auswahl ermöglichte es, landwirtschaftliches Wissen durch eine Streamlit-Chat-Schnittstelle mit SQLite-Logging und Feedback-Mechanismus für kontinuierliche Verbesserung zugänglicher zu machen, was die Bedeutung domänenspezifischer Sprachmodelle für mehrsprachige #box("RAG-Anwendungen unterstreicht.")
+#pagebreak()
 
 - Welche zwölf Lessons Learned wurden dokumentiert und wie verteilen sich diese auf technische, operative und #box("ethische Kategorien?")
 
@@ -834,6 +887,7 @@ Langfristig bietet sich die Integration solcher Systeme in wissenschaftliche Sof
 - Wie ist ein Datenpunkt im MAGPIE-Benchmark formal definiert (als Tupel) und welche Rolle spielen die Penalties und Utilities im Kontext der #box("Multi-Agenten-Interaktion?")
   
   Ein Datenpunkt im MAGPIE-Benchmark ist formal als Tupel ⟨N, T, D, C, I, P, p, U⟩ definiert, wobei N eine endliche Menge von Agenten {a1, a2, ..., ak} darstellt, T eine offene Aufgabe wie Ressourcenzuteilung beschreibt, D ein Deliverable zur Aufgabenabschluss markiert, C Constraints aus öffentlichen und privaten Informationen ableitet, I öffentliche Informationen bezeichnet, P private/sensible Daten umfasst, p Penalties für Datenleckagen definiert und U Belohnungen für Teilaufgaben festlegt. Die Penalties und Utilities spielen eine zentrale Rolle in Multi-Agenten-Interaktionen, da sie realistische Trade-offs zwischen Aufgabenerfüllung und Datenschutz schaffen - Agenten müssen strategisch entscheiden, ob sie niedrig-penalisierte Informationen (pij = 1) teilen, um hoch-belohnte Ziele (uik = 5) zu erreichen, während sie sensible #box("Daten (pil = 4) schützen.")
+#pagebreak()
 
 - Welche spezifischen Leakage-Raten zeigten GPT-4o und Claude-3.7-Sonnet im Explicit Instruction Setting verglichen mit dem Implicit #box("Instruction Setting?")
 
@@ -842,6 +896,7 @@ Langfristig bietet sich die Integration solcher Systeme in wissenschaftliche Sof
 - Wie wurde der Datengenerierungsprozess mittels LLM-Pipeline durchgeführt und welche Verifikationsschritte #box("wurden implementiert?")
 
   Der Datengenerierungsprozess wurde durch eine mehrstufige LLM-Pipeline durchgeführt, die Claude-3.7-Sonnet sowohl als Generator als auch als Verifizierer nutzte. Der Prozess begann mit manuell kuratierten Seeds für verschiedene Domänen, gefolgt von automatischer Szenario-Generierung durch das LLM, das realistische High-Stakes-Szenarien vorschlug. Jede Stufe beinhaltete strenge Verifikationsschritte: Ein Verifizierer-LLM bewertete die Realitätsnähe und den Einsatz der Szenarien, überprüfte die Aufgaben-Agent-Ausrichtung, validierte die Kohärenz von Agentenprofilen und stellte sicher, dass private Informationen natürlich motiviert waren. Zusätzlich wurden durch einen finalen Verifikationsschritt Deliverables und Constraints gegen die Aufgabenziele geprüft, um konfliktfreie und lösbare #box("Aufgaben zu gewährleisten.")
+#pagebreak()
 
 - Was ist der Zusammenhang zwischen der Leakage-Rate und der Task-Success-Rate, wie in #box("Abbildung 7 dargestellt?")
 
@@ -850,6 +905,7 @@ Langfristig bietet sich die Integration solcher Systeme in wissenschaftliche Sof
 - Welche fünf Hauptdomänen deckt der MAGPIE-Datensatz ab und welche Art von High-Stakes-Szenarien wurden für jede #box("Domäne entwickelt?")
 
   Der MAGPIE-Datensatz umfasst 158 Aufgaben über 16 verschiedene High-Impact-Domänen, wobei die Hauptkategorien Legal, Scheduling, Healthcare, Tech & Infrastructure und Research umfassen. Spezifische High-Stakes-Szenarien beinhalten strategische GPU-Ressourcenzuteilung zwischen Forschungsteams mit privaten Projektdetails und Latenzanforderungen, Universitätszulassungen mit vertraulichen Budgetbeschränkungen und Bewerberdaten, Gehaltsverhandlungen mit sensiblen Informationen über andere Mitarbeitergehälter, Büro-Miteigentümerschaftsvereinbarungen mit privaten finanziellen Präferenzen und Crowdsourced Innovation in der Pharmaentwicklung mit teilweise geheimen Forschungsdurchbrüchen. Diese Szenarien wurden bewusst so gestaltet, dass vollständiger Ausschluss privater Daten die Aufgabenerfüllung behindert, während uneingeschränktes Teilen zu erheblichen realen Verlusten #box("führen könnte.")
+#pagebreak()
 
 === Paper 3: Adaptive #box("Hybrid Sort")
 
@@ -871,6 +927,7 @@ Langfristig bietet sich die Integration solcher Systeme in wissenschaftliche Sof
 - Wie wurde die Hardware-aware Optimierung implementiert, insbesondere die dynamische Anpassung von k_max basierend auf L3-Cache und #box("Thread Count?")
 
   Die Hardware-aware Optimierung implementiert eine dynamische Anpassung von kmax basierend auf Systemressourcen gemäß der Formel kmax = (L3 Cache)/(4 × Thread Count). Diese Implementierung gewährleistet Thread-Parallelismus bei gleichzeitig speichereffizienter Cache-Nutzung und resultierte in einer 12% Erhöhung der Cache-Auslastung verglichen mit statischen Ansätzen. Das System aktiviert konditionale Parallelisierung nur wenn vorteilhaft: Radix Sort zeigt besonders effektive Skalierung mit 1.79× Speedup für Datensätze > 10⁶ Elemente trotz 12% Thread-Management-Overhead, während Quicksort aufgrund signifikanter Synchronisationskosten (47% Overhead) limitierte #box("Parallelisierbarkeit (1.12× Speedup) aufweist.")
+#pagebreak()
 
 === Paper 4: Scalable GPU Performance #box("Variability Analysis")
 
@@ -885,6 +942,7 @@ Langfristig bietet sich die Integration solcher Systeme in wissenschaftliche Sof
 - Welche Methode wurde zur Identifikation der Top-5 anomalous shards verwendet und wie #box("funktioniert diese?")
   
   Zur Identifikation der Top-5 anomalous Shards verwendeten die Autoren die Inter-Quartile Range (IQR) Methode. Diese statistische Methode berechnet zunächst gemeinsame Statistiken (Minimum, Maximum, Standardabweichung) kollaborativ über alle P Ranks in einem Round-Robin-Verfahren. Anschließend werden diese gemeinsamen Statistiken verwendet, um Anomalien zu identifizieren, wobei die IQR-Methode Ausreißer basierend auf der Verteilung der Daten innerhalb der Quartile bestimmt und die fünf auffälligsten Shards zur detaillierten #box("Analyse auswählt.")
+#pagebreak()
 
 - Was zeigt die Analyse der Memory Stall Duration für Rank 2 bezüglich der Device-to-Host und #box("Host-to-Device Transfers?")
 
@@ -907,6 +965,7 @@ Langfristig bietet sich die Integration solcher Systeme in wissenschaftliche Sof
 - Was sind "Areas of mutual interest" im Kontext der AI Safety Forschung und welche konkreten Beispiele werden für potentiell kooperative #box("Forschungsbereiche genannt?")
 
   "Areas of mutual interest" bezeichnen Forschungsbereiche, bei denen verschiedene Akteure (Unternehmen, Länder) trotz Konkurrenz gemeinsame Interessen haben und Anreize bestehen, Informationen und Forschungsergebnisse zu teilen. Das Paper gibt konkrete Beispiele: bestimmte Verifikationsmechanismen, Risikomanagement-Standards und Risikobewertungen, da diese minimalen Wettbewerbsvorteil bieten, aber einem gemeinsamen Interesse dienen. Ähnlich wie konkurrierende Flugzeughersteller (Boeing und Airbus) bei Flugsicherheitsinformationen und -standards kooperieren, könnten AI-Akteure bei der Zusammenarbeit profitieren, da niemand von AI-Zwischenfällen oder der Ermächtigung böswilliger #box("Akteure profitiert.")
+#pagebreak()
 
 - Welche spezifischen Definitionen werden für die Begriffe "Artificial General Intelligence (AGI)" und "Artificial Superintelligence (ASI)" im #box("Glossar gegeben?")
 

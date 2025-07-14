@@ -43,6 +43,7 @@ Sei $#vars("c")$ eine #varl("c"), $#vars("L")$ die #varl("L") ${#vars("c")_1, #v
       [$#varf("FN")$],
     
   ))<ConfusionMatrixOneDimensional>
+#v(-0.75em)
 
 Precision gibt an, welcher Anteil der als positiv identifizierten Ergebnisse tatsächlich positiv ist. Sie misst die Fähigkeit eines #acrpl("LLM"), negative Instanzen zu filtern. Die Formel der Precision ist im Folgenden dargestellt. Hierbei entspricht $abs("Menge")$ der Kardinalität #box([einer Menge: 
   #cite(<Hu2024LLMEvaluation>, supplement: "S. 8")])
@@ -52,7 +53,7 @@ Precision gibt an, welcher Anteil der als positiv identifizierten Ergebnisse tat
   = "korrekt als positiv klassifizierte Einträge" / "als positiv klassifizierte Einträge" 
   = abs(#vars("TP")) / (abs(#vars("TP")) + abs(#vars("FP"))) $
 ])
-
+#v(-0.3em)
 Recall, auch bekannt als "True Positive Rate" oder "Sensitivity", beschreibt, wie vollständig relevante Ergebnisse erkannt wurden. Sie bestimmt, inwiefern ein Modell positive Ergebnisse identifiziert. Die Formel für Recall lautet:
   #cite(<Hu2024LLMEvaluation>, supplement: "S. 7-8")
 
@@ -61,6 +62,7 @@ Recall, auch bekannt als "True Positive Rate" oder "Sensitivity", beschreibt, wi
   = "korrekt als positiv klassifizierte Einträge" / "tatsächlich positive Einträge"
   = abs(#vars("TP")) / (abs(#vars("TP")) + abs(#vars("FN"))) $
 ])
+#v(-0.3em)
 
 Der F1-Score bildet das harmonische Mittel zwischen Precision und Recall. Die Formel für den F1-Score lautet:
   #cite(<Hu2024LLMEvaluation>, supplement: "S. 8")
@@ -70,7 +72,7 @@ Der F1-Score bildet das harmonische Mittel zwischen Precision und Recall. Die Fo
   = (2dot"Precision"dot"Recall") / ("Precision"+"Recall")
   = (2 dot abs(#vars("TP"))) / (2 dot abs(#vars("TP")) + abs(#vars("FP")) + abs(#vars("FN"))) $
 ])
-
+#v(-0.8em)
 === Recall-Oriented Understudy for Gisting Evaluation <ROUGE>
 #acr("ROUGE") ist eine Evaluationsmetrik des #acr("NLP"), welche zur Evaluation von generierten Texten gegenüber eines Referenztextes angewendet wird
   #cite(<Hu2024LLMEvaluation>, supplement: "S. 11-12").

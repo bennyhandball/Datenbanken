@@ -19,6 +19,7 @@ Die Ergebnisse aus @Modelling wurden erfasst und in tabellarischer Form gesammel
 
 Die #acr("LLM")-as-a-Judge-Bewertungen stützen dieses Ergebnis: Während das Baselinesystem in vier von fünf Dimensionen durchschnittlich 0 von 2 Punkten erreicht, erzielt das #acr("RAG")-System signifikant höhere Werte (1,7 für Faktentreue, 1,2 für Vollständigkeit, 2,0 für Relevanz, 1,3 für Begründung und 1,2 für Tiefe, vgl. @heatmap_judge). Dies unterstreicht sowohl eine quantitativ als auch qualitativ verbesserte Antwortgenerierung durch #acr("RAG").
 
+#pagebreak()
 Bei der Betrachtung der Ergebnisse auf Ebene der einzelnen Fragen (siehe @heatmap_n_grams und @heatmap_judge) zeigt sich, dass die Verbesserungen nicht gleichmäßig verteilt sind. Einige Fragen profitieren stark von der RAG-Implementierung, während andere nur geringe oder gar keine Verbesserungen zeigen. Dies könnte auf unterschiedliche Schwierigkeitsgrade der Fragen oder auf die Verfügbarkeit relevanter Dokumente zurückzuführen sein. 
 
 #figure(caption:
@@ -32,7 +33,7 @@ Bei der Betrachtung der Ergebnisse auf Ebene der einzelnen Fragen (siehe @heatma
 
 @correlation_metrics illustriert die Korrelationsbeziehung zwischen den N-Gramm-Metriken und den #acr("LLM")-as-a-Judge-Bewertungen, wobei letztere zur besseren Vergleichbarkeit als Anteil am Maximalscore (2 Punkte) normalisiert wurden. Dafür wird der #varl("r") #vars("r") verwendet, welcher die lineare Beziehung zwischen zwei Variablen misst. $abs(#vars("r"))=1$ bedeutet eine perfekte Korrelation, während $abs(#vars("r"))=0$ keine Korrelation anzeigt.
   #cite(<cohen1988statistical>, supplement: "S. 75-79")
-
+#pagebreak()
 Die Analyse offenbart eine moderate positive Korrelation zwischen beiden Bewertungsansätzen: Mit steigenden N-Gramm-Werten nehmen tendenziell auch die #acr("LLM")-Bewertungen zu. Bemerkenswert ist die asymmetrische Bewertungscharakteristik des #acr("LLM"): Qualitativ unzureichende Antworten werden verstärkt negativ bewertet $(#vars("r") = –0.21)$, während besonders hohe N-Gramm-Scores überproportional positiv honoriert werden $(#vars("r") = 0.44)$. Diese Beobachtung unterstreicht den komplementären Charakter der #acr("LLM")-basierten Evaluation zu den rein quantitativen Metriken.
 
 #figure(caption:
@@ -54,11 +55,11 @@ Aufgrund der positiven Ergebnisse in @Evaluation wird im Rahmen dieser Arbeit ei
 - *Abfrage von Inhalten:* In einem Chat können Nutzer Fragen stellen, die das System mit Hilfe von #acr("RAG") beantwortet. Dabei werden relevante Dokumente aus der Vektordatenbank abgerufen und die Antworten generiert.
 - *Übersicht hochgeladener Dokumente:* Unter dem Chat werden die hochgeladenen Dokumente aufgelistet, die für die #acr("RAG")-Abfrage genutzt werden.
 
-Der Prototyp nutzt Flask als Web-Framework und Qdrant als Vektordatenbank. Aufgrund der positiven Ergebnisse aus @Evaluation wurde die in @Modelling vorgestellte Architektur sowie identischen Modelle eingesetzt.
+Der Prototyp nutzt Flask als Web-Framework und Qdrant als Vektordatenbank sowie die in @Modelling vorgestellte Architektur.
 
 #figure(caption:
 [Oberfläche des RAG-Chatbot-Prototypen. Eigene Darstellung.]
-, image(width: 65%,
+, image(width: 70%,
 "pictures/prototype.png" 
 ))
 <prototype>

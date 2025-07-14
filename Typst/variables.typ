@@ -12,12 +12,9 @@
   "\u{03C9}": "Wort",
   B: "Menge aller n-gramme im vorhergesagten Text",
   D: "Menge aller n-gramme im Referenztext",
-  k: "Metrik-Gewichtung",
   c: "Klasse",
   SE: "Standardfehler",
-  "\u{03C3}": "Standardabweichung",
-  μ: "Allgemeine Mittelwert",
   "\u{039B}": "Textlänge",
-  "\u{03B1}": "Signifikanzniveau",
   r: "Pearson-Korrelationskoeffizient",
+  k:"Anzahl der betrachteten Chunks"
 )
