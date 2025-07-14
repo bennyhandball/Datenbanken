@@ -57,7 +57,7 @@ Aufgrund der positiven Ergebnisse in @Evaluation wird im Rahmen dieser Arbeit ei
 Der Prototyp nutzt Flask als Web-Framework und Qdrant als Vektordatenbank. Aufgrund der positiven Ergebnisse aus @Evaluation wurde die in @Modelling vorgestellte Architektur sowie identischen Modelle eingesetzt. Die 
 
 #figure(caption:
-[Korrelation zwischen N-Gramm/LLM-as-a-Judge. Eigene Darstellung.]
+[Oberfläche des RAG-Chatbot-Prototypen. Eigene Darstellung.]
 , image(width: 65%,
 "pictures/prototype.png" 
 ))
