@@ -18,5 +18,6 @@
   "\u{03C3}": "Standardabweichung",
   μ: "Allgemeine Mittelwert",
   "\u{039B}": "Textlänge",
-  "\u{03B1}": "Signifikanzniveau"
+  "\u{03B1}": "Signifikanzniveau",
+  r: "Pearson-Korrelationskoeffizient",
 )

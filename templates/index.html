@@ -1,66 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <title>Qdrant RAG GPT</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta charset="UTF-8">
+  <title>Qdrant RAG GPT</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-
 <body>
-
-    <div class="containers-wrapper">
-
-        <div class="container">
-
-           
-            <h1>Qdrant Vector-Database Documents</h1>
-
+  <div class="container">
+    <h1>Qdrant RAG Chat</h1>
+    <div class"document-info">
+        <div id="selected-doc-title" class="file-title"></div>
+        <div id="loading-container">
+            <div id="loading-bar"></div>
         </div>
-
-        <div class="container">
-            <h1>Qdrant RAG Chat</h1>
-            <div id="loading-container">
-                <div id="loading-bar"></div>
-            </div>
-
-            <div id="chat-interface">
-                <div id="chat-container">
-                    {% for msg in chat_history %}
-                    <div class="chat-message {{ msg.role }}">
-                        <p class="timestamp">{{ msg.timestamp }}</p>
-                        <p>{{ msg.content }}</p>
-                    </div>
-                    {% endfor %}
-                </div>
-
-                <form method="post" action="{{ url_for('interact') }}" enctype="multipart/form-data" id="chat-form"
-                    class="chat-form">
-                    <div>
-                        <label for="document" class="upload-label">📁</label>
-                        <input type="file" name="document" id="document" accept="application/pdf" hidden>
-                    </div>
-                    <input type="text" name="message" id="query" placeholder="Ask a question">
-                    <button type="submit" class="send-btn">➤</button>
-                </form>
-            </div>
-
-            <form method="post" action="{{ url_for('clear_chat') }}" class="clear-form">
-                <button type="submit">Clear Chat</button>
-            </form>
-
-            {% if error %}
-            <div class="error">
-                <p>{{ error }}</p>
-            </div>
-            {% endif %}
-        </div>
-
-        <!-- Second container (exact copy of the first) -->
-
     </div>
 
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
-</body>
+    <div id="chat-interface">
+      <div id="chat-container">
+        {% for msg in chat_history %}
+          <div class="chat-message {{ msg.role }}">
+            <p class="timestamp">{{ msg.timestamp }}</p>
+            <p>{{ msg.content }}</p>
+          </div>
+        {% endfor %}
+      </div>
 
+      <form method="post"
+            action="{{ url_for('interact') }}"
+            enctype="multipart/form-data"
+            id="chat-form"
+            class="chat-form">
+
+        <!-- 📁 file picker (hidden) -->
+        <label for="document" class="upload-label">📁</label>
+        <input 
+          type="file"
+          name="document"
+          id="document"
+          accept="application/pdf"
+          hidden
+        >
+
+        <!-- chat input + send button -->
+        <input type="text" name="message" id="query" placeholder="Ask a question">
+        <button type="submit" class="send-btn">➤</button>
+      </form>
+    </div>
+
+    <form method="post" action="{{ url_for('clear_chat') }}" class="clear-form">
+      <button type="submit">Clear Chat</button>
+    </form>
+
+    {% if error %}
+      <div class="error"><p>{{ error }}</p></div>
+    {% endif %}
+  </div>
+
+  <!-- Uploaded docs list -->
+  <div class="container">
+    <h1>Uploaded Documents</h1>
+    {% if uploaded_docs %}
+      {% for name in uploaded_docs %}
+        <div class="document">
+          <img 
+            src="{{ url_for('static', filename='pdf_icon.png') }}" 
+            alt="PDF Icon" 
+            class="logo"
+          >
+          {{ name }}
+        </div>
+      {% endfor %}
+    {% else %}
+      <p>No documents uploaded yet.</p>
+    {% endif %}
+  </div>
+
+  <script>
+    const input = document.getElementById('document');
+    const titleDiv = document.getElementById('selected-doc-title');
+    const form = document.getElementById('chat-form');
+
+    input.addEventListener('change', () => {
+      if (!input.files || input.files.length === 0) {
+        titleDiv.textContent = '';
+        return;
+      }
+
+      // Truncate to 10 chars + "..."
+      const fullName = input.files[0].name;
+      titleDiv.textContent = fullName;
+
+      // Immediately submit the form to upload
+      form.requestSubmit();
+    });
+  </script>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
 </html>
