@@ -348,12 +348,7 @@ Um den Lesefluss zu verbessern, werden Abbildungen, Codebeispiele und Tabellen, 
     title: "Tabellenverzeichnis",
     target: figure.where(kind: table)
   )
-#pagebreak()
-// Codeverzeichnis (List of Code) 
-  #outline(
-    title: "Codeverzeichnis",
-    target: figure.where(kind: "code")
-  )
+
 #pagebreak()
 // Promptverzeichniss (List of Code) 
   #outline(
