@@ -5,7 +5,7 @@
 #import "variables-lib.typ": init-variables, print-variables, var, varpl, vars, varspl, varl, varlpl, varf,varfpl
 
 #let rag_evaluation = [
-== Retrieval Augmented Generation Evaluation
+== Retrieval Augmented Generation Evaluation <EvaluationParameters>
 
 Um die Leistung eines #acr("RAG")-Systems messbar zu machen, werden geeignete Evaluationsmetriken bestimmt. Diese spalten sich in Klassifikationsmetriken, zur Klassifizierung richtiger und falscher Ergebnisse, sowie Token-Similarity-Metriken zum Vergleich der Ähnlichkeit von Referenz- und #acr("LLM")-Antwort.
   #cite(<Hu2024LLMEvaluation>, supplement: "S. 6-7")

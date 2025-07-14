@@ -6,6 +6,7 @@
 
 #let evaluation_and_deployment = [
 == Evaluation <Evaluation>
+Die Ergebnisse aus @Modelling wurden erfasst und in tabellarischer Form gesammelt. Anschließend wurden diese mit den in @EvaluationParameters definierten Metriken ausgewertet. @aggregated_metrics präsentiert die über alle Fragen hinweg aggregierten Resultate, differenziert nach N-Gramm-basierten Metriken und #acr("LLM")-as-a-Judge-Bewertungen. Die Ergebnisse je Frage befinden sich in @evaluation_total_results im Anhang.
   
 #figure(caption:
 [Aggregierte Metriken vor/nach #acr("RAG")-Implementierung. Eigene Darstellung.]
@@ -14,7 +15,7 @@
 ))
 <aggregated_metrics>
 
-@aggregated_metrics präsentiert die über alle Fragen hinweg aggregierten Resultate, differenziert nach N-Gramm-basierten Metriken und #acr("LLM")-as-a-Judge-Bewertungen. Beide Metriktypen zeigen eine signifikante Steigerung der Antwortqualität infolge der #acr("RAG")-Implementierung. So erhöht sich beispielsweise die durchschnittliche Precision-1 von 15,5 % auf 32,6 %, Recall-1 von 8,6 % auf 32,4 % und #acr("ROUGE")-1 von 11,2 % auf 29,1 %. Ähnliche Verbesserungen sind bei den 2-Gramm-Metriken zu beobachten (Precision-2: +8,8 #acr("pp"), Recall-2: +11,1 #acr("pp"), ROUGE-2: +9,0 #acr("pp")). 
+@aggregated_metrics zeigt, dass beide Metriktypen eine signifikante Steigerung der Antwortqualität infolge der #acr("RAG")-Implementierung verzeichnen. So erhöht sich beispielsweise die durchschnittliche Precision-1 von 15,5 % auf 32,6 %, Recall-1 von 8,6 % auf 32,4 % und #acr("ROUGE")-1 von 11,2 % auf 29,1 %. Ähnliche Verbesserungen sind bei den 2-Gramm-Metriken zu beobachten (Precision-2: +8,8 #acr("pp"), Recall-2: +11,1 #acr("pp"), ROUGE-2: +9,0 #acr("pp")). 
 
 Die #acr("LLM")-as-a-Judge-Bewertungen stützen dieses Ergebnis: Während das Baselinesystem in vier von fünf Dimensionen durchschnittlich 0 von 2 Punkten erreicht, erzielt das #acr("RAG")-System signifikant höhere Werte (1,7 für Faktentreue, 1,2 für Vollständigkeit, 2,0 für Relevanz, 1,3 für Begründung und 1,2 für Tiefe, vgl. @heatmap_judge). Dies unterstreicht sowohl eine quantitativ als auch qualitativ verbesserte Antwortgenerierung durch #acr("RAG").
 
