@@ -494,7 +494,7 @@ Die Architektur umfasst eine Speicherschicht für persistente Vektordaten, eine 
 
 === Indexierung und Suchoptimierung
 Für die effiziente Durchsuchung großer Vektorbestände setzen Vektordatenbanken spezialisierte Indexierungsalgorithmen ein. Hierarchical Navigable Small World (HNSW)-Graphen, eingeführt von Yu A Malkov et al. #cite(<Malkov>) ermöglichen durch mehrschichtige Navigationsstrukturen sublineare Suchzeiten bei hoher Genauigkeit. Alternative Verfahren wie Locality-Sensitive Hashing (LSH) bieten je nach Anwendungsfall spezifische Vorteile hinsichtlich Speichereffizienz #box("oder Suchgeschwindigkeit. "+cite(<han2023comprehensivesurveyvectordatabase>, supplement: "S. 4-7"))
-#pagebreak()
+
 Die Approximate Nearest Neighbor (ANN)-Suche bildet das methodische Fundament dieser Verfahren #cite(<Malkov>, supplement: "S. 1-3"). Da exakte Bestimmung der nächstgelegenen Nachbarn in hochdimensionalen Räumen rechnerisch aufwendig ist, approximieren diese Algorithmen die Ergebnisse mit kontrollierbarer Genauigkeit bei #box("reduzierten Rechenzeiten "+cite(<johnson2017billionscalesimilaritysearchgpus>, supplement: "S. 1, 2, 10")+cite(<Malkov>, supplement: "S. 1-5")+".")
 
 === Technische Implementierung
@@ -504,7 +504,6 @@ Moderne Vektordatenbanken bieten standardisierte APIs für sowohl Batch-Import g
 #acrf("RAG") kombiniert die Stärken von #acrpl("LLM") mit dem gezielten Zugriff auf externe Wissensquellen. Klassische #acr("LLM")-Modelle schöpfen ausschließlich aus dem Trainingswissen und können aktuelle oder spezielle Informationen nicht einbeziehen #cite(<gupta2024comprehensivesurveyretrievalaugmentedgeneration>, supplement: "1"), was bei neuen oder spezialisierten Fragestellungen zu falschen oder „halluzinierten", also erfundenen, Antworten #box("führen kann "+cite(<gupta2024comprehensivesurveyretrievalaugmentedgeneration>, supplement: "1-2")+cite(<Huang_2025>, supplement: "S. 1, 3, 20")+cite(<ibm2023rag>)+".")
 
 #acr("RAG")-Systeme hingegen durchsuchen vor jeder Antwort eine hinterlegte Wissensbasis (z.B. Dokumentensammlung, Datenbank oder Internetsuche) nach relevanten Textpassagen und übergeben diese als zusätzlichen Kontext an das #acr("LLM"). So lassen sich aktuelle Fakten und spezialisierte Informationen direkt einbinden, ohne das #acr("LLM") neu trainieren zu müssen, was Präzision und Nachvollziehbarkeit deutlich #box("erhöht "+cite(<gupta2024comprehensivesurveyretrievalaugmentedgeneration>, supplement: "1-2")+", ["+ref(<RAGWorkflow>)+"].")
-#pagebreak()
 
 ===  Wissensabruf und Anreicherung
 Im #acr("RAG")-Verfahren wird zu jeder Anfrage die Wissensbasis  nach relevanten Textpassagen durchsucht, die zusammen mit der Frage als zusätzlicher Kontext an das #acr("LLM") übergeben werden. Das #acr("LLM") kann dann die abgerufenen Fakten direkt in seine Antwort einbetten #cite(<lewis2021retrievalaugmentedgenerationknowledgeintensivenlp>, supplement: "S. 9"). So können auch aktuelle Informationen, wie neueste Forschungsergebnisse, einfließen, ohne dass das #acr("LLM") diese im Training lernen musste. Die Antworten basieren auf verifizierten Quellen und bleiben aktuell, da neue Daten einfach in die Wissensbasis aufgenommen werden können, was Qualität und Aktualität gerade bei nischen Themen #box("und neuen Erkenntnissen erhöht "+cite(<karpukhin2020densepassageretrievalopendomain>, supplement: "S. 8") +cite(<lewis2021retrievalaugmentedgenerationknowledgeintensivenlp>, supplement: "S. 9")).
@@ -543,7 +542,11 @@ Besonders im akademischen Bereich stehen #acrpl("LLM") vor der Herausforderung, 
 
 Dazu wird ein eigenes #acr("RAG")-System entwickelt, das es erlaubt,  Literatur hochzuladen und gezielt Fragen dazu zu stellen. Die Qualität der Antworten wird evaluiert, um das Potenzial solcher Systeme für den akademischen Einsatz realistisch einschätzen #box("zu können.")
 
-Dafür werden folgende Metriken für die Quantifizierung der Ergebnisse genutzt *JULIAN*
+Dafür werden die in @EvaluationParameters genannten Metriken für die Quantifizierung der Ergebnisse genutzt:
+- *N-Gramm-basierten Metriken*: Metriken wie Precision-n, Recall-n und ROUGE-n vergleichen die generierten Antworten mit Referenzantworten, indem sie die Übereinstimmung von N-Grammen messen. Diese wird als Wert zwischen 0 und 1 wiedergegeben.
+- *#acr("LLM")-as-a-Judge*: Diese Metrik nutzt ein #acr("LLM") als Bewertungsinstanz, um die Qualität der generierten Antworten zu beurteilen. Das #acr("LLM") bewertet die Antworten auf Basis der Kriterien "Total Correctness", "Completeness", "Relevance", "Justfiication" und "Depth", indem dieses eine numerische Punktzahl zwischen 0 und 2 je Kategorie vergibt.
+
+Abschließend wird das #acr("RAG")-System in Form einer Webanwendung als Prototyp implementiert, die es Nutzern ermöglicht, aktuelle wissenschaftliche Publikationen hochzuladen und gezielte Fragen zu diesen Dokumenten zu stellen.
 
 == Data Understanding <Data_Set>
 Zur systematischen Evaluation des entwickelten #acr("RAG")-Systems wurde eine kuratierte Auswahl wissenschaftlicher Publikationen als Testdatensatz verwendet. Die Datengrundlage besteht aus fünf aktuellen Veröffentlichungen aus dem Bereich der Informatik, die von der wissenschaftlichen Publikationsplattform ArXiv.org bezogen wurden. Sämtliche ausgewählten Publikationen weisen ein einheitliches Veröffentlichungsdatum vom #box("27. Juni 2025 auf.")
@@ -584,7 +587,6 @@ Für die Entwicklung des Modells und die darauffolgende Analyse wurden weitere f
 
 
 Zur Generierung der Antworten mithilfe des #acr("RAG")-Systems werden, wie in @LLM_Theorie erläutert, #acrpl("LLM"), augrund ihrer hohen Performance gegenüber alternativen Verfahren eingestetzt. Vom Training eines eigenen Modells wird aufgrund von geringer Datengrundlage sowie Kosten- und Recheneleistung abgesehen und verschiedene #acrpl("PLM") eingesetzt #cite(<strubell_ganesh_mccallum_2019>, supplement: "S.3648,3649"). 
-#pagebreak()
 
 - *Generierendes Modell GPT-4o:* GPT-4o von OpenAI, veröffentlicht am 13. Mai 2024, zeichnet sich durch eine hohe Leistungsfähigkeit aus #cite(<gpt_4o>). Nach den Angaben von OpenAI ist das Modell GPT-4o das beste und leistungsfähigste Modell außerhalb der O-Serie #cite(<gpt_4o>). Im Vergleich zu diesen Modellen, wie beispielsweise o3-mini, ist GPT-4o schneller in der Sprachverarbeitung #cite(<gpt_4o>). 
 
@@ -594,30 +596,25 @@ Zur Generierung der Antworten mithilfe des #acr("RAG")-Systems werden, wie in @L
 
 Auch das Prompt-Template für den #acr("LLM")-as-a-Judge Ansatz wurde nach den Kriterien der Literatur erstellt (siehe @Prompt_Kriterien ) und in allen Iterationen des #acr("RAG")-Systems konsistent eingesetzt. Die Prompt Templates befinden sich im Prompt-Verzeichnis.
 
-
-
 *Retrieval Augmented Generation Parameter:*
 
 Grundsätzlich gibt es keine expliziten Vorgaben für die Wahl der #acr("RAG") Parameter #cite(<chiang2024optimizing>). Diese sind Use-Case und Anforderungsspezifisch #cite(<chiang2024optimizing>). Für den vorliegenden Use-Case müsste man durch mehrere Experiment die beste Konfiguration der kombinierten Parameter ermitteln, da dies jedoch nicht der Fokus der Arbeit ist, soll im Folgenden die Wahl der Paramter begründet werden. 
 
-
 *Top-k-Retrieval Parameter:* 
 Für die Implementierung des #acr("RAG")-Systems wurde der Top-k-Retrieval Parameter auf den Wert 5 gesetzt. Diese Entschidung basiert auf der in der Fachliteratur empfohlenen Praxis, verschiedene k-Werte systematisch zu evaluieren und einen ausgewogenen Mittelwert zu wählen #cite(<chiang2024optimizing>). Der Wert k=5 stellt dabei einen Kompromiss zwischen einem niedrigen -Wert (k=1-2), die relevante Informationen übersehen könnten, und einem zu hohen k-Wert (k>=10), die zu einer Verschlechterung der Präzision durch irrelevante Treffer führen können dar #cite(<chiang2024optimizing>). 
-
 
 *Chunk Size/Overlap: *Für die Konfiguration der Chunk-Size des #acr("RAG")-Systems wird eine Chunk-Size von 1024 Tokens mit einem Overlap von 128 Token gewählt. Erfahrungen aus einem vergleichbaren Use-Case zeigenm dass diese naive Chunking-Methode passende Retrieval-Ergebnisse liefert #cite(<Ammar2025OptimizingRAG>). Gleichzeitig ermöglicht die gewählte Chunkgröße in Kombination mit einem Obverlap von 128 Token eine schnelle Verarbeitung bei hoher Genauigkeit. Daher stellt die Konfiguration mit 1024 Tokens und 128 Tokens Overlap eine passende Balance zwischen Qualität und Effizienz dar #cite(<Ammar2025OptimizingRAG>). 
 
 *Distanzmetrik:* Als weitverbreitete und zuverlässige Distanzmetrik wird die Cosinus Ähnlichkeit verwendet #cite(<juvekar2024cos>, supplement: "S.1"). Diese misst den Kosinus Winkel zwischen zwei Vektoren und ist somit geeignet, um semantische Ähnlichkeiten effektiv zu erfassen. 
 
-
 #pagebreak()
-*Verwendete Retrieval-Augmented Generation-Architektur*
 
+*Verwendete Retrieval-Augmented Generation-Architektur*
 #figure(caption:"Übersicht RAG Architektur",image(width: 90%,"pictures/RAG_Architektur.jpg"))<RAG_Architektur>
 
 
 
-Die RAG-Architektur in @RAG_Architektur zeigt die projektspezifische Architektur des #acr("RAG")-Systems, die zur Beantwortung der Fragen (siehe Anhang) eingesetzt wird. Im Folgenden soll das Vorgehen näher erläutert werden.
+Die #acr("RAG")-Architektur in @RAG_Architektur zeigt die projektspezifische Architektur des #acr("RAG")-Systems, die zur Beantwortung der Fragen (siehe Anhang) eingesetzt wird. Im Folgenden soll das Vorgehen näher erläutert werden.
 
 Um die Fragen mit Hilfe des #acr("RAG")-Systems beantworten zu können, müssen zunächst die Kontextdaten (Paper Knowledge Base) zur Beantwortung der Fragen in die Vektor-Datenbank (Qdrant) geladen werden. In der vorliegenden Arbeit handelt es sich dabei um die genannten fünf wissenschaftlichen Literaturauszüge (siehe @Data_Set). 
 
@@ -654,6 +651,8 @@ Trotz allem unterliegen die Ergebnisse Limitationen hinsichtlich ihrer Aussagekr
 - *Evaluationsmethoden:* Die verwendeten Metriken (Precision-n, Recall-n, #acr("ROUGE")-n, #acr("LLM")-as-a-Judge) sind standardisiert, aber möglicherweise nicht ausreichend, um die Qualität der Antworten vollständig zu erfassen #cite(<Hu2024LLMEvaluation>, supplement: "11-15"). Zukünftige Arbeiten sollten zusätzliche qualitative Bewertungsmethoden einbeziehen, um ein umfassenderes Bild der Antwortqualität zu erhalten sowie eine Validierung von Menschen vornehmen #cite(<Li2024LLMJudge>, supplement: "S. 1-3").
 
 Im Folgenden Abschnitt wird ein Ausblick auf zukünftige Forschung und identifizierte Möglichkeiten der Weiterentwicklung gegeben.
+
+#pagebreak()
 
 == Ausblick
 Die Ergebnisse der Arbeit zeigen, dass #acr("RAG") ein vielversprechender Ansatz für die Verarbeitung aktueller wissenschaftlicher Literatur darstellt. Für die Verwendung im akademischen Umfeld eröffnet dies neue Potenziale, wie etwa zur Unterstützung bei Literaturrecherchen, dem automatisierten Beantworten fachspezifischer Fragen oder der schnellen Kontextualisierung #box("neuer Publikationen.")

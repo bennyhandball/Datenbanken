@@ -5,6 +5,8 @@
 #import "variables-lib.typ": init-variables, print-variables, var, varpl, vars, varspl, varl, varlpl, varf,varfpl
 
 #let rag_parameter = [
+
+#pagebreak()
 === Retrieval-Augmented-Generation Parameter
 
 Die Leistung eines #acr("RAG")-Systems werden durch die Wahl mehrerer Parameter beeinflusst. Jeder Parameter wirkt sowohl eigenständig als auch in Wechselwirkung mit den anderen. Folgende Parameter sind von #box("besonderer Relevanz:")

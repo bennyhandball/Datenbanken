@@ -44,8 +44,8 @@ Sei $#vars("c")$ eine #varl("c"), $#vars("L")$ die #varl("L") ${#vars("c")_1, #v
     
   ))<ConfusionMatrixOneDimensional>
 
-Precision gibt an, welcher Anteil der als positiv identifizierten Ergebnisse tatsächlich positiv ist. Sie misst die Fähigkeit eines #acrpl("LLM"), negative Instanzen zu filtern. Die Formel der Precision ist im Folgenden dargestellt. Hierbei entspricht $abs("Menge")$ der Kardinalität einer Menge: 
-  #cite(<Hu2024LLMEvaluation>, supplement: "S. 8")
+Precision gibt an, welcher Anteil der als positiv identifizierten Ergebnisse tatsächlich positiv ist. Sie misst die Fähigkeit eines #acrpl("LLM"), negative Instanzen zu filtern. Die Formel der Precision ist im Folgenden dargestellt. Hierbei entspricht $abs("Menge")$ der Kardinalität #box([einer Menge: 
+  #cite(<Hu2024LLMEvaluation>, supplement: "S. 8")])
 
 #align(center, [
   $ "Precision" 
@@ -78,7 +78,7 @@ Sie quantifiziert die Ähnlichkeit zweier Texte in einer Metrik und ermöglicht 
   #cite(<Hu2024LLMEvaluation>, supplement: "S. 14").
 #acr("ROUGE")-n, eine Umsetzung von #acr("ROUGE"), misst den Überlappungsgrad zwischen einem generierten Text zu einer Referenz mittels N-Grammen, welche Wortfolgen der Länge N repräsentieren
   #cite(<Lin2004>, supplement: "S. 1-2").
-Formal entspricht #acr("ROUGE")-n dem in @PrRecF1 definierten F1-Score, wobei anstatt absoluter Zuordnung die Übereinstimmung von N-Grammen als True Positive herangezogen werden #cite(<Hu2024LLMEvaluation>, supplement: "S. 14").
+Formal entspricht #acr("ROUGE")-n dem in @PrRecF1 definierten F1-Score, wobei anstatt absoluter Zuordnung die Übereinstimmung von N-Grammen als True Positive #box([herangezogen werden #cite(<Hu2024LLMEvaluation>, supplement: "S. 14").])
 
 Sei $#vars("\u{03C9}")$ ein #varl("\u{03C9}"), $#vars("b") = (#vars("\u{03C9}")_1, #vars("\u{03C9}")_2,...,#vars("\u{03C9}")_(#vars("\u{039B}")_#vars("b")))$ ein #varl("b") der Länge $\u{039B}_#vars("b")$ als Wortsequenz von $#vars("\u{03C9}")_1$ bis $#vars("\u{03C9}")_(#vars("\u{039B}")_#vars("b"))$ und $#vars("d") = (#vars("\u{03C9}")_1, #vars("\u{03C9}")_2,...,#vars("\u{03C9}")_(#vars("\u{039B}")_#vars("d")))$ ein #varl("d") der Länge $\u{039B}_#vars("d")$ als Wortsequenz von $#vars("\u{03C9}")_1$ bis $#vars("\u{03C9}")_(#vars("\u{039B}")_#vars("d"))$. Damit ist $#vars("B")$ die #varl("B"), $#vars("D")$ die #varl("D") und $#vars("D") \u{2229} #vars("B")$ die Menge an überschneidenden n-Grammen, welche der Menge $#vars("TP")$ auf Basis von N-Grammen entsprechen. Die im generierten Text vorkommenden, aber nicht in der Referenz enthaltenen N-Gramme $#vars("B")\u{2216}#vars("D")$ entsprechen der Menge $#vars("FP")$, in der Referenz, aber nicht im generierten Text enthaltene N-Gramme $#vars("D")\u{2216}#vars("B")$ der Menge $#vars("FN")$ und weder in $#vars("B")$ noch in $#vars("D")$ vorkommende N-Gramme der Menge $#vars("TN")$. Auf Basis dieser N-Gramm basierten Mengen lassen sich $"Precision"_n$, $"Recall"_n$ sowie $#acrs("ROUGE")_n$ als N-Gramm basierter F1-Score mit den #box([folgenden Formeln berechnen:
   #cite(<Hu2024LLMEvaluation>, supplement: "S. 14"):])
@@ -99,6 +99,9 @@ Die Aussagekraft von #acr("ROUGE")-n ist begrenzt: im Gegensatz zu Metriken wie 
   #cite(<Hu2024LLMEvaluation>, supplement: "S. 14-15").
 Aus diesem Grund wird #acr("ROUGE")-n häufig in Kombination mit anderen Metriken eingesetzt, um eine umfassendere Bewertung der Qualität von generierten Texten zu ermöglichen
   #cite(<Hu2024LLMEvaluation>, supplement: "S. 15").
+
+
+#pagebreak()
 
 === Large Language Model as a Judge <LLM-as-a-Judge>
 #acr("LLM") as a Judge bezeichnet einen Evaluationsansatz, bei dem #acrpl("LLM") zur Bewertung von Ergebnissen anderer Modelle eingesetzt werden
